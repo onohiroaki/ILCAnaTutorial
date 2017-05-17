@@ -1,0 +1,5 @@
+# Ignore ced-viewer.xml, which is created by runced command
+ced-viewer.xml
+# 
+# Ignore all .slcio file
+*.slcio
