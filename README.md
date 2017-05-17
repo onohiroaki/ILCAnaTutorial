@@ -18,8 +18,8 @@ Please read iLCSoft documentation in
 [https://github.com/iLCSoft/ilcsoftDoc/](https://github.com/iLCSoft/ilcsoftDoc/blob/master/README.md)
 and links therein.  Many usefull information will be found there.
 
-The released version of iLCSoft, both source and binaries, is available under ''/cvmfs/ilc.desy.de/sw''. 
-The most of the system used for studies using ilcsoft must have ''cvmfs'' installed. If not,
+The released version of iLCSoft, both source and binaries, is available under `/cvmfs/ilc.desy.de/sw`. 
+The most of the system used for studies using ilcsoft must have `cvmfs` installed. If not,
 the information at 
 [ILCSoft on CVMFS - CERN TWiki](https://twiki.cern.ch/twiki/bin/view/CLIC/CLICCvmfs) and 
 [CVMFS at DESY - Grid@DESY](http://grid.desy.de/cvmfs/)
@@ -30,6 +30,17 @@ iLCSoft environment for v01-16-02 is initialized by
 ```
 . /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-16-02/init_ilcsoft.sh
 ```
+
+## Example folders
+
+### CED
+
+Example to run CED event display
+
+### DSTAnalysis
+
+Example to analize DST files, including a C++ source code.
+
 
 
  
