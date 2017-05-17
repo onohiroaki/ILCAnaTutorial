@@ -1,0 +1,47 @@
+
+CED is an event viewer of ILCSoft data based on X11 and OpenGL.
+CED consistes of a display server, glced, and a client, ced-viewer. 
+
+glced has to be executed in advance. ced-viewer is a Marlin
+application and sends display data to glced through tcp port defined by 
+CED_PORT environment parameter.  glced can run at a remote site where
+ced-viewer runs or at your local PC.  
+
+The sample programs here are to run glced and ced-viewer both at KEKCC.
+To run them, do 
+
+  1. The first step is to run glced, using a script start-glced,
+     which sets CED_PORT to your uid in order to avoid a conflict 
+     with other users, then start glced and the glced window will open.
+
+  2. The next step is to run CEDViewer process by Marlin by a script runced,
+     the first argument being as the input data.  The runced script is 
+     prepared to display REC file.  The steering file has to be modified 
+     to display DST data. 
+
+     The CEDViewer can be terminated by <CTRL>-C or at the end of input file.
+     The glced can stay running for use by another CEDViewer job.
+
+   In short, do 
+    $ ./glced-start
+    $ ./runced [rec-file]
+
+
+If glced is installed in your local PC, it can be executed at your PC
+and receive display command from CED viewer running at KEKCC. 
+The following line should be inserted in the ssh configuration file, 
+~/.ssh/config, in order to allow port forwarding.
+
+
+--- begining of ~/.ssh/config 
+
+   Host *.cc.kek.jp
+      FallBackToRsh no
+      RemoteForward <CED_PORT>  localhost:<CED_PORT>
+
+--- end of ~/.ssh/config
+
+<CED_PORT> is the <CED_PORT> number which is used by glced and ced-viewer.
+
+The CED manual will be found in the doc directory of CED release:
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CED/v01-09-02/doc/manual.pdf

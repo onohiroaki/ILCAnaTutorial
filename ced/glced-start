@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#
+# glced-start
+#
+
+evdispdir=${HOME}/glced-dump
+if [ "x${CED_PORT}" == "x" ] ; then
+#  export CED_PORT=`id -u`
+  echo "Error: CED_PORT is not set"
+  echo "Set CED_PORT environment variable before executing this command."
+  exit
+fi
+echo "- Screen copy of glced will be created in ${evdispdir}"
+echo "  Warning: existing file will be over-written."
+( 
+  mkdir -p ${evdispdir}
+  cd ${evdispdir}
+  /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-17-11/CED/v01-09-02/bin/glced &
+#
+)
+

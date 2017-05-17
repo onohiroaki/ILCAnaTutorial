@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# (Function)
+#  Start ced-viewer.
+# (Usage)
+#    ./runced [input_file]
+# (Note)
+#    The environment parameter, CED_PORT, should be common to 
+#    your glced.  It has to be unique within the system.  Otherwise
+#    your viewer will interfere with other viewer.
+#
+
+
+
+softdir=/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/
+export MARLIN_DLL=
+. ${softdir}/v01-17-11/init_ilcsoft.sh
+
+MARLINUTILS=${ILCSOFT}/MarlinUtil/v01-12-01/lib
+MARLIN_DLL=${MARLINUTILS}/libMarlinUtil.so:${MARLIN_DLL}
+
+confdir=`pwd`/cedconfig
+marlin_xml=${confdir}/ced-viewer.xml.in
+gearfile=${confdir}/gear-ILD_o1_v05.xml
+using_particle_gun="false"
+SkipNEvents=0
+
+viewer=MyFPCCDViewer
+viewer=MyCEDViewer
+
+infile=$1
+
+if [ "x$1" == "x" -o "$1" == "-h" -o "$1" == "--help" ] ; then 
+  echo "./runced [filename]"
+  echo "  Start CEDViewer.  Run glced before executing this command."
+  echo " (note)"
+  echo "Set CED_PORT environment variable prioir to run this command."
+  exit
+fi
+if [ ! -f $1 ] ; then 
+  echo "File $1 does not exist."
+  exit
+fi
+if [ "x$2" != "x" ] ; then viewer=$2 ; fi
+
+if [ -z ${CED_PORT} ] ; then 
+  echo "CED_PORT is not set.  Set CED_PORT which is used for glced."
+  exit
+fi
+
+
+
+# if [ "x$1" == "x" ] ; then 
+#   read -p "Input file name ? :" infile
+# fi
+
+export LD_LIBRARY_PATH=${ILCSOFT}/CEDViewer/v01-12/lib:${ILCSOFT}/MarlinUtil/v01-12-01/lib:${LD_LIBRARY_PATH}
+# export MARLIN_DLL=${ROOTSYS}/lib/libGui.so:${ROOTSYS}/lib/libGed.so:${ROOTSYS}/lib/libTreePlayer.so:${MARLIN_DLL}
+
+if [ -e ./ced-viewer.xml.in ] ; then marlin_xml=./ced-viewer.xml.in ; fi
+if [ -e ./GearOutput.xml ] ; then gearfile=GearOutput.xml ; fi
+
+
+
+
+sed -e "s|%%INPUT_FILES%%|${infile}|" \
+    -e "s|%%GEAR_FILE%%|${gearfile}|" \
+    -e "s|%%SkipNEvents%%|${SkipNEvents}|" \
+    -e "s|%%UsingParticleGun%%|${using_particle_gun}|" \
+    -e "s|%%VIEWER%%|${viewer}|" ${marlin_xml} > ced-viewer.xml
+
+# export CED_PORT=20131
+# if [ "x${CED_PORT}" == "x" ] ; then 
+#   export CED_PORT=`id -u`
+#   echo "CED_PORT was set to ${CED_PORT}"
+#fi
+
+Marlin ced-viewer.xml
+
