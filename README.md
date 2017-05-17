@@ -37,11 +37,17 @@ iLCSoft environment for v01-16-02 is initialized by
 
 Example to run CED event display
 
-### DSTAnalysis
+### DSTAnal
 
 Example to analize DST files, including a C++ source code.
 
+### runmokka
 
+Simulate 250GeV e2e2H event by Mokka
+
+### runmarlin
+
+Analize simulated file created by `runmokka` example.
 
  
  
