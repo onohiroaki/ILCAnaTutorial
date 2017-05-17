@@ -15,7 +15,7 @@ as a developper release.
 
 iLCSoft is maintained at [https://github.com/iLCSoft](https://github.com/iLCSoft).
 Please read iLCSoft documentation in 
-[https://github.com/iLCSoft/ilcsoftDoc/blob/master/README.md]([https://github.com/iLCSoft/ilcsoftDoc/)
+[https://github.com/iLCSoft/ilcsoftDoc/blob/master/README.md](https://github.com/iLCSoft/ilcsoftDoc/)
 and links therein.  Many usefull information will be found there.
 
 The released version of iLCSoft, both source and binaries, is available under "/cvmfs/ilc.desy.de/sw". 
