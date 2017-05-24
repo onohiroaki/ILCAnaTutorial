@@ -1,0 +1,95 @@
+ &process_input
+ process_id = "e2e2h_o"
+ sqrts = 250
+ luminosity = 1
+ polarized_beams = T
+ structured_beams = T
+ beam_recoil = T
+ /
+
+ &integration_input
+ calls = 1 100000 10 100000 1 500000
+ seed = 512345678
+ read_grids = F
+! read_grids = T
+! default_mass_cut = 40.
+! default_q_cut = 40.
+! phase_space_only = T
+! accuracy_goal = 10.0
+! efficiency_goal = 50.0
+ time_limit_adaptation = 10000
+/
+
+ &simulation_input
+ n_events = 100
+ write_events_raw = F
+ keep_beam_remnants = T
+ write_events_file = "E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001"
+ fragment = T
+ max_file_count = 100
+ fragmentation_method = 3
+! OPAL tune
+ pythia_parameters = "PMAS(25,1)=125.0; PMAS(25,2)=0.0043;
+  MSTJ(41)=2; MSTU(22)=20; MSTJ(28)=2;
+  PARJ(21)=0.40000; PARJ(41)=0.11000; PARJ(42)=0.52000; PARJ(81)=0.25000;
+  PARJ(82)=1.90000; MSTJ(11)=3; PARJ(54)=-0.03100; PARJ(55)=-0.00200;
+  PARJ(1)=0.08500; PARJ(3)=0.45000; PARJ(4)=0.02500; PARJ(2)=0.31000;
+  PARJ(11)=0.60000; PARJ(12)=0.40000; PARJ(13)=0.72000; PARJ(14)=0.43000;
+  PARJ(15)=0.08000; PARJ(16)=0.08000; PARJ(17)=0.17000; MSTP(3)=1;
+  MWID(25)=2;
+  BRAT(212)=0.00044;BRAT(213)=0.0268;BRAT(214)=0.578;BRAT(219)=0.000221;
+  BRAT(220)=0.0637;BRAT(222)=0.0856;BRAT(223)=0.0023;BRAT(224)=0.00155;
+  BRAT(225)=0.0267;BRAT(226)=0.216"
+  write_events = T
+  write_events_format = 20
+  bytes_per_file = 500000000
+ /
+
+ &diagnostics_input 
+! show_phase_space = T
+ time_limit = 10050
+ chattiness = 5
+ show_histories = T
+ show_histograms = T
+ screen_histograms = T
+ /
+
+ &parameter_input
+ Me = 0
+ Mmu = 0
+ Ms = 0
+ Mc = 0
+ Mb = 0
+ MH = 125.0
+ wH = 0.0043
+/
+
+ &beam_input 
+ particle_name = 'e1'
+ polarization = 1.0 0.0
+ USER_spectrum_on = T
+ USER_spectrum_mode = 22
+ ISR_on = T
+ ISR_alpha = 0.0072993
+ ISR_m_in = 0.000511
+ EPA_on = F
+ EPA_alpha = 0.0072993
+ EPA_m_in = 0.000511
+ EPA_mX = 4.
+ EPA_Q_max = 4.
+ /
+
+ &beam_input 
+ particle_name = 'E1'
+ polarization = 0.0 1.0
+ USER_spectrum_on = T
+ USER_spectrum_mode = -22
+ ISR_on = T
+ ISR_alpha = 0.0072993
+ ISR_m_in = 0.000511
+ EPA_on = F
+ EPA_alpha = 0.0072993
+ EPA_m_in = 0.000511
+ EPA_mX = 4.
+ EPA_Q_max = 4.
+ /
