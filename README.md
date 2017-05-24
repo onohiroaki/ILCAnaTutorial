@@ -33,6 +33,10 @@ iLCSoft environment for v01-16-02 is initialized by
 
 ## Example folders
 
+### whizard-1.95 
+
+Example of event generation by whizard-1.95.
+
 ### CED
 
 Example to run CED event display

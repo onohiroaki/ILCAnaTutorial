@@ -28,9 +28,10 @@ How to run whizard1 jobs
 
   [Note]
 
-  The whizard job parameter written in "whizard.in" is prepared
-  just for an example not for physics study.
-
+  - The whizard job parameter written in "whizard.in" is prepared
+    just for an example not for physics study.
+  - whizard-1.95 requires gcc-4.8 and gfortran-4.8. The example here 
+    uses the one installed locally in KEKCC ILC group area.
 
 3. References
 
