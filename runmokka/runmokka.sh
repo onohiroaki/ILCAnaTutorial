@@ -4,8 +4,8 @@
 # 
 
 softdir=/sw/ilc/ilcsoft
-ilcsoftdir=${softdir}/cvmfs/x86_64_gcc44_sl6/v01-16-02-p1
-ildconfigdir=${softdir}/cvmfs/ILDConfig/v01-16-p03
+ilcsoftdir=${softdir}/cvmfs/x86_64_gcc44_sl6/v01-16-02
+ildconfigdir=${softdir}/cvmfs/ILDConfig/v01-14-01-p00
 
 . ${ilcsoftdir}/init_ilcsoft.sh
 
@@ -22,8 +22,8 @@ StandardConfig=${ildconfigdir}/StandardConfig/current
 ln -sf ${StandardConfig}/particle.tbl .
 
 
-datadir="/hsm/ilc/grid/storm/prod/ilc/mc-dbd/generated/250-TDR_ws/higgs"
-ln -sf ${datadir}/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I106479.001.stdhep .
+datadir="../whizard1.95/jobs/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001"
+ln -sf ${datadir}/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001.001.stdhep .
 
 # Start Mokka here
 

@@ -10,7 +10,15 @@
 ####################################
 
 
-/Mokka/init/lcioFilename E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I106479.001.20evt.slcio
+/Mokka/init/lcioFilename sv01-14-01-p00.mILD_o1_v05.pE250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001.z20evt.slcio
+
+#Set processID as event parameter
+/Mokka/init/lcioEventParameter int GenProcessID 990001
+/Mokka/init/lcioEventParameter string Process e2e2h
+/Mokka/init/lcioEventParameter float CrossSection_fb 17.152695
+/Mokka/init/lcioEventParameter float Energy 250.0
+/Mokka/init/lcioEventParameter float Pol_ep -1.0
+/Mokka/init/lcioEventParameter float Pol_em  1.0
 
 #/Mokka/init/registerPlugin TrackingOnlyPlugin 
 

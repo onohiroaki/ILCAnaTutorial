@@ -1,13 +1,17 @@
-/** Example of DST analysis program
+/** 
+ * @file MyDSTProcessor.cc
+ * @brief Example of DST analysis program
  * 
  * <h4>Overview</h4>
  * This processor reads LOI DST samples and calculate 
  *   - visible energy 
  *   - visible mass
- *   - jet angle
- *   - LCFIVertex tag
+ *   - jet angle ( not yet )
+ *   - LCFIVertex tag ( not yet )
  * and results is written as a root ntuple file.
- * 
+ *
+ * @author Akiya Miyamoto
+ * @date May 31, 2017 
  */
 
 
@@ -36,11 +40,11 @@ using namespace marlin ;
 MyDSTProcessor aMyDSTProcessor ;
 
 /**
+ * @fn
  * Constructor of MyDSTProcessor.
  * register input collections and parameters
  */
 MyDSTProcessor::MyDSTProcessor() : Processor("MyDSTProcessor") {
-
 
     // register steering parameters: name, description, class-variable, default value
     registerInputCollection( LCIO::MCPARTICLE,
@@ -55,36 +59,28 @@ MyDSTProcessor::MyDSTProcessor() : Processor("MyDSTProcessor") {
             _colNamePFOs ,
             std::string("PandoraPFOs")
     );
-/*
-    registerInputCollection( LCIO::VERTEX,
-            "VertexCollectionName" , 
-            "Name of the Vertex collection"  ,
-            _colNameVertex ,
-            std::string("Vertex")
-    );
-*/
 
     registerProcessorParameter("RootFileName",
                            "Root file name to output Ntuples, etc",
                            _rootFileName,
                            std::string("myanal.root"));
 
-
-
 }
 
-
-
+/**
+ * Initialize MyDSTProcessor.  Called once at the begining of job
+ */
 void MyDSTProcessor::init() { 
 
+    /* Output information can be controlled by streamlog_out method *************/
     streamlog_out(DEBUG) << "   init called  " << std::endl ;
 
-    // usually a good idea to
     printParameters() ;
 
     _nRun = 0 ;
     _nEvt = 0 ;
  
+    /* Initialize ROOT file *****************************************************/
     _rootf=new TFile(_rootFileName.c_str(), "RECREATE");
     _nt = new TNtuple("nt","Test ntuple","ev:np:mass");
 
@@ -93,6 +89,9 @@ void MyDSTProcessor::init() {
 }
 
 
+/**
+ * A method to process run header in LCIO file
+ */ 
 void MyDSTProcessor::processRunHeader( LCRunHeader* run) { 
     
     _nRun++ ;
@@ -125,10 +124,10 @@ void MyDSTProcessor::processRunHeader( LCRunHeader* run) {
 
 } 
 
-
-
+/**
+ * Process event data. Main part of your analysis
+ */
 void MyDSTProcessor::processEvent( LCEvent * evt ) { 
-
 
     // this gets called for every event 
     // usually the working horse ...
@@ -197,7 +196,6 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
        int nRP = colRP->getNumberOfElements() ;
        npart=nRP;
        CLHEP::HepLorentzVector psum;
-//       std::vector<double> cosv;
        for( int i=0 ; i < nRP ; i++ ) {
          ReconstructedParticle *rp = 
             dynamic_cast<ReconstructedParticle*> (colRP->getElementAt(i)) ;
@@ -254,7 +252,9 @@ void MyDSTProcessor::check( LCEvent * evt ) {
     // nothing to check here - could be used to fill checkplots in reconstruction processor
 }
 
-
+/**
+ * Called at the end of job
+ */
 void MyDSTProcessor::end(){ 
 
     std::cout << "MyDSTProcessor::end()  " << name() 
