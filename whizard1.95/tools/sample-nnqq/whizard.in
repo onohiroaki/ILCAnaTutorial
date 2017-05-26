@@ -1,5 +1,5 @@
  &process_input
- process_id = "nnh_o"
+ process_id = "zz_sl0nu_up zz_sl0nu_down"
  sqrts = 250
  luminosity = 1
  polarized_beams = T
@@ -21,10 +21,10 @@
 /
 
  &simulation_input
- n_events = 100
+ n_events = 1000
  write_events_raw = F
  keep_beam_remnants = T
- write_events_file = "E250-TDR_ws.Pnnh.Gwhizard-1_95.eL.pR.I990001"
+ write_events_file = "E250-TDR_ws.Pnnqq.Gwhizard-1_95.eL.pR.I990002"
  fragment = T
  max_file_count = 100
  fragmentation_method = 3

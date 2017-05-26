@@ -22,10 +22,11 @@ StandardConfig=${ildconfigdir}/StandardConfig/current
 ln -sf ${StandardConfig}/particle.tbl .
 
 
-datadir="../whizard1.95/jobs/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001"
-ln -sf ${datadir}/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001.001.stdhep .
+# datadir="../whizard1.95/jobs/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001"
+# ln -sf ${datadir}/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001.001.stdhep .
+datadir="../whizard1.95/jobs/E250-TDR_ws.Pnnh.Gwhizard-1_95.eL.pR.I990001"
+ln -s ${datadir}/E250-TDR_ws.Pnnh.Gwhizard-1_95.eL.pR.I990001.001.stdhep .
 
 # Start Mokka here
-
 ${MokkaDBConfig}/scripts/mokka-wrapper.sh  -M ILD_o1_v05 mokka.steer
 

@@ -28,9 +28,10 @@ aalowpt_file=${aalowpt_dir}/sv01-14-01-p03.mILD_o1_v05.E250-TDR_ws.Paa_lowpt.I10
 gear_xml_file=../runmokka/GearOutput.xml
 
 # Input and output file
-input_file=../runmokka/sv01-14-01-p00.mILD_o1_v05.pE250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I990001.z20evt.slcio
-output_rec_file=rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I990001.Pe2e2h.eR.pL.dREC.z20evt.slcio
-output_dst_file=rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I990001.Pe2e2h.eR.pL.dDST.z20evt.slcio
+input_file=../runmokka/sv01-14-01-p00.mILD_o1_v05.pE250-TDR_ws.Pnnh.Gwhizard-1_95.eL.pR.I990001.z20evt.slcio
+output_rec_file=rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I990001.Pnnh.eR.pL.dREC.z20evt.slcio
+output_dst_file=rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I990001.Pnnh.eR.pL.dDST.z20evt.slcio
+
 
 # Start Marlin here
 # Non-default values are modified by command line options.
