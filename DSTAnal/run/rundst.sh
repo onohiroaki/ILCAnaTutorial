@@ -10,14 +10,14 @@ export MARLIN_DLL=../lib/libmydstanal.so
 gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v01-16-p10_250/StandardConfig/current/GearOutput.xml
 
 maxrecords=10000
-# dstdir=/hsm/ilc/grid/storm/prod/ilc/mc-dbd/ild/dst-merged/250-TDR_ws/higgs_ffh/ILD_o1_v05/v01-16-p10_250
-# dstpref=rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I106483.Pnnh.eL.pR
-# infile=${dstdir}/${dstpref}-00001-DST.slcio
-# for i in `seq 2 4` ; do 
-#   infile="$infile ${dstdir}/${dstpref}-0000${i}-DST.slcio"
-# done
+#dstdir=/hsm/ilc/grid/storm/prod/ilc/mc-dbd/ild/dst-merged/250-TDR_ws/higgs_ffh/ILD_o1_v05/v01-16-p10_250
+#dstpref=rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I106483.Pnnh.eL.pR
+#infile=${dstdir}/${dstpref}-00001-DST.slcio
+#for i in `seq 2 4` ; do 
+#  infile="$infile ${dstdir}/${dstpref}-0000${i}-DST.slcio"
+#done
 
-infile=../../runmarlin/rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I990001.Pe2e2h.eR.pL.dDST.z20evt.slcio
+infile=../../runmarlin/rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I990001.Pnnh.eR.pL.dDST.z20evt.slcio
 
 
 Marlin --global.LCIOInputFiles="${infile}" \
