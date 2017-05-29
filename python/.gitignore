@@ -1,0 +1,3 @@
+# Ignore files to build and run
+*.root
+*.png
