@@ -16,6 +16,8 @@ echo "  Warning: existing file will be over-written."
 ( 
   mkdir -p ${evdispdir}
   cd ${evdispdir}
+#  export MARLIN_DLL=
+#  export LD_LIBRARY_PATH=
   /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-17-11/CED/v01-09-02/bin/glced &
 #
 )
