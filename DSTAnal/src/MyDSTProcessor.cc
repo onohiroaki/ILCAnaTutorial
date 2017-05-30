@@ -82,7 +82,7 @@ void MyDSTProcessor::init() {
  
     /* Initialize ROOT file *****************************************************/
     _rootf=new TFile(_rootFileName.c_str(), "RECREATE");
-    _nt = new TNtuple("nt","Test ntuple","ev:np:mass");
+    _nt = new TNtuple("nt","Test ntuple","ev:np:mass:nj:jm:csj:csj1:csj2");
 
     streamlog_out(MESSAGE) << _rootFileName << " is created" << std::endl;
 
@@ -177,10 +177,6 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
 //          MCParticle *p = dynamic_cast<MCParticle*> (colMP->getElementAt(i)); 
        }
     }
-    float visible_energy=0;
-    float visible_mass=0;
-    int   npart=0;
-
 
     // Scan ReconstructedParticle collection
     LCCollection* colRP = NULL;
@@ -192,6 +188,9 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
        streamlog_out(WARNING) << _colNamePFOs << "collection not available" << std::endl;
        colRP = NULL;
     }
+    float visible_energy=0;
+    float visible_mass=0;
+    int   npart=0;
     if( colRP != NULL ) {
        int nRP = colRP->getNumberOfElements() ;
        npart=nRP;
@@ -208,6 +207,41 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
        visible_mass=psum.m();
     }
 
+
+    // Get FatsJet clustring result.
+    LCCollection *colJet = NULL;
+    try {
+      colJet = evt->getCollection("JetOut");
+    }
+    catch ( lcio::DataNotAvailableException e )
+    {
+      streamlog_out(WARNING) << "JetOut collection not available." << std::endl;
+      colJet = NULL;   
+    }
+    float jetmas = 0.0;
+    float csjet = -10.0;
+    float csj1 = -10.0;
+    float csj2 = -10.0;
+    int   njet = 0;
+    if( colJet != NULL ) {
+      njet = colJet->getNumberOfElements();
+      if ( colJet->getNumberOfElements() > 1 ) {
+        ReconstructedParticle *jet1 = 
+	  dynamic_cast<ReconstructedParticle*> (colJet->getElementAt(0));
+        ReconstructedParticle *jet2 = 
+  	  dynamic_cast<ReconstructedParticle*> (colJet->getElementAt(1));
+        const double *j1_mom = jet1->getMomentum();
+        CLHEP::HepLorentzVector j1(j1_mom[0], j1_mom[1], j1_mom[2], jet1->getEnergy());
+        const double *j2_mom = jet2->getMomentum();
+        CLHEP::HepLorentzVector j2(j2_mom[0], j2_mom[1], j2_mom[2], jet2->getEnergy());
+        jetmas = (j1+j2).m();
+        csjet  = (j1+j2).cosTheta();
+        csj1   = j1.cosTheta();
+        csj2   = j2.cosTheta();
+        }
+    }    
+
+#if 0
     // Using LCRelation object
     LCCollection* colRel = NULL;
     try { 
@@ -233,10 +267,11 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
                                << std::endl;
        }
     }
+#endif
 
     // Fill data into Ntuple 
-  
-    _nt->Fill(visible_energy, float(npart), visible_mass);
+
+    _nt->Fill(visible_energy, float(npart), visible_mass, float(njet), jetmas, csjet, csj1, csj2);  
 
     //-- note: this will not be printed if compiled w/o MARLINDEBUG=1 !
 

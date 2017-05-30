@@ -7,7 +7,7 @@ export MARLIN_DLL=   # Clear MARLIN_DLL before source init_ilcsoft.sh
 . /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-16-02/init_ilcsoft.sh   # DBD version
 # . /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-17-11/init_ilcsoft.sh   # Latest compatible with Mokka
 
-export MARLIN_DLL=../lib/libmydstanal.so
+export MARLIN_DLL=../lib/libmydstanal.so:${MARLIN_DLL}
 
 gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v01-16-p10_250/StandardConfig/current/GearOutput.xml
 
@@ -26,4 +26,4 @@ Marlin --global.LCIOInputFiles="${infile}" \
        --global.GearXMLFile=${gearfile} \
        --global.MaxRecordNumber=${maxrecords} \
        --MyMyDSTProcessor.RootFileName=${anal_result} \
-       mydstanal.xml
+       mydstanal-nooutput.xml
