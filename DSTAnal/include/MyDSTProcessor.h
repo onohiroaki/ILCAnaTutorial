@@ -29,55 +29,53 @@ using namespace marlin ;
 
 class MyDSTProcessor : public Processor {
   
- public:
+    public:
   
-  virtual Processor*  newProcessor() { return new MyDSTProcessor ; }
-  
-  
-  MyDSTProcessor() ;
-  
-  /** Called at the begin of the job before anything is read.
-   * Use to initialize the processor, e.g. book histograms.
-   */
-  virtual void init() ;
-  
-  /** Called for every run.
-   */
-  virtual void processRunHeader( LCRunHeader* run ) ;
-  
-  /** Called for every event - the working horse.
-   */
-  virtual void processEvent( LCEvent * evt ) ; 
+        virtual Processor*  newProcessor() { return new MyDSTProcessor ; }
   
   
-  virtual void check( LCEvent * evt ) ; 
+        MyDSTProcessor() ;
   
+        /** Called at the begin of the job before anything is read.
+        * Use to initialize the processor, e.g. book histograms.
+        */
+        virtual void init() ;
+      
+        /** Called for every run.
+        */
+        virtual void processRunHeader( LCRunHeader* run ) ;
+      
+        /** Called for every event - the working horse.
+        */
+        virtual void processEvent( LCEvent * evt ) ; 
+      
+        virtual void check( LCEvent * evt ) ; 
+      
+      
+        /** Called after data processing for clean up.
+        */
+        virtual void end() ;
   
-  /** Called after data processing for clean up.
-   */
-  virtual void end() ;
-  
-  
- protected:
+    protected:
 
-  /** Input collection names.
-   */
-  std::string _colNamePFOs ;
-  std::string _colNameVertex ;
-  std::string _colNameMCParticle ;
-  
-  /** Output root file name.
-   */
-  std::string _rootFileName;
-
-  int _nRun ;  /**< run number */
-  int _nEvt ;  /**< event number */
-  
-  /** Ntuple to output analysis result
-   */
-  TNtuple *_nt;
-  TFile   *_rootf;  /**< root file object */
-} ;
+        /** Input collection names.
+         */
+        std::string _colNamePFOs ;
+        std::string _colNameVertex ;
+        std::string _colNameMCParticle ;
+        
+        /** Output root file name.
+         */
+        std::string _rootFileName;
+      
+        int _nRun ;  /**< run number */
+        int _nEvt ;  /**< event number */
+        
+        /** Ntuple to output analysis result
+         */
+        TNtuple *_nt;
+        TFile   *_rootf;  /**< root file object */
+};
 
 #endif
 
