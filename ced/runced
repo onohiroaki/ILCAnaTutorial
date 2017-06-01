@@ -31,10 +31,21 @@ viewer=MyCEDViewer
 infile=$1
 
 if [ "x$1" == "x" -o "$1" == "-h" -o "$1" == "--help" ] ; then 
-  echo "./runced [filename]"
-  echo "  Start CEDViewer.  Run glced before executing this command."
-  echo " (note)"
-  echo "Set CED_PORT environment variable prioir to run this command."
+  echo "./runced <input_file> [viewer]"
+  echo " "
+  echo "  (Function)"
+  echo "    Start CEDViewer.  Run glced before executing this command."
+  echo " "
+  echo "  (Note)"
+  echo "    Set CED_PORT environment variable prioir to run this command."
+  echo " "
+  echo "  (Arguments)"
+  echo "    input_file  : slcio file name. It should be REC file for the "
+  echo "                  default viewer (CEDViewer)"
+  echo "    viewer  : Optional argument. If omitted, 'MyCEDViewer' is used "
+  echo "              and input file should be REC file. To display DST file"
+  echo "              use 'MyDSTViewer'.  Other viewers defined in cedconfig/ced-viewer.xml.in"
+  echo "              includes 'MyGenericViewer' " 
   exit
 fi
 if [ ! -f $1 ] ; then 
