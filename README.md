@@ -1,5 +1,5 @@
 # Tutorial
-Collection of examples for ILCSoft tutorial
+Collection of examples for ILCSoft tutorial in June 2018
 
 ##  Get started.
 
@@ -8,10 +8,9 @@ Follpowing command downloads Tutorial package in your working directory,
    git clone https://github.com/akiyamiyamoto/Tutorial.git
 ```
 
-The tutorial in this package assumes iLCSoft-v01-16-02 running on Scientific Linux 6
-unless stated otherwise. iLCSoft-v01-16-02 is the version validated for DBD study 
-and later.  A new version of iLCSoft for ILD detector optimization is available 
-as a developper release.
+The tutorial in this package assumes iLCSoft-v02-00-01 running on Scientific Linux 6
+unless stated otherwise. iLCSoft-v02-00-01 is the version used for the ILD detector 
+optimization. 
 
 iLCSoft is maintained at [https://github.com/iLCSoft](https://github.com/iLCSoft).
 Please read iLCSoft documentation in 
@@ -25,21 +24,23 @@ the information at
 [CVMFS at DESY - Grid@DESY](http://grid.desy.de/cvmfs/)
 are usefull for the installation.
 
-iLCSoft environment for v01-16-02 is initialized by 
+iLCSoft environment for v02-00-01 is initialized by 
 
 ```
-. /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-16-02/init_ilcsoft.sh
+. /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh
 ```
 
 ## Example folders
 
-### whizard-1.95 
-
-Example of event generation by whizard-1.95.
-
 ### CED
 
 Example to run CED event display
+
+following sub-folders are under-development.
+
+### whizard-1.95 
+
+Example of event generation by whizard-1.95.
 
 ### DSTAnal
 
