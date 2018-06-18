@@ -1,0 +1,12 @@
+#
+#  Before source this file, do 
+#  $ export CED_PORT=<port_number>
+#
+#  ced2to will starts glced, then cedviewer.
+#
+#
+
+ced2go \
+-v CEDViewer \
+-d /cvmfs/ilc.desy.de/sw/ILDConfig/v02-00-01/StandardConfig/production/Gear/gear_ILD_l5_o1_v02.xml \
+/hsm/ilc/grid/storm/prod/ilc/mc-opt-3/ild/rec/500-TDR_ws/2f_Z_leptonic/ILD_l5_o1_v02/v02-00-01/00010255/000/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I250106.P2f_z_l.eL.pR.n001_001.d_rec_00010255_884.slcio
