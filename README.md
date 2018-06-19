@@ -1,11 +1,12 @@
 # Tutorial
-Collection of examples for ILCSoft tutorial in June 2018
+Collection of examples for ILCSoft tutorial in June 2018.
+Presentation materials of the turorial will be found at [here](https://kds.kek.jp/indico/event/27935/contribution/0/material/slides/0.pptx).
 
 ##  Get started.
 
 Follpowing command downloads Tutorial package in your working directory, 
 ``` 
-   git clone https://github.com/akiyamiyamoto/Tutorial.git
+   git clone https://github.com/akiyamiyamoto/Tutorial.git Tutorial
 ```
 
 The tutorial in this package assumes iLCSoft-v02-00-01 running on Scientific Linux 6
@@ -30,31 +31,42 @@ iLCSoft environment for v02-00-01 is initialized by
 . /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh
 ```
 
+or equivalently by 
+```
+. lesson1/init_001
+```
+
 ## Example folders
 
-### CED
+### lesson1
+
+scripts to initialize environment and run anajob and dumpevent
+
+### cedgo
 
 Example to run CED event display
 
-following sub-folders are under-development.
+### python
 
-### whizard-1.95 
+A simple python analysis of DST-merged files
 
-Example of event generation by whizard-1.95.
+### runddsim
+
+Run ddsim 
+
+### runmarlin
+
+Run ILD standard marlin reconstruction with background overlay 
 
 ### DSTAnal
 
 Example to analize DST files, including a C++ source code.
 
-### runmokka
+
+### Obsolete directory
+
+#### runmokka
 
 Simulate 250GeV e2e2H event by Mokka
 
-### runmarlin
 
-Analize simulated file created by `runmokka` example.
-
-### python
-
-An example to analize e2E2h using python 
- 

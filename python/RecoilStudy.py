@@ -132,50 +132,76 @@ def makePlots(plotdata, pngfile="plots.png"):
   
     '''
     
-    rfs = []
-    nts = []
+    data = []
+    # rfs = []
+    # nts = []
+    # data = copy.deepcopy(plotdata)
     # Get TNtuple objects from ROOT files
-    for pldata in plotdata:
+    for pldata in sorted(plotdata):
         rf = pldata["rootfile"]
         opts = pldata["option"]
-        rfs.append(ROOT.TFile(rf))
-        nts.append(rfs[-1].Get("nt"))
-        nts[-1].SetLineColor(opts["color"])
-    
+        rec = {}
+        rec["rf"] = ROOT.TFile(rf)
+        rec["nt"] = rec["rf"].Get("nt")
+        rec["nt"].SetLineColor(opts["color"])
+        rec["opts"] = opts
+        data.append(rec)
+
     c1 = ROOT.TCanvas("c1", "Example", 800, 800)
     c1.Divide(1, 2)
 
     # Draw uppper figure
     c1.cd(1)
-    nts[0].Draw("mas","mas>80.0 && mas<120.0")
+    selection = "mas>80.0 && mas < 120.0"
+    nent = data[0]["nt"].GetEntries()
+    nsel = data[0]["nt"].Draw("mas",selection)
     ROOT.gPad.SetGridx(1)
     ROOT.gPad.SetGridy(1)
-    if len(nts) > 1:
-        for nt in nts[1:]:
-            nt.Draw("mas","","same")
+    data[0]["eff"] = float(nsel)/float(nent)*100.0
+    if len(data) > 1:
+        for da in data[1:]:
+            nent = da["nt"].GetEntries()
+            nsel = da["nt"].Draw("mas",selection,"same")
+            da["eff"] = float(nsel)/float(nent)*100.0
+    for da in data:
+        print "%8.4f" % da["eff"]
+ 
+
     xpos = 0.7
-    ypos = 0.8
-    tobj = []
-    for pldata in plotdata:
-       text = pldata["option"]["legend"]
+    ypos = 0.75
+    tobj1 = []
+    for da in data:
+       text = "%s : Eff=%8.2f %%" % (da["opts"]["legend"], da["eff"])
        ypos -= 0.05
-       tobj.append(ROOT.TLatex(xpos, ypos, text))
-       tobj[-1].SetTextColor(pldata["option"]["color"])
-       tobj[-1].SetNDC(True)
-       tobj[-1].Draw()
+       tobj1.append(ROOT.TLatex(xpos, ypos, text))
+       tobj1[-1].SetTextColor(da["opts"]["color"])
+       tobj1[-1].SetNDC(True)
+       tobj1[-1].Draw()
     
     # Draw second figure
     c1.cd(2)
-    nts[0].Draw("mm","mm>100.0 && mm < 500.0")
+    selection = "mm>100.0 && mm < 500.0"
+    nent = data[0]["nt"].GetEntries()
+    nsel = data[0]["nt"].Draw("mm",selection)
     ROOT.gPad.SetGridx(1)
     ROOT.gPad.SetGridy(1)
-    if len(nts) > 1:
-        for nt in nts[1:]:
-            nt.Draw("mm","","same")
+    data[0]["eff"] = float(nsel)/float(nent)*100.0
+    if len(data) > 1:
+        for da in data[1:]:
+            nent = da["nt"].GetEntries()
+            nsel = da["nt"].Draw("mm",selection,"same")
+            da["eff"] = float(nsel)/float(nent)*100.0
 
-    for to in tobj:
-        to.Draw()
-
+    xpos = 0.7
+    ypos = 0.75
+    tobj2 = []
+    for da in data:
+       text = "%s : Eff=%8.2f %%" % (da["opts"]["legend"], da["eff"])
+       ypos -= 0.05
+       tobj2.append(ROOT.TLatex(xpos, ypos, text))
+       tobj2[-1].SetTextColor(da["opts"]["color"])
+       tobj2[-1].SetNDC(True)
+       tobj2[-1].Draw()
     # Write results to a file.
     c1.Print(pngfile)  
   
@@ -191,8 +217,8 @@ if __name__ == '__main__':
                     "/hsm/ilc/grid/storm/prod/ilc/mc-dbd/ild/dst-merged/500-TDR_ws/higgs_ffh/ILD_o1_v05/v01-16-p05_500/rv01-16-p05_500.sv01-14-01-p00.mILD_o1_v05.E500-TDR_ws.I106519.Pe2e2h.eL.pR.d_dstm_8118_1.slcio"]
 
     do_anal = True
-    # maxread = 8996
-    maxread = 100
+    maxread = 8996
+    # maxread = 100
   
     options = {}
     options = {"l5":{"color":2,"legend":"l5_o1"}, "s5":{"color":3, "legend":"s5_o1"}, "dbd":{"color":4, "legend":"dbd"}}
