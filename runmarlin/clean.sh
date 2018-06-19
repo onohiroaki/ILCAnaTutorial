@@ -1,4 +1,7 @@
 
+rm -vf *.slcio
+rm -vf *.log
+
 rm -vf bbudsc_3evt_DST.slcio
 rm -vf bbudsc_3evt_REC.slcio
 rm -vf bbudsc_3evt_stdreco.slcio
