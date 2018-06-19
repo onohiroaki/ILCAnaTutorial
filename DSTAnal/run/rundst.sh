@@ -2,22 +2,23 @@
 
 export MARLIN_DLL=   # Clear MARLIN_DLL before source init_ilcsoft.sh 
 
-. /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-16-02/init_ilcsoft.sh   # DBD version
-# . /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/v01-17-11/init_ilcsoft.sh   # Latest compatible with Mokka
+. /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh   # Latest ILCSoft
 
 export MARLIN_DLL=../lib/libmydstanal.so:${MARLIN_DLL}
 
-gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v01-16-p10_250/StandardConfig/current/GearOutput.xml
+gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v02-00-01/StandardConfig/production/Gear/gear_ILD_l5_v02.xml
 
-maxrecords=10000
-#dstdir=/hsm/ilc/grid/storm/prod/ilc/mc-dbd/ild/dst-merged/250-TDR_ws/higgs_ffh/ILD_o1_v05/v01-16-p10_250
-#dstpref=rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I106483.Pnnh.eL.pR
-#infile=${dstdir}/${dstpref}-00001-DST.slcio
-#for i in `seq 2 4` ; do 
-#  infile="$infile ${dstdir}/${dstpref}-0000${i}-DST.slcio"
-#done
+maxrecords=100
+dstdir=/hsm/ilc/grid/storm/prod/ilc/mc-opt-3/ild/dst-merged/500-TDR_ws/higgs_ffh/ILD_l5_o1_v02/v02-00-01
+dstfile=rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I106524.Pnnh.eR.pL.n001.d_dstm_10297_0.slcio
 
-infile=../../runmarlin/rv01-16-p10_250.sv01-14-01-p00.mILD_o1_v05.E250-TDR_ws.I990001.Pnnh.eR.pL.dDST.z20evt.slcio
+infile=${dstdir}/${dstfile}
+checktape=`ghils ${infile} | cut -d" " -f1`
+if [ "x${checktape}" != "xB" ] ; then 
+  echo "Stage-in input file "
+  echo ${infile}
+fi
+
 
 
 Marlin --global.LCIOInputFiles="${infile}" \

@@ -58,11 +58,12 @@
   <parameter name="algorithm" type="StringVec">kt_algorithm 0.7  </parameter>
   <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
   <!-- parameter name="clusteringMode" type="StringVec">Inclusive  </parameter --> 
-  <parameter name="clusteringMode" type="StringVec">InclusiveIterativeNJets 2 10.0 </parameter>
+  <!-- parameter name="clusteringMode" type="StringVec">InclusiveIterativeNJets 2 40.0 </parameter -->
+  <parameter name="clusteringMode" type="StringVec">ExclusiveNJets 2 </parameter>
   <!--The identified jets-->
-  <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle">JetOut </parameter>
+  <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle">JetOut</parameter>
   <!--a list of all reconstructed particles we are searching for jets in.-->
-  <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+  <parameter name="recParticleIn" type="string" lcioInType="ReconstructedParticle">PandoraPFOs</parameter>
   <!--The recombination scheme used when merging 2 particles. Usually there is no need to use anything else than 4-Vector addition: E_scheme-->
   <parameter name="recombinationScheme" type="string">E_scheme </parameter>
 </processor>
@@ -90,7 +91,7 @@
  <processor name="MyMyDSTProcessor" type="MyDSTProcessor">
  <!-- description not set by author -->
   <!--Name of the MCParticle collection-->
-  <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticlesSkimmed </parameter>
+  <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticle</parameter>
   <!--Name of the ReconsructedParticle collection-->
   <parameter name="ReconstructedParticleCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
   <!--Root file name to output Ntuples, etc-->
