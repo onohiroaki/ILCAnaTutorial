@@ -3,16 +3,16 @@
  * @brief Example of DST analysis program
  * 
  * <h4>Overview</h4>
- * This processor reads LOI DST samples and calculate 
+ * This processor reads ILD optimization samples and calculate 
  *   - visible energy 
  *   - visible mass
- *   - jet angle ( not yet )
+ *   - jet angle 
  *   - LCFIVertex tag ( not yet )
  * and results is written as a root ntuple file.
  *
  * @author Akiya Miyamoto
- * @date May 31, 2017 
- */
+ * @date June 22, 2018 
+*/
 
 
 #include "MyDSTProcessor.h"
@@ -23,14 +23,14 @@
 #include <EVENT/LCRelation.h>
 
 // ----- include for verbosity dependend logging ---------
-#include "marlin/VerbosityLevels.h"
+#include <marlin/VerbosityLevels.h>
 
 #include <UTIL/PIDHandler.h>
 #include <UTIL/LCTOOLS.h>
 #include <UTIL/LCTime.h>
 
-#include "TFile.h"
-#include "TNtuple.h"
+#include <TFile.h>
+#include <TNtuple.h>
 #include "CLHEP/Vector/LorentzVector.h"
 
 using namespace lcio ;
@@ -46,12 +46,14 @@ MyDSTProcessor aMyDSTProcessor ;
  */
 MyDSTProcessor::MyDSTProcessor() : Processor("MyDSTProcessor") {
 
+    _description = "A sample DST analysis processor " ;
+
     // register steering parameters: name, description, class-variable, default value
     registerInputCollection( LCIO::MCPARTICLE,
         "MCParticleCollectionName" , 
         "Name of the MCParticle collection"  ,
         _colNameMCParticle ,
-        std::string("MCParticlesSkimmed")
+        std::string("MCParticle")
     );
     registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
         "ReconstructedParticleCollectionName",
@@ -96,32 +98,29 @@ void MyDSTProcessor::processRunHeader( LCRunHeader* run) {
     
     _nRun++ ;
     
-    streamlog_out(MESSAGE) << "### Run Header ### " << std::endl;
-    streamlog_out(MESSAGE) << "  Run Number: " << run->getRunNumber() << std::endl;
-    streamlog_out(MESSAGE) << "  Detector name: " << run->getDetectorName() << std::endl;
-    streamlog_out(MESSAGE) << "  Description: " << run->getDescription() << std::endl;
-
-    const LCParameters& params = run->getParameters();
-    StringVec intKeys, floatKeys, stringKeys ;
-    int nIntKeys = params.getIntKeys(intKeys).size();
-    int nFloatKeys = params.getFloatKeys(floatKeys).size();
-//    int nStringKeys = params.getStringKeys(stringKeys).size();
+    if ( _nRun == 1 ) {
+        streamlog_out(MESSAGE) << "### Run Header ### " << std::endl;
+        streamlog_out(MESSAGE) << "  Run Number: " << run->getRunNumber() << std::endl;
+        streamlog_out(MESSAGE) << "  Detector name: " << run->getDetectorName() << std::endl;
+        streamlog_out(MESSAGE) << "  Description: " << run->getDescription() << std::endl;
     
-    for ( int i=0; i < nIntKeys ; i++ ) {
-        streamlog_out(MESSAGE) << " IntKey: " << intKeys[i] << std::endl;
+        const LCParameters& params = run->getParameters();
+        StringVec intKeys, floatKeys, stringKeys ;
+        int nIntKeys = params.getIntKeys(intKeys).size();
+        int nFloatKeys = params.getFloatKeys(floatKeys).size();
+        int nStringKeys = params.getStringKeys(stringKeys).size();
+        
+        for ( int i=0; i < nIntKeys ; i++ ) {
+            streamlog_out(MESSAGE) << " IntKey: " << intKeys[i] << std::endl;
+        }
+        for ( int i=0; i < nFloatKeys ; i++ ) {
+            streamlog_out(MESSAGE) << " FloatKey: " << floatKeys[i] << std::endl;
+        }
+        for ( int i=0; i < nStringKeys ; i++ ) {
+            streamlog_out(MESSAGE) << " StringKey: " << stringKeys[i] << std::endl;
+        }
+    
     }
-    for ( int i=0; i < nFloatKeys ; i++ ) {
-        streamlog_out(MESSAGE) << " FloatKey: " << floatKeys[i] << std::endl;
-    }
-//    for ( int i=0; i < nStringKeys ; i++ ) {
-//        streamlog_out(MESSAGE) << " StringKey: " << stringKeys[i] << std::endl;
-//    }
-    StringVec stringVals;
-    params.getStringVals( "MOKKA_MacroFile", stringVals ) ;
-    for ( unsigned int i=0; i < stringVals.size() ; i++ ) {
-        streamlog_out(MESSAGE) << stringVals[i] << std::endl;
-    }
-
 } 
 
 /**
@@ -139,7 +138,7 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
         streamlog_out(DEBUG) << "   processing event: " << evt->getEventNumber()
                              << "   in run:  " << evt->getRunNumber()
                              << std::endl ;
-        LCTOOLS::dumpEvent(evt);
+//        LCTOOLS::dumpEvent(evt);
     }
 
     // print Some Event parameters
@@ -153,8 +152,8 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
   
         const LCParameters& params = evt->getParameters();
         FloatVec xsectVec;
-        params.getFloatVals( "CrossSection_fb", xsectVec ) ;
-        streamlog_out(MESSAGE) << "  CrossSection_fb: " << xsectVec[0] << std::endl;
+        params.getFloatVals( "crossSection", xsectVec ) ;
+        streamlog_out(MESSAGE) << "  crossSection: " << xsectVec[0] << " fb" << std::endl;
         FloatVec energyVec;
         params.getFloatVals( "Energy", energyVec ) ;
         streamlog_out(MESSAGE) << "  Energy: " << energyVec[0] << std::endl;
@@ -239,34 +238,6 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
             csj2   = j2.cosTheta();
         }
     }    
-
-#if 0
-    // Using LCRelation object
-    LCCollection* colRel = NULL;
-    try { 
-        colRel = evt->getCollection("RecoMCTruthLink");
-    }
-    catch ( lcio::DataNotAvailableException e )
-    {
-        streamlog_out(WARNING) << "RecoMCTruthLink collection not available" << std::endl;
-        colRel = NULL;
-    }
-    if ( mydebug && colRel != NULL ) {
-        for ( int i=0; i < colRel->getNumberOfElements(); i++ ) {
-            LCRelation* lcrel = dynamic_cast<LCRelation*> (colRel->getElementAt(i));
-            ReconstructedParticle *rp = 
-	        dynamic_cast<ReconstructedParticle*> (lcrel->getFrom());           
-            MCParticle *mcp = 
-	        dynamic_cast<MCParticle*> (lcrel->getTo());           
-            float weight = lcrel->getWeight();
-            streamlog_out(MESSAGE) << " Rec. energy=" << rp->getEnergy() 
-                               << " weight=" << weight 
-                               << " MCP energy=" << mcp->getEnergy()
-                               << " ID=" << mcp->getPDG()
-                               << std::endl;
-        }
-    }
-#endif
 
     // Fill data into Ntuple 
 

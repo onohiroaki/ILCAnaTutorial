@@ -3,7 +3,7 @@
 Quick steps to build the mymarlin example:
 ------------------------------------------
 
-    . /path/to/ilcsoft/installation/v01-XX/init_ilcsoft.sh
+    . /path/to/ilcsoft/installation/v02-XX/init_ilcsoft.sh
     mkdir build
     cd build
     cmake -C $ILCSOFT/ILCSoft.cmake ..

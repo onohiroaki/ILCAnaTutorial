@@ -33,7 +33,6 @@ class MyDSTProcessor : public Processor {
   
         virtual Processor*  newProcessor() { return new MyDSTProcessor ; }
   
-  
         MyDSTProcessor() ;
   
         /** Called at the begin of the job before anything is read.
@@ -51,7 +50,6 @@ class MyDSTProcessor : public Processor {
       
         virtual void check( LCEvent * evt ) ; 
       
-      
         /** Called after data processing for clean up.
         */
         virtual void end() ;
@@ -60,21 +58,21 @@ class MyDSTProcessor : public Processor {
 
         /** Input collection names.
          */
-        std::string _colNamePFOs ;
-        std::string _colNameVertex ;
-        std::string _colNameMCParticle ;
+	std::string _colNamePFOs {} ;
+        std::string _colNameVertex {} ;
+        std::string _colNameMCParticle {} ;
         
         /** Output root file name.
          */
-        std::string _rootFileName;
+        std::string _rootFileName {} ;
       
-        int _nRun ;  /**< run number */
-        int _nEvt ;  /**< event number */
+        int _nRun{};  /**< run number */
+        int _nEvt{};  /**< event number */
         
         /** Ntuple to output analysis result
          */
-        TNtuple *_nt;
-        TFile   *_rootf;  /**< root file object */
+        TNtuple *_nt {};
+        TFile   *_rootf {} ;  /**< root file object */
 };
 
 #endif
