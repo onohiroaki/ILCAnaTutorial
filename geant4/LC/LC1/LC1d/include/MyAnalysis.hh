@@ -10,6 +10,7 @@ class MyAnalysis {
   public:
     TFile *fFile;
     TNtuple *fNt;
+    TNtuple *fNtEvt;
 
     static MyAnalysis *fMySelf;
     static G4String fRootFile;

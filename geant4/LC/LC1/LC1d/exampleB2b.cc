@@ -41,6 +41,7 @@
 #include "FTFP_BERT.hh"
 #include "G4StepLimiterPhysics.hh"
 
+#include "TROOT.h"
 #include "Randomize.hh"
 
 #include "G4VisExecutive.hh"
@@ -51,6 +52,7 @@
 
 int main(int argc,char** argv)
 {
+  gROOT->SetBatch(true);
   // Detect interactive mode (if no arguments) and define UI session
   //
   G4UIExecutive* ui = 0;

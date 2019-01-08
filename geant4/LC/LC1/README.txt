@@ -32,6 +32,10 @@ LC1c
 ================================================
 Accumulate SD hits in ROOT ntuple
 
+gROOT->SetBatch(true) in main to avoid conflict of 
+openGL and root graphic.
+
+ROOT output file name can be modified by using DetectorMessenger.
 
 ================================================
 LC1d

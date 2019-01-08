@@ -37,6 +37,7 @@
 #include "G4ios.hh"
 #include "MyAnalysis.hh"
 #include "B2TrackerHit.hh"
+#include "B2PrimaryGeneratorAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -67,8 +68,8 @@ void B2EventAction::EndOfEventAction(const G4Event* event)
   // periodic printing
 
   G4int eventID = event->GetEventID();
-  // if ( eventID < 100 || eventID % 100 == 0) {
-  if ( eventID < 100 ) {
+  /*
+  if ( eventID < 100 || eventID % 100 == 0) {
     G4cout << ">>> Event: " << eventID  << G4endl;
     if ( trajectoryContainer ) {
       G4cout << "    " << n_trajectories
@@ -78,22 +79,23 @@ void B2EventAction::EndOfEventAction(const G4Event* event)
     G4cout << "    "  
            << hc->GetSize() << " hits stored in this event" << G4endl;
   }
+  */
 
   MyAnalysis *myanal = MyAnalysis::Instance();
   // myanal->Print();
 
   G4VHitsCollection* hc = event->GetHCofThisEvent()->GetHC(0);
-  G4cout << hc->GetSize() << " Number of hits in this event" << G4endl;
+  G4cout << " Event: " << eventID  ;
+  G4cout << " Number of hits " << hc->GetSize() << G4endl;
   auto hitsCollection 
     = static_cast<B2TrackerHitsCollection*>(event->GetHCofThisEvent()->GetHC(0));
 
-  // for_each ( B2TrackerHit *ahit in hc ) {
   for ( unsigned int ih=0; ih < hitsCollection->GetSize() ; ih ++ ) {
     B2TrackerHit *ahit = (B2TrackerHit*)hc->GetHit(ih);
-  //  G4cerr << " Tid=" << ahit->GetTrackID() ;
-  //  G4cerr << " fStatus=" << ahit->GetStatus(); 
-  //  G4cerr << " Edep=" << ahit->GetEdep();
-  //  G4cerr << G4endl;
+    //  G4cerr << " Tid=" << ahit->GetTrackID() ;
+    //  G4cerr << " fStatus=" << ahit->GetStatus(); 
+    //  G4cerr << " Edep=" << ahit->GetEdep();
+    //  G4cerr << G4endl;
     G4double xh = ahit->GetPostPos().x();
     G4double yh = ahit->GetPostPos().y();
     G4double zh = ahit->GetPostPos().z();
@@ -104,13 +106,16 @@ void B2EventAction::EndOfEventAction(const G4Event* event)
     G4double eh = ahit->GetPostEnergy();
 
     myanal->fNt->Fill((float)eventID, (float)ahit->GetTrackID(), 
-                      (float)ahit->GetPDG(), (float)ahit->GetPostStatus(), 
-                      (float)ahit->GetCopyNo(), 
-                      (float)ahit->GetEdep(), 
-                      (float)xh, (float)yh, (float)zh, (float)th, 
-                      (float)pxh, (float)pyh, (float)pzh, (float)eh);
+                    (float)ahit->GetPDG(), (float)ahit->GetPostStatus(), 
+                    (float)ahit->GetCopyNo(), 
+                    (float)ahit->GetEdep(), 
+                    (float)xh, (float)yh, (float)zh, (float)th, 
+                    (float)pxh, (float)pyh, (float)pzh, (float)eh);
   }
 
+  myanal->fNtEvt->Fill((float)eventID,
+                  (float)B2PrimaryGeneratorAction::fCosTheta,
+                  (float)B2PrimaryGeneratorAction::fPhi);
 }  
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

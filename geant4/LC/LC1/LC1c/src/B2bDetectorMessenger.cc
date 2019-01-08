@@ -34,6 +34,7 @@
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
+#include "G4UIcmdWithABool.hh"
 #include "MyAnalysis.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -101,6 +102,7 @@ void B2bDetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
   if( command == fRootFileCmd ) {
     MyAnalysis::Instance()->SetRootFile(newValue.data());
   }
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

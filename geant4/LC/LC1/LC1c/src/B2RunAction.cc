@@ -35,7 +35,6 @@
 
 #include "MyAnalysis.hh"
 
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 B2RunAction::B2RunAction()

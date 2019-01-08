@@ -39,13 +39,22 @@
 #include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
 
+#include "G4MuonPlus.hh"
+#include "G4MuonMinus.hh"
 #include "Randomize.hh"
 
+#include <cmath>
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+G4double B2PrimaryGeneratorAction::fCosTheta=-100.0;
+G4double B2PrimaryGeneratorAction::fPhi=-100.0;
 
 B2PrimaryGeneratorAction::B2PrimaryGeneratorAction()
  : G4VUserPrimaryGeneratorAction()
 {
+  /*
   G4int nofParticles = 1;
   fParticleGun = new G4ParticleGun(nofParticles);
 
@@ -58,13 +67,15 @@ B2PrimaryGeneratorAction::B2PrimaryGeneratorAction()
   // fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.5,0.5,0.2));
   fParticleGun->SetParticleEnergy(3.0*GeV);
+  */
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 B2PrimaryGeneratorAction::~B2PrimaryGeneratorAction()
 {
-  delete fParticleGun;
+  // delete fParticleGun;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -89,11 +100,60 @@ void B2PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     G4cerr << "The gun will be place in the center." << G4endl;
   }
   */
-
+  /*
   // fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., -worldZHalfLength));
   fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., 0.));
 
   fParticleGun->GeneratePrimaryVertex(anEvent);
+  */
+
+  G4double ene = 250.0 * GeV;
+  G4double mass = 0.105 * GeV;
+  G4double mom = std::sqrt( ene*ene - mass*mass );
+
+  G4double pi = 3.141592653589793 ;
+
+  G4PrimaryVertex *primaryVertex = new G4PrimaryVertex(0.0, 0.0, 0.0, 0.0);
+
+  G4double phi = 2.0*pi*G4RandFlat::shoot();
+  
+  G4bool retry=true;
+  G4double cosx = 0.0 ;
+  while(retry) { 
+    cosx = 1.0 - 2.0*G4RandFlat::shoot() ;
+    G4double val = 0.5*( 1 + cosx*cosx );
+    if ( G4RandFlat::shoot() < val ) {
+      retry = false; 
+    }
+  }
+  fCosTheta=cosx;
+  fPhi = phi;
+
+  for(int i=0; i<2; i++ ) {
+
+    G4ParticleDefinition *particleDef = 0;
+    if ( i == 1 ) particleDef = G4MuonMinus::MuonMinus();
+    else          particleDef = G4MuonPlus::MuonPlus();
+
+    cosx *= -1.0;
+    phi += pi;
+
+    G4double sinx = std::sqrt( (1.0 - cosx ) * ( 1.0 + cosx ) );
+    G4double momx = mom * std::cos(phi) * sinx;
+    G4double momy = mom * std::sin(phi) * sinx;
+    G4double momz = mom * cosx;
+
+    G4PrimaryParticle *p = new G4PrimaryParticle( particleDef, 
+        momx, momy, momz);
+    p->SetMass(particleDef->GetPDGMass());
+    p->SetCharge(particleDef->GetPDGCharge());
+    
+    primaryVertex->SetPrimary(p);
+    
+  }  
+  anEvent->AddPrimaryVertex(primaryVertex);
+
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -30,6 +30,7 @@ void MyAnalysis::Initialize()
 
    fFile = new TFile(fRootFile.data(),"recreate");
    fNt = new TNtuple("nt","tracker hit","ev:tid:pdg:st:cno:edep:xh:yh:zh:th:pxh:pyh:pzh:eh");
+   fNtEvt = new TNtuple("ntevt","tracker hit","ev:cs:phi");
 
 }
 
