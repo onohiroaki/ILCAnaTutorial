@@ -1,0 +1,234 @@
+usage: Running DD4hep Simulations: [-h] [--steeringFile STEERINGFILE]
+                                   [--compactFile COMPACTFILE]
+                                   [--runType {batch,vis,run,shell}]
+                                   [--inputFiles INPUTFILES [INPUTFILES ...]]
+                                   [--outputFile OUTPUTFILE]
+                                   [-v {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}]
+                                   [--numberOfEvents NUMBEROFEVENTS]
+                                   [--skipNEvents SKIPNEVENTS]
+                                   [--physicsList PHYSICSLIST]
+                                   [--crossingAngleBoost CROSSINGANGLEBOOST]
+                                   [--vertexSigma X Y Z T]
+                                   [--vertexOffset X Y Z T]
+                                   [--macroFile MACROFILE] [--enableGun]
+                                   [--enableG4GPS] [--enableG4Gun]
+                                   [--dumpParameter]
+                                   [--enableDetailedShowerMode]
+                                   [--dumpSteeringFile]
+                                   [--meta.eventNumberOffset META.EVENTNUMBEROFFSET]
+                                   [--meta.eventParameters META.EVENTPARAMETERS [META.EVENTPARAMETERS ...]]
+                                   [--meta.runNumberOffset META.RUNNUMBEROFFSET]
+                                   [--filter.mapDetFilter FILTER.MAPDETFILTER]
+                                   [--filter.tracker FILTER.TRACKER]
+                                   [--filter.filters FILTER.FILTERS]
+                                   [--filter.calo FILTER.CALO]
+                                   [--field.delta_intersection FIELD.DELTA_INTERSECTION]
+                                   [--field.min_chord_step FIELD.MIN_CHORD_STEP]
+                                   [--field.equation FIELD.EQUATION]
+                                   [--field.stepper FIELD.STEPPER]
+                                   [--field.largest_step FIELD.LARGEST_STEP]
+                                   [--field.delta_chord FIELD.DELTA_CHORD]
+                                   [--field.eps_min FIELD.EPS_MIN]
+                                   [--field.eps_max FIELD.EPS_MAX]
+                                   [--field.delta_one_step FIELD.DELTA_ONE_STEP]
+                                   [--guineapig._parameters GUINEAPIG._PARAMETERS]
+                                   [--guineapig.particlesPerEvent GUINEAPIG.PARTICLESPEREVENT]
+                                   [--gun.thetaMin GUN.THETAMIN]
+                                   [--gun.phiMin GUN.PHIMIN]
+                                   [--gun.direction GUN.DIRECTION]
+                                   [--gun.particle GUN.PARTICLE]
+                                   [--gun.multiplicity GUN.MULTIPLICITY]
+                                   [--gun.energy GUN.ENERGY]
+                                   [--gun.thetaMax GUN.THETAMAX]
+                                   [--gun.isotrop GUN.ISOTROP]
+                                   [--gun.position GUN.POSITION]
+                                   [--gun.distribution {uniform,costheta,eta,pseudorapidity,ffbar}]
+                                   [--gun.phiMax GUN.PHIMAX]
+                                   [--random.type RANDOM.TYPE]
+                                   [--random.enableEventSeed]
+                                   [--random.replace_gRandom RANDOM.REPLACE_GRANDOM]
+                                   [--random.luxury RANDOM.LUXURY]
+                                   [--random.file RANDOM.FILE]
+                                   [--random.seed RANDOM.SEED]
+                                   [--part.minDistToParentVertex PART.MINDISTTOPARENTVERTEX]
+                                   [--part.enableDetailedHitsAndParticleInfo]
+                                   [--part.keepAllParticles PART.KEEPALLPARTICLES]
+                                   [--part.minimalKineticEnergy PART.MINIMALKINETICENERGY]
+                                   [--part.saveProcesses PART.SAVEPROCESSES]
+                                   [--part.printStartTracking PART.PRINTSTARTTRACKING]
+                                   [--part.printEndTracking PART.PRINTENDTRACKING]
+                                   [--action.tracker ACTION.TRACKER]
+                                   [--action.mapActions ACTION.MAPACTIONS]
+                                   [--action.calo ACTION.CALO]
+                                   [--output.random {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}]
+                                   [--output.kernel {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}]
+                                   [--output.part {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}]
+                                   [--output.inputStage {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}]
+                                   [--physics.rangecut PHYSICS.RANGECUT]
+                                   [--physics.pdgfile PHYSICS.PDGFILE]
+                                   [--physics.decays PHYSICS.DECAYS]
+                                   [--physics.list PHYSICS.LIST]
+                                   [--lcio._parameters LCIO._PARAMETERS]
+                                   [--lcio.mcParticleCollectionName LCIO.MCPARTICLECOLLECTIONNAME]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --steeringFile STEERINGFILE, -S STEERINGFILE
+                        Steering file to change default behaviour
+  --compactFile COMPACTFILE
+                        The compact XML file
+  --runType {batch,vis,run,shell}
+                        The type of action to do in this invocation
+                        batch: just simulate some events, needs numberOfEvents, and input file or gun
+                        vis: enable visualisation, run the macroFile if it is set
+                        run: run the macroFile and exit
+                        shell: enable interactive session
+  --inputFiles INPUTFILES [INPUTFILES ...], -I INPUTFILES [INPUTFILES ...]
+                        InputFiles for simulation .stdhep, .slcio, .HEPEvt, .hepevt, .hepmc, .pairs files are supported
+  --outputFile OUTPUTFILE, -O OUTPUTFILE
+                        Outputfile from the simulation,only lcio output is supported
+  -v {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}, --printLevel {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}
+                        Verbosity use integers from 1(most) to 7(least) verbose
+                        or strings: VERBOSE, DEBUG, INFO, WARNING, ERROR, FATAL, ALWAYS
+  --numberOfEvents NUMBEROFEVENTS, -N NUMBEROFEVENTS
+                        number of events to simulate, used in batch mode
+  --skipNEvents SKIPNEVENTS
+                        Skip first N events when reading a file
+  --physicsList PHYSICSLIST
+                        Physics list to use in simulation
+  --crossingAngleBoost CROSSINGANGLEBOOST
+                        Lorentz boost for the crossing angle, in radian!
+  --vertexSigma X Y Z T
+                        FourVector of the Sigma for the Smearing of the Vertex position: x y z t
+  --vertexOffset X Y Z T
+                        FourVector of translation for the Smearing of the Vertex position: x y z t
+  --macroFile MACROFILE, -M MACROFILE
+                        Macro file to execute for runType 'run' or 'vis'
+  --enableGun, -G       enable the DDG4 particle gun
+  --enableG4GPS         enable the Geant4 GeneralParticleSource. Needs a macroFile (runType run) or use it with the shell (runType shell)
+  --enableG4Gun         enable the Geant4 particle gun. Needs a macroFile (runType run) or use it with the shell (runType shell)
+  --dumpParameter, --dump
+                        Print all configuration Parameters and exit
+  --enableDetailedShowerMode
+                        use detailed shower mode
+  --dumpSteeringFile    print an example steering file to stdout
+  --meta.eventNumberOffset META.EVENTNUMBEROFFSET
+                        The event number offset to write in slcio output file. E.g setting it to 42 will start counting events from 42 instead of 0
+  --meta.eventParameters META.EVENTPARAMETERS [META.EVENTPARAMETERS ...]
+                        Event parameters to write in every event. Use C/F/I ids to specify parameter type. E.g parameterName/F=0.42 to set a float parameter
+  --meta.runNumberOffset META.RUNNUMBEROFFSET
+                        The run number offset to write in slcio output file. E.g setting it to 42 will start counting runs from 42 instead of 0
+  --filter.mapDetFilter FILTER.MAPDETFILTER
+                         a map between patterns and filter objects, using patterns to attach filters to sensitive detector 
+  --filter.tracker FILTER.TRACKER
+                         default filter for tracking sensitive detectors; this is applied if no other filter is used for a tracker
+  --filter.filters FILTER.FILTERS
+                         list of filter objects: map between name and parameter dictionary 
+  --filter.calo FILTER.CALO
+                         default filter for calorimeter sensitive detectors; this is applied if no other filter is used for a calorimeter 
+  --field.delta_intersection FIELD.DELTA_INTERSECTION
+  --field.min_chord_step FIELD.MIN_CHORD_STEP
+  --field.equation FIELD.EQUATION
+  --field.stepper FIELD.STEPPER
+  --field.largest_step FIELD.LARGEST_STEP
+  --field.delta_chord FIELD.DELTA_CHORD
+  --field.eps_min FIELD.EPS_MIN
+  --field.eps_max FIELD.EPS_MAX
+  --field.delta_one_step FIELD.DELTA_ONE_STEP
+  --guineapig._parameters GUINEAPIG._PARAMETERS
+  --guineapig.particlesPerEvent GUINEAPIG.PARTICLESPEREVENT
+                        Set the number of pair particles to simulate per event.
+                            Only used if inputFile ends with ".pairs"
+                            If "-1" all particles will be simulated in a single event
+                            
+  --gun.thetaMin GUN.THETAMIN
+  --gun.phiMin GUN.PHIMIN
+                        Minimal azimuthal angle for random distribution
+  --gun.direction GUN.DIRECTION
+                         direction of the particle gun, 3 vector 
+  --gun.particle GUN.PARTICLE
+  --gun.multiplicity GUN.MULTIPLICITY
+  --gun.energy GUN.ENERGY
+  --gun.thetaMax GUN.THETAMAX
+  --gun.isotrop GUN.ISOTROP
+                         isotropic distribution for the particle gun
+                        
+                            use the options phiMin, phiMax, thetaMin, and thetaMax to limit the range of randomly distributed directions
+                            if one of these options is not None the random distribution will be set to True and cannot be turned off!
+                            
+  --gun.position GUN.POSITION
+                         position of the particle gun, 3 vector 
+  --gun.distribution {uniform,cos(theta),eta,pseudorapidity,ffbar}
+                        choose the distribution of the random direction for theta
+                        
+                            Options for random distributions:
+                        
+                            'uniform' is the default distribution, flat in theta
+                            'cos(theta)' is flat in cos(theta)
+                            'eta', or 'pseudorapidity' is flat in pseudorapity
+                            'ffbar' is distributed according to 1+cos^2(theta)
+                        
+                            Setting a distribution will set isotrop = True
+                            
+  --gun.phiMax GUN.PHIMAX
+  --random.type RANDOM.TYPE
+  --random.enableEventSeed
+                        If True, calculate random seed for each event basedon eventID and runID
+                        Allows reproducibility even whenSkippingEvents
+  --random.replace_gRandom RANDOM.REPLACE_GRANDOM
+  --random.luxury RANDOM.LUXURY
+  --random.file RANDOM.FILE
+  --random.seed RANDOM.SEED
+  --part.minDistToParentVertex PART.MINDISTTOPARENTVERTEX
+                        Minimal distance between particle vertex and endpoint of parent after
+                            which the vertexIsNotEndpointOfParent flag is set
+                            
+  --part.enableDetailedHitsAndParticleInfo
+                        Enable lots of printout on simulated hits and MC-truth information
+  --part.keepAllParticles PART.KEEPALLPARTICLES
+                         Keep all created particles 
+  --part.minimalKineticEnergy PART.MINIMALKINETICENERGY
+                        MinimalKineticEnergy to store particles created in the tracking region
+  --part.saveProcesses PART.SAVEPROCESSES
+                        List of processes to save, on command line give as whitespace separated string in quotation marks
+  --part.printStartTracking PART.PRINTSTARTTRACKING
+                         Printout at Start of Tracking 
+  --part.printEndTracking PART.PRINTENDTRACKING
+                         Printout at End of Tracking 
+  --action.tracker ACTION.TRACKER
+                         set the default tracker action 
+  --action.mapActions ACTION.MAPACTIONS
+                         create a map of patterns and actions to be applied to sensitive detectors
+                                example: SIM.action.mapActions['tpc'] = "TPCSDAction" 
+  --action.calo ACTION.CALO
+                         set the default calorimeter action 
+  --output.random {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}
+                        Output level for Random Number Generator setup
+  --output.kernel {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}
+                        Output level for Geant4 kernel
+  --output.part {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}
+                        Output level for ParticleHandler
+  --output.inputStage {1,2,3,4,5,6,7,VERBOSE,DEBUG,INFO,WARNING,ERROR,FATAL,ALWAYS}
+                        Output level for input sources
+  --physics.rangecut PHYSICS.RANGECUT
+                         The global geant4 rangecut for secondary production
+                        
+                            Default is 0.7 mm as is the case in geant4 10
+                        
+                            To disable this plugin and be absolutely sure to use the Geant4 default range cut use "None"
+                        
+                            Set printlevel to DEBUG to see a printout of all range cuts,
+                            but this only works if range cut is not "None"
+                            
+  --physics.pdgfile PHYSICS.PDGFILE
+                         location of particle.tbl file containing extra particles and their lifetime information
+                        
+                            For example in $DD4HEP/examples/DDG4/examples/particle.tbl
+                            
+  --physics.decays PHYSICS.DECAYS
+  --physics.list PHYSICS.LIST
+  --lcio._parameters LCIO._PARAMETERS
+  --lcio.mcParticleCollectionName LCIO.MCPARTICLECOLLECTIONNAME
+                        Set the name of the collection containing the MCParticle input.
+                            Default is "MCParticle".
+                            

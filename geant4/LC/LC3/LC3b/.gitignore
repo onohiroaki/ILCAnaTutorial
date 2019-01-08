@@ -1,0 +1,6 @@
+bin/
+build/
+run/
+*.slcio
+*.log
+G4History.macro
