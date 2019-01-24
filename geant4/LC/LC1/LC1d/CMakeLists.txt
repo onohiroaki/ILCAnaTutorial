@@ -8,6 +8,14 @@ set( CMAKE_CXX_FLAGS "-g -Wall"  CACHE STRING "cxx options")
 message("CMAKE_INSTALL_PREFIX is ${CMAKE_INSTALL_PREFIX}")
 message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
 
+set( CMAKE_CXX_COMPILER $ENV{CXX} ) # Set environ parameter
+set( CMAKE_C_COMPILER $ENV{CC} )
+
+message("CMAKE_CXX_COMPILER is ${CMAKE_CXX_COMPILER}")
+message("CMAKE_C_COMPILER is ${CMAKE_C_COMPILER}")
+
+# execute_process(COMMAND root-config --incdir OUTPUT_VARIABLE ROOT_INCLUDE)
+
 #----------------------------------------------------------------------------
 # Setup the project
 #
@@ -28,15 +36,18 @@ else()
   find_package(Geant4 REQUIRED)
 endif()
 
+find_package(ROOT REQUIRED)
+
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
 #
 include(${Geant4_USE_FILE})
-include_directories(${PROJECT_SOURCE_DIR}/include )
+include_directories(${PROJECT_SOURCE_DIR}/include $ENV{ROOTSYS}/include )
 
-find_package(ROOT REQUIRED)
-include(${ROOT_USE_FILE})
+
+message(" ROOT_USE_FILE is ${ROOT_USE_FILE} ")
+# include(${ROOT_USE_FILE})
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
