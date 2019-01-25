@@ -1,4 +1,9 @@
-
+================================================
+setup-cvmfs.sh
+================================================
+Setup environment parameters to build and run program 
+using files on cvmfs. gcc4.10.03, python2.7, cmake, root-6.08.00
+nd gcc4.9
 
 ================================================
 LC1a
