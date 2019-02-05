@@ -5,10 +5,15 @@ LC2a:
 
 =========================================
 LC2b:
-  Create a generator file by python
+  Calculate AFB(mu+mu-) by SM
 
 =========================================
 LC2c: 
+  Generate mu+mu- events by SM and saved as a LCIO file.
+
+=========================================
+LC2d: 
+  Simulate mu+mu- event created in LC2c
+
+
   Read the generator file (slcio) and create a simple plot by python
-
-
