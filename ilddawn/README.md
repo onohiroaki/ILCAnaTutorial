@@ -182,4 +182,11 @@ editting eps file using a graphic editor, like Illustrator.
 ILD geometry created this way is available at [ILD_l5_v02](pictures/ILD_l5_v02-x200.png)
 
 
+## Note
+
+### dawn and dawncut
+In this example, [dawn-3.91a](http://geant4.kek.jp/~tanaka/src/dawn_3_91a.tgz) and 
+[dawncut-1.54a](http://geant4.kek.jp/~tanaka/src/dawncut_1_54a.taz) 
+available at [http://geant4.kek.jp/~tanaka/](http://geant4.kek.jp/~tanaka/)
+are used.
 
