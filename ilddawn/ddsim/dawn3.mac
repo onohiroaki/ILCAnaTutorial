@@ -1,0 +1,38 @@
+# /run/initialize
+# 
+
+
+# /vis/scene/create
+# /vis/scene/add/volume
+# /vis/sceneHandler/create DAWNFILE
+# /vis/viewer/create
+# /vis/drawVolume world
+
+# /vis/viewer/set/lineSegmentsPerCircle 24
+
+# /vis/viewer/flush
+
+/vis/scene/create
+/vis/scene/add/volume
+/vis/sceneHandler/create DAWNFILE
+/vis/viewer/create
+/vis/drawVolume world
+/vis/geometry/set/visibility FTD_envelope 0 False
+/vis/geometry/set/visibility SET_envelope 0 False
+/vis/geometry/set/visibility SIT_envelope 0 False
+/vis/geometry/set/visibility VXD_envelope 0 False
+/vis/geometry/set/visibility TPC_envelope 0 False
+/vis/geometry/set/visibility EcalPlug_envelope 0 False
+/vis/geometry/set/visibility HcalBarrel_envelope 0 False
+/vis/geometry/set/visibility EcalBarrel_envelope 0 False
+/vis/geometry/set/visibility EcalEndcap_envelope 0 False
+/vis/geometry/set/visibility HcalRing_envelope 0 False
+/vis/geometry/set/visibility HcalEndcap_envelope 0 False
+/vis/geometry/set/visibility YokeBarrel_envelope 0 False
+/vis/geometry/set/visibility YokeEndcap_envelope 0 False
+/vis/geometry/set/visibility Lcal_envelope 0 False
+/vis/geometry/set/visibility LHCal_envelope 0 False
+/vis/geometry/set/visibility Coil_envelope 0 False
+/vis/geometry/set/visibility BeamCal_envelope 0 False
+/vis/viewer/flush
+
