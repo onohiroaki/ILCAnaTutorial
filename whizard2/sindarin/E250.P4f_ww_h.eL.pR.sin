@@ -1,0 +1,91 @@
+# $Id: LEP_higgs.sin 2293 2010-04-11 23:57:50Z jr_reuter $
+# Simple complete physics example: Higgs search at LEP
+########################################################################
+#
+# Copyright (C) 1999-2015 by 
+#     Wolfgang Kilian <kilian@physik.uni-siegen.de>
+#     Thorsten Ohl <ohl@physik.uni-wuerzburg.de>
+#     Juergen Reuter <juergen.reuter@desy.de>
+#     with contributions from
+#     Christian Speckner <cnspeckn@googlemail.com>
+#
+# WHIZARD is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by 
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# WHIZARD is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+########################################################################
+
+model = SM_CKM
+
+# Alias definition
+# include ( "%%ALIASES%%" )
+
+# ww_h0cuxx ww_h0uubd ww_h0uusd ww_h0ccbs ww_h0ccds 
+# #
+#       WW: more than 2 flavours
+#
+# ww_h0cuxx       e1,E1 cq,down_type_q,uq,down_type_q                       omega w:c,c
+# ww_h0uubd       e1,E1 uq,bq,uq,dq                                         omega w:c,c
+# ww_h0uusd       e1,E1 uq,sq,uq,dq                                         omega w:c,c
+# ww_h0ccbs       e1,E1 cq,bq,cq,sq                                         omega w:c,c
+# ww_h0ccds       e1,E1 cq,dq,cq,sq                                         omega w:c,c
+#
+   alias uq = u:U
+   alias dq = d:D
+   alias cq = c:C
+   alias sq = s:S
+   alias bq = b:B
+#
+   alias up_type_q = u:c:U:C
+   alias down_type_q = d:s:b:D:S:B
+
+#   mu = 0 GeV
+#   md = 0 GeV
+  ms = 0 GeV
+  mc = 0 GeV
+  mb = 0 GeV
+
+  alphas = 0
+
+#
+#      e+e- --> mu+mu- and tau+tau-
+#
+polarized e1,E1,e2,E2,e3,E3,n1,N1,n2,N2,n3,N3,u,U,d,D,s,S,c,C,b,B,t,T, "W+", "W-", Z
+
+process P4f_ww_h = e1, E1 => ( cq,down_type_q,uq,down_type_q ) + (uq,bq,uq,dq) + (uq,sq,uq,dq) + ( cq,bq,cq,sq ) + ( cq,dq,cq,sq ) { process_num_id = %%PROCESS_ID%% }
+
+compile
+
+#
+logical ?is_higgs_process = false
+
+include ("%%PYTHIA6_PARAMETERS%%" )
+
+sqrts = 250 GeV
+
+beams = e1, E1 => beam_events => isr
+$beam_events_file = "%%BEAM_EVENTS_FILE%%"
+beams_pol_density = @(-1), @(+1)
+
+integrate ( P4f_ww_h ) { ?polarized_events = true }
+
+printf "#Total cross section : P4f_ww_h %13e fb" ( integral( P4f_ww_h ) )
+
+# sample_format = lcio
+sample_format = lcio
+$sample = "%%SAMPLE_NAME%%"
+?write_raw = false
+
+n_events = %%N_EVENTS%%
+simulate ( P4f_ww_h ) { ?polarized_events = true } 
+

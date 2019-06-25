@@ -1,0 +1,75 @@
+# $Id: LEP_higgs.sin 2293 2010-04-11 23:57:50Z jr_reuter $
+# Simple complete physics example: Higgs search at LEP
+########################################################################
+#
+# Copyright (C) 1999-2015 by 
+#     Wolfgang Kilian <kilian@physik.uni-siegen.de>
+#     Thorsten Ohl <ohl@physik.uni-wuerzburg.de>
+#     Juergen Reuter <juergen.reuter@desy.de>
+#     with contributions from
+#     Christian Speckner <cnspeckn@googlemail.com>
+#
+# WHIZARD is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by 
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# WHIZARD is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+########################################################################
+
+model = SM_CKM
+
+# Alias definition
+include ( "%%ALIASES%%" )
+
+alias uncoloured = e1:e2:e3:n1:n2:n3:E1:E2:E3:N1:N2:N3:A
+polarized n1,N1,n2,N2,n3,N3,e1,E1,e2,E2,e3, E3, "W+", "W-", Z
+
+#
+#      e+e- --> mu nu tau nu
+#
+process P4f_munutaunu = e1, E1 => (e2, N2, n3, E3 ) + ( e3, N3, n2, E2) + ( e3, N3, n3, E3 ) + ( e3, E3, e3, E3 )  { process_num_id = 150106 }
+
+compile
+
+#
+logical ?is_higgs_process = false
+include ("%%PYTHIA6_PARAMETERS%%" )
+
+?ps_taudec_active = true
+?ps_tauola_photos = true
+?ps_tauola_transverse =  false
+?ps_tauola_dec_rad_cor = true
+ps_tauola_dec_mode1=3
+ps_tauola_dec_mode2=3
+
+real default_M_cut = 4 GeV
+cuts = all M > default_M_cut [uncoloured,uncoloured]
+
+sqrts = 250 GeV
+
+beams = e1, E1 => beam_events => isr
+$beam_events_file = "%%BEAM_EVENTS_FILE%%"
+beams_pol_density = @(-1), @(+1)
+
+integrate ( P4f_munutaunu )
+
+sample_format = stdhep_ev4
+# sample_format = hepmc
+$sample = "E250.P4f_munutaunu.Gwhizard2-beam.eL.pR"
+?write_raw = false
+
+n_events = %%N_EVENTS%%
+simulate ( P4f_munutaunu ) { ?polarized_events = true }
+
+# compile_analysis 
+
+

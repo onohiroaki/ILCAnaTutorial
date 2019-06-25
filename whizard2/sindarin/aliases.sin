@@ -1,0 +1,52 @@
+########################################################################
+#
+# particle aliases for LC generation
+#
+########################################################################
+
+#=====================================================
+   alias q = u:d:s:c:b
+   alias r = u:d:s:c
+##   alias p = u:d:s
+   alias x = u:c
+   alias y = d:s:b
+##   alias v = n1:n2:n3
+   alias w = e2:e3
+   alias Q = U:D:S:C:B
+   alias R = U:D:S:C
+##   alias P = U:D:S
+   alias X = U:C
+   alias Y = D:S:B
+   alias V = N1:N2:N3
+   alias W = E2:E3
+#
+   alias uq = u:U
+   alias dq = d:D
+   alias cq = c:C
+   alias sq = s:S
+   alias bq = b:B
+#
+##   alias electron = e1:E1
+##   alias mu = e2:E2
+##   alias tau = e3:E3
+#
+##   alias nu_e = n1:N1
+##   alias nu_mu = n2:N2
+##   alias nu_tau = n3:N3
+#
+   alias up_type_q = u:c:U:C
+   alias down_type_q = d:s:b:D:S:B
+   alias not_dq = s:b:S:B
+   alias not_sq = d:b:D:B
+#
+   alias lepton = e1:e2:e3:E1:E2:E3
+   alias not_electron = e2:e3:E2:E3
+#
+   alias neutrino = n1:n2:n3:N1:N2:N3
+   alias not_nu_tau = n1:n2:N1:N2
+   alias not_nu_mu = n1:n3:N1:N3
+   alias not_nu_e = n2:n3:N2:N3
+#
+   alias fermion = u:d:c:s:b:e1:e2:e3:n1:n2:n3:U:D:C:S:B:E1:E2:E3:N1:N2:N3
+
+
