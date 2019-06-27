@@ -17,3 +17,7 @@ LC2d:
 
 
   Read the generator file (slcio) and create a simple plot by python
+
+=========================================
+LC2e:
+  Include ISR and beamstruhlung spectrum in event generation
