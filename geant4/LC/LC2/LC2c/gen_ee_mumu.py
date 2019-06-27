@@ -20,9 +20,9 @@ def generate_costheta_phi(ecm):
 
     cosx = -10
     while ( cosx == -10 ) :
-        x = random.random()
+        x = 1.0 - 2.0*random.random()
         fx = ( 1 + a1ova0*x + x*x ) / sigmax
-        if fx < random.random():
+        if random.random() < fx :
             cosx = x
 
     phi = ( 2*random.random() - 1 ) * 2*math.pi
