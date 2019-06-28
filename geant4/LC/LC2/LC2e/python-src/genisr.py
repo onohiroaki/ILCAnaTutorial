@@ -1,5 +1,9 @@
 #!/bin/env python 
 
+# Basic example to call fortran subroutine, using cpython interface.
+# See further comments below.
+
+
 from ctypes import *
 import math
 
@@ -19,10 +23,14 @@ factor = 1.0
 
 
 isrlib = cdll.LoadLibrary("../lib/libpyISRBS.so")
+
+# Declare argument type of fortran subroutine.
+
 isrlib.isr_function_.argtypes = [ POINTER(c_double), POINTER(c_double), POINTER(c_double), POINTER(c_int32) ]
-# isrlib.isr_function_.argtypes = [ c_void_p, c_void_p ]
 isrlib.isr_remnant_.argtypes = [ POINTER(c_double), POINTER(c_double), POINTER(c_double), 
                                  POINTER(c_double), POINTER(c_double), POINTER(c_double) ]
+
+# Prepare from python variables C/Fortran type variables.
 
 afactor = c_double(factor)
 ax = c_double(x)
@@ -34,9 +42,13 @@ pmom_shape = c_double*4  # Declare array size
 pmom = pmom_shape()   # Create array
 pmom_pointer = cast(pmom, POINTER(c_double))  # Get pointer to array
 
+# Pass variables by reference.
+# In the case of array, it's pointer is given.
+
 isrlib.isr_function_(byref(afactor), byref(ax), byref(aeps), byref(aLLA_order))
 isrlib.isr_remnant_(byref(ax), byref(ax0), byref(ax), byref(ax0), byref(asqrts), pmom_pointer )
 
+# After a call, generated spectrum weight(factor), 
 
 print "Factor=" + str(afactor.value)
 print "x=" + str(ax.value)

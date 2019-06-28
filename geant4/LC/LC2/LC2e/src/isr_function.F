@@ -4,13 +4,19 @@ c(function)
 c  generate ISR spectrum a la Jadaha.
 c  This code is extracted from Whizard/whizard-src/beams.f90
 c(arguments)
-c  factor [R*8,inout]
-c  x      [R*8,inout]
-c  eps    [R*8,in]
+c  factor [R*8,inout] : Weight of the generated spectrum. 
+c         weight of the generated point is multiplied 
+c  x      [R*8,inout] : 
+c    input : random number between 0 to 1 for spectrum generation
+c    output : generated energy normalized to 0 to 1
+c  eps    [R*8,in] : Epsilon value for ISR calculation, 
+c    eps = =xALF0/xPI*2*log(ROOTS/AME)
 c  LLA_order [I*4, in]
+c    Order of ISR calculation
 c
 c(Author)
 c  Akiya Miyamoto, 2-June-2011, original version
+c                 28-June-2019, Comment added
 c
 c ========================================================
 c      implicit none

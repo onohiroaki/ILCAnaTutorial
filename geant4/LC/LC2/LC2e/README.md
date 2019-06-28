@@ -24,3 +24,8 @@ python isrplot.py
 
 A root file of generated ISR spectrum is created.
 
+
+## Reference
+
+- Library for a generation of ISR spectrum was taken from Whizard1.95 library 
+used in ILC DBD study.

@@ -4,13 +4,18 @@ c
 c(Function)
 c  generate Pt of ISR photons
 c(input Arguments)
-c  x : random value, which is returned by strfun_ISR
+c  x : random value, which is returned by strfun_ISR ( isr_function )
 c  x0 : beam fractional energy before ISR ( x0 after beam strahlung )
 c  ran1 : random number to generate pt
 c  ran2 : random number to generate photon azimuthal angle
 c  sqrts : nominal CM energy in GeV
 c(output arguments)
 c  pmom(0:3) : Photon momentum.  (E,px,py,pz)
+c
+c  A.Miyamoto, taken from whizard1.95/a6f/include for DBD study and 
+c              python interface
+c =====================================================
+c
       implicit real*8 (a-h,o-z)
       real*8 pmom(0:3)
       parameter (pi=3.14159265358979D0)
