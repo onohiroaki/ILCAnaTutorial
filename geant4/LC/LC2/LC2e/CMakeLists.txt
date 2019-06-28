@@ -24,19 +24,6 @@ project(pyISRBS Fortran)
 
 message("PROJECT_SOURCE_DIR is ${PROJECT_SOURCE_DIR}")
 
-# set ( CMAKE_INSTALL_PREFIX "..")
-#----------------------------------------------------------------------------
-# Find Geant4 package, activating all available UI and Vis drivers by default
-# You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
-# to build a batch mode only executable
-#
-# option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
-# if(WITH_GEANT4_UIVIS)
-#   find_package(Geant4 REQUIRED ui_all vis_all)
-# else()
-#   find_package(Geant4 REQUIRED)
-# endif()
-
 find_package(ROOT REQUIRED)
 
 #----------------------------------------------------------------------------
@@ -47,23 +34,13 @@ find_package(ROOT REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/include $ENV{ROOTSYS}/include )
 
 
-# message(" ROOT_USE_FILE is ${ROOT_USE_FILE} ")
-# include(${ROOT_USE_FILE})
-
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.F)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/fortran/*.F)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.inc)
-file(GLOB scripts ${PROJECT_SOURCE_DIR}/python-src/*.py )
-
-#----------------------------------------------------------------------------
-# Add the executable, and link it to the Geant4 libraries
-#
-# add_executable(exampleB2b exampleB2b.cc ${sources} ${headers})
-# target_link_libraries(exampleB2b ${Geant4_LIBRARIES})
-# target_link_libraries(exampleB2b ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
+file(GLOB scripts ${PROJECT_SOURCE_DIR}/src/python/*.py )
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -80,6 +57,10 @@ set(pyISRBS_SCRIPTS ${scripts})
 #
 install(TARGETS pyISRBS DESTINATION lib)
 
-install(FILES ${pyISRBS_SCRIPTS} DESTINATION demo)
+install(
+   FILES ${pyISRBS_SCRIPTS} 
+   PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+   DESTINATION bin 
+)
 
 
