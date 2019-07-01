@@ -1,0 +1,76 @@
+# $Id: LEP_higgs.sin 2293 2010-04-11 23:57:50Z jr_reuter $
+# Simple complete physics example: Higgs search at LEP
+########################################################################
+#
+# Copyright (C) 1999-2015 by 
+#     Wolfgang Kilian <kilian@physik.uni-siegen.de>
+#     Thorsten Ohl <ohl@physik.uni-wuerzburg.de>
+#     Juergen Reuter <juergen.reuter@desy.de>
+#     with contributions from
+#     Christian Speckner <cnspeckn@googlemail.com>
+#
+# WHIZARD is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by 
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# WHIZARD is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+########################################################################
+
+model = SM_CKM
+
+# Alias definition
+# include ( "%%ALIASES%%" )
+
+#
+#      e+e- --> tau+tau-
+#
+alias uncoloured = e1:e2:e3:n1:n2:n3:E1:E2:E3:N1:N2:N3:A
+polarized e3, E3, "W+", "W-", Z
+
+
+process P2f_bB = e1, E1 => ( b, B ) { process_num_id = 10000 }
+
+compile
+
+#
+#
+logical ?is_higgs_process = false
+include ( "pythia6-parameters.sin" )
+
+mH = 2000.
+wH = 10.
+alphas = 1.e-6
+isr_alpha = 0.0072993
+isr_mass = 0.000511
+epa_alpha = 0.0072993
+
+real default_M_cut = 4 GeV
+cuts = all M > default_M_cut [uncoloured,uncoloured]
+
+sqrts = 500 GeV
+
+beams = e1, E1 
+# beams = e1, E1 => beam_events => isr
+# $beam_events_file = "%%BEAM_EVENTS_FILE%%"
+# beams_pol_density = @(-1), @(+1)
+# ?isr_recoil = true
+# ?keep_remnants = true
+# ?keep_beams = true
+
+?write_raw = false
+
+
+integrate ( P2f_bB ) { ?polarized_events = true }
+
+# printf "#Total cross section : P2f_tautau %13e fb" ( integral( P2f_tautau ) )
+
+
