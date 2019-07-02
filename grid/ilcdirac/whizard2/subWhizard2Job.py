@@ -83,8 +83,8 @@ def subWhizard2():
     job.setInputSandbox(["pythia6-parameters.sin", "P2f_qqbar.sin"])
     job.setOutputSandbox(['*.log', '*.sh', '*.py', '*.xml'])
     job.setOutputData( [outputFile] )
-    job.setJobGroup( "myWhiz2" )
-    job.setName( "MyWhizard2" )
+    job.setJobGroup( "mywhiz2" )
+    job.setName( "mywhizard2" )
     
     whiz = Whizard2()
     whiz.setVersion("2.7.0")
