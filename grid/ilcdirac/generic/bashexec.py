@@ -19,6 +19,9 @@ j.setJobGroup("Tutorial")
 j.setName("GenericExec")
 j.setInputSandbox(["mypre.sh", "myanal.sh"])
 j.setInputData(indata)
+j._setSoftwareTags(["marlin.ILCSoft-02-00-02_gcc49"])
+# j._setSoftwareTags(["lcio.ILCSoft-02-00-01_gcc49"])
+j.setILDConfig("v02-00-02")
 
 ################################################
 appre = GenericApplication()
