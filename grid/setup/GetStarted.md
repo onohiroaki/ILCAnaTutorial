@@ -30,7 +30,9 @@ ILCDirac を使うには、
 毎年、KEKCAアカウントの更新が必要。更新は、
 KEK GRID CA Web Enrollment Service [https://gridca.kek.jp/enroll.php](https://gridca.kek.jp/enroll.php)に
 ログインして、revoke を行う。KEKCC アカウントのユーザー名とパスワードでログインする。
-Revoke したのち、以下に述べる、userkey, usercert の更新などの処理も必要。
+2. Revoke User Certificate より User certificate revocation のページに行き、 
+revoke の理由としては、 unspecified を指定する。
+Revoke したのちは、以下に述べる、userkey, usercert の更新などの処理も必要。
 
 
 
@@ -64,33 +66,33 @@ save a certificate file : usercert.pem
 
 $ chmod 400 userkey.pem
 $ openssl pkcs12 -export -in usercert.pem -inkey userkey.pem -out mycert.p12
+Enter pass phrase for userkey.pem: ●●●●●●
+Enter Export Password: ▲▲▲▲▲▲▲▲
+Verifying - Enter Export Password:▲▲▲▲▲▲▲▲
+( ▲▲▲▲▲▲▲▲ は証明書を開封するためのパスワード。Web browserで使うとき使用する)
+
 ```
 
 
-## Web browser に certificate の登録 (Windows の場合)
+## Web browser に certificate の登録 (Windows10 の場合)
 
-### Microsoft/Edge, IE11 
-```
-IE11 設定　インターネットオプション⇒ コンテンツ⇒証明書　で
-　インポートで、mycert.p12 をインポートする
-　パスワード入力：●●●●●●
-　　　　「秘密キーの保護を強力にする」「このキーをエクスポート可能にする」はチェックしない
-       「すべての拡張プロパティーを含める」はチェック
-　　　　証明書ストアー：証明書をすべて次のストアに配置する、で「個人」を選ぶ
-```
-### Google Chrome
-```
-設定⇒詳細設定⇒証明書の管理
-Microsoft/Edge と同じファイルを使用しているので、改めて登録する必要はない
-```
+### Windows への登録
+コントロールパネル⇒ネットワークとインターネット⇒インターネットオプション⇒コンテンツ　で証明書タブを開く
+インポートで、mycert.p12 をインポートする。入力画面が現れたら、 
+
+-　パスワード入力: ▲▲▲▲▲▲▲▲  
+-　「秘密キーの保護を強力にする」「このキーをエクスポート可能にする」はチェックしない  
+-　「すべての拡張プロパティーを含める」はチェック  
+-　証明書ストアー：証明書をすべて次のストアに配置する、で「個人」を選ぶ  
+
+コントロールパネルは、スタートボタンを左クリック⇒ Windowsシステムツール⇒コントロールパネル
+で開くことができる。  
+以上で、 Microsoft/Edge と Google Chrome で証明書を使えるようになる。
 
 ### Firefox
-```
-オプション⇒プライバシーとセキュリティー（左側のメニューより）
-          ⇒証明書　証明書を表示
-あなたの証明書に mycert.p12 をインポート
+オプション⇒プライバシーとセキュリティー（左側のメニューより）⇒証明書　証明書を表示  
+「あなたの証明書」に mycert.p12 をインポート
 
-```
 
 ## ILC VO への登録
 [https://grid-voms.desy.de:8443/voms/ilc](https://grid-voms.desy.de:8443/voms/ilc)より ILC VO 登録を申請
