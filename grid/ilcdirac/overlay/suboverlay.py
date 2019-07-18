@@ -84,6 +84,7 @@ def subOverlay():
 
     isLocal = _clip.isLocal    
     nbevts = 50 if _clip.numberOfEvents == 0 else _clip.numberOfEvents
+    nbevts = 0 # To analize all input events
     outputFilePrefix="overlay_example" if _clip.outputFilePrefix == "" else _clip.outputFilePrefix
     outputDir = _clip.outputDir
     inputFile = _clip.inputFile
@@ -160,6 +161,7 @@ def subOverlay():
     marlin.setOutputRecFile(recfile)
     extraCLIArguments =  " --constant.DetectorModel=%s " % detector_model
     extraCLIArguments += " --constant.RunOverlay=true --constant.CMSEnergy=%s " % str(energy)
+    extraCLIArguments += " --global.Verbosity=MESSAGE "
     marlin.setExtraCLIArguments( extraCLIArguments )
 
     job.append(marlin)
