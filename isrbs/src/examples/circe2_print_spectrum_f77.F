@@ -21,7 +21,7 @@ c initialize seed
 
 c generate events
       do 10 n = 1, nevent
-        call circe2_generate (x)
+        call circe2_genbeam (x)
         write (*, '(F12.10,1X,F12.10)') x
    10 continue
       stop

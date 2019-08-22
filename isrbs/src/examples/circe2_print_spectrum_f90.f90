@@ -17,7 +17,7 @@ program circe2_print_spectrum_f90
   filename = "250-TDR_ws-ee.circe2"
 !  filename = "ilc250-ee.circe2"
 !  filename = "ilc250.circe"
-  nevents = 100
+  nevents = 20
 
 
   call circe2_load (c2s, trim(filename), trim(design), roots, ierror)

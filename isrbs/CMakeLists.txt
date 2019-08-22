@@ -9,7 +9,7 @@ message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
 set( CMAKE_CXX_COMPILER $ENV{CXX} ) # Set environ parameter
 set( CMAKE_C_COMPILER $ENV{CC} )
 set( CMAKE_Fortran_COMPILER "gfortran" )
-set( CMAKE_Fortran_FLAGS "-g -Iinclude/circe2 " )
+set( CMAKE_Fortran_FLAGS "-g -Iinclude/circe2 -fpic " )
 
 # set( CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "makefile verbose" )
 # set( CMAKE_COLOR_MAKEFILE FALSE CACHE BOOL "makefile color" )
@@ -28,6 +28,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(pyISRBS Fortran)
 
 set( CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR} CACHE STRING "insall prefix" FORCE )
+# set( CMAKE_MODULE_LINKER_FLAGS " -L${PROJECT_SOURCE_DIR}/lib -lcirce2 -ltaorng -ltaorng_objs ")
 
 message("PROJECT_SOURCE_DIR is ${PROJECT_SOURCE_DIR}")
 message("CMAKE_INSTALL_PREFIX is ${CMAKE_INSTALL_PREFIX}")
@@ -55,7 +56,7 @@ file(GLOB scripts ${PROJECT_SOURCE_DIR}/src/python/*.py )
 # build B2b. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
-add_library( pyISRBS SHARED ${sources} )
+add_library( pyISRBS SHARED ${sources} ${PROJECT_SOURCE_DIR}/lib/circe2.o ${PROJECT_SOURCE_DIR}/lib/tao_random_numbers.o ${PROJECT_SOURCE_DIR}/lib/tao_random_objects.o )
 target_link_libraries( pyISRBS ${ROOT_LIBRARIES} )
 
 
@@ -96,6 +97,7 @@ install(
 # file(MAKE_DIRECTORY demo_circe2)
 install( TARGETS circe2_print_spectrum_f77.exe DESTINATION bin)
 install( TARGETS circe2_print_spectrum_f90.exe DESTINATION bin)
+
 # install( CODE "execute_process ( COMMAND ln -sv ${PROJECT_SOURCE_DIR}/share/circe2/data/250-TDR_ws-ee.circe2 
 #                demo_circe2 )"
 #       )
