@@ -19,9 +19,11 @@ mkdir -p circe2
   tar zxf ${circe2_targz}
   (
     cd ${circe2_version}
-    ./configure --disable-ocaml --prefix=${install_dir}
+    # ./configure --disable-ocaml --prefix=${install_dir}
+    ./configure --disable-ocaml --enable-static=no --prefix=${install_dir}
     make 
     make install
+    cp -pv src/.libs/*.o ${install_dir}/lib
   )
 
   circe2_ilc=${install_dir}/share/ilc

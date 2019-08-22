@@ -28,7 +28,6 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(pyISRBS Fortran)
 
 set( CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR} CACHE STRING "insall prefix" FORCE )
-# set( CMAKE_MODULE_LINKER_FLAGS " -L${PROJECT_SOURCE_DIR}/lib -lcirce2 -ltaorng -ltaorng_objs ")
 
 message("PROJECT_SOURCE_DIR is ${PROJECT_SOURCE_DIR}")
 message("CMAKE_INSTALL_PREFIX is ${CMAKE_INSTALL_PREFIX}")
@@ -39,7 +38,6 @@ find_package(ROOT REQUIRED)
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
 #
-# include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/include/circe2 $ENV{ROOTSYS}/include )
 
 
