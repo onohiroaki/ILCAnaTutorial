@@ -23,8 +23,8 @@ message("CMAKE_FORTRAN_COMPILER is ${CMAKE_Fortran_COMPILER}")
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
-project(bases)
+cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
+project(bases CXX Fortran )
 
 set( CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR} CACHE STRING "insall prefix" FORCE )
 
@@ -55,9 +55,7 @@ file(GLOB headers include/*.h )
 # build B2b. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
-add_library( bases SHARED ${sources} )
-# target_link_libraries( pyISRBS ${ROOT_LIBRARIES} )
-
+add_library( BasesSpring SHARED ${sources} )
 
 # cmake_policy(SET CMP0015 NEW)
 #----------------------------------------------------------------------------
@@ -68,30 +66,18 @@ add_library( bases SHARED ${sources} )
 # Add executables
 # 
 
-# link_directories(lib)
-# add_executable(nunugam.cxx ${PROJECT_SOURCE_DIR}/src/examples/circe2_print_spectrum_f77.F ${headers})
-# target_link_libraries(circe2_print_spectrum_f77.exe pyISRBS circe2 taorng taorng_objs )
-
-# add_executable(circe2_print_spectrum_f90.exe ${PROJECT_SOURCE_DIR}/src/examples/circe2_print_spectrum_f90.f90 ${headers})
-# target_link_libraries(circe2_print_spectrum_f90.exe pyISRBS circe2 taorng taorng_objs )
-
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
 
-install(TARGETS bases LIBRARY DESTINATION lib)
+install(TARGETS BasesSpring LIBRARY DESTINATION lib)
 
-# install(
-#   FILES ${pyISRBS_SCRIPTS} 
-#   PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-#   DESTINATION bin 
-#)
 
 #----------------------------------------------------------------------------
-# Create demo_circe2 directory and install demo files there
+# Add example program
 #
-# file(MAKE_DIRECTORY demo_circe2)
-# install( TARGETS circe2_print_spectrum_f77.exe DESTINATION bin)
-# install( TARGETS circe2_print_spectrum_f90.exe DESTINATION bin)
 
 add_subdirectory(example)
+
+add_subdirectory(basesv5.1)
+

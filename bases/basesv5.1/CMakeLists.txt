@@ -2,12 +2,14 @@
 
 # set( CMAKE_INSTALL_PREFIX ".." CACHE STRING "install prefix" FORCE)
 
-set( CMAKE_CXX_FLAGS "-g -Wall -D__USEISOCXX__ "  CACHE STRING "cxx options")
+# set( CMAKE_CXX_FLAGS "-g -Wall -D__USEISOCXX__ "  CACHE STRING "cxx options")
 
-message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
+# message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
 
-set( CMAKE_CXX_COMPILER $ENV{CXX} ) # Set environ parameter
-set( CMAKE_C_COMPILER $ENV{CC} )
+# set( CMAKE_CXX_COMPILER $ENV{CXX} ) # Set environ parameter
+# set( CMAKE_C_COMPILER $ENV{CC} )
+
+set( CMAKE_Fortran_COMPILER gfortran )
 
 # --------------------------------------------------------------------------
 # Do not remove RPATH, when installing executables
@@ -18,8 +20,8 @@ set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # set( CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "makefile verbose" )
 # set( CMAKE_COLOR_MAKEFILE FALSE CACHE BOOL "makefile color" )
 
-message("CMAKE_CXX_COMPILER is ${CMAKE_CXX_COMPILER}")
-message("CMAKE_C_COMPILER is ${CMAKE_C_COMPILER}")
+# message("CMAKE_CXX_COMPILER is ${CMAKE_CXX_COMPILER}")
+# message("CMAKE_C_COMPILER is ${CMAKE_C_COMPILER}")
 
 
 #----------------------------------------------------------------------------
@@ -32,14 +34,15 @@ message("CMAKE_C_COMPILER is ${CMAKE_C_COMPILER}")
 #----------------------------------------------------------------------------
 # Setup include directory for this project
 #
-include_directories(include )
+# include_directories(include )
 
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-file(GLOB headers nunugam/*.h )
+file(GLOB sources src/*.f )
+# file(GLOB headers nunugam/*.h )
 # file(GLOB scripts ${PROJECT_SOURCE_DIR}/src/python/*.py )
 
 #----------------------------------------------------------------------------
@@ -54,23 +57,17 @@ cmake_policy(SET CMP0015 NEW)
 #
 
 #----------------------------------------------------------------------------
-# Add executables
+# Add Libraries
 # 
+add_library( basesv5.1 STATIC ${sources} )
 
-add_executable(nng_int.exe nunugam/testint.cxx nunugam/nunugam.cxx ${headers})
-target_link_libraries(nng_int.exe BasesSpring)
-
-add_executable(nng_gen.exe nunugam/testgen.cxx nunugam/nunugam.cxx ${headers})
-target_link_libraries(nng_gen.exe BasesSpring)
-
-add_executable(nng_intgen.exe nunugam/intgen.cxx nunugam/nunugam.cxx ${headers})
-target_link_libraries(nng_intgen.exe BasesSpring)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
+install( TARGETS basesv5.1 DESTINATION lib )
 
-install(TARGETS nng_int.exe nng_gen.exe nng_intgen.exe DESTINATION bin)
+# install(TARGETS nng_int.exe nng_gen.exe nng_intgen.exe DESTINATION bin)
 
 # install(
 #   FILES ${pyISRBS_SCRIPTS} 
