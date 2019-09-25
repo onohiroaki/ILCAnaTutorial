@@ -95,9 +95,9 @@ Verifying - Enter Export Password:▲▲▲▲▲▲▲▲
 
 
 ## ILC VO への登録
-[https://grid-voms.desy.de:8443/voms/ilc](https://grid-voms.desy.de:8443/voms/ilc)より ILC VO 登録を申請
+[https://grid-voms.desy.de:8443/voms/ilc](https://grid-voms.desy.de:8443/voms/ilc)より ILC VO 登録を申請する。
 
-VOMS Admin for VO ilc <ilc-vo-support@desy.de> にメールを出して、所属や身分、ILC VO の使用目的を説明し
+VOMS Admin for VO ilc <ilc-vo-support@desy.de> にもメールを出して、所属や身分、ILC VO の使用目的を説明し
 承認するように依頼する。連絡が不十分だと、登録完了まで数日かかることがある。
 
 
