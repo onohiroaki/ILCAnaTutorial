@@ -12,9 +12,9 @@ simdetector=`echo ${recdetector} | cut -d"_" -f1,2,4`
 
 unset MARLIN_DLL
 softdir=/cvmfs/ilc.desy.de/sw
-. ${softdir}/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh
+. ${softdir}/x86_64_gcc49_sl6/v02-00-02/init_ilcsoft.sh
 
-ildconfig=/cvmfs/ilc.desy.de/sw/ILDConfig/v02-00-01/StandardConfig/production
+ildconfig=/cvmfs/ilc.desy.de/sw/ILDConfig/v02-00-02/StandardConfig/production
 
 ## 2. Setup links to files
 echo "ILCSOFT is ${ILCSOFT}"
@@ -35,7 +35,7 @@ echo ${lcgeo_DIR}
 #   --constant.DetectorModel=${recdetector} \
 #
 
-time Marlin /cvmfs/ilc.desy.de/sw/ILDConfig/v02-00-01/StandardConfig/production/MarlinStdReco.xml \
+time Marlin /cvmfs/ilc.desy.de/sw/ILDConfig/v02-00-02/StandardConfig/production/MarlinStdReco.xml \
   --global.LCIOInputFiles=../runddsim/bbudsc_3evt.m${simdetector}.slcio \
   --constant.OutputBaseName=bbudsc_3evt.m${recdetector} \
   --constant.DetectorModel=${recdetector} \
