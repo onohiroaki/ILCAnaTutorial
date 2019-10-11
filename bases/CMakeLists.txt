@@ -23,7 +23,7 @@ message("CMAKE_FORTRAN_COMPILER is ${CMAKE_Fortran_COMPILER}")
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(bases CXX Fortran )
 
 set( CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR} CACHE STRING "insall prefix" FORCE )
