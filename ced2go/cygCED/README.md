@@ -28,7 +28,8 @@ $ glced_hits.exe
 
 `glced.exe` opens a new windows of the glced server.
 `glced_hits.exe` is a glced client for test and shows
-a figure as shown below. 
+a figure as shown below.  
+ 
 <img src="glced_mhits.png" width="100pt">
 
  
