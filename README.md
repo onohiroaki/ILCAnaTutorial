@@ -28,7 +28,7 @@ are usefull for the installation.
 iLCSoft environment for v02-00-01 is initialized by 
 
 ```
-. /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh
+. /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-02/init_ilcsoft.sh
 ```
 
 or equivalently by 
@@ -42,13 +42,13 @@ or equivalently by
 
 scripts to initialize environment and run anajob and dumpevent
 
-### cedgo
+### ced2go
 
 Example to run CED event display
 
 ### python
 
-A simple python analysis of DST-merged files
+Example of pythons for LCIO data and ROOT file analysis
 
 ### runddsim
 
@@ -61,6 +61,30 @@ Run ILD standard marlin reconstruction with background overlay
 ### DSTAnal
 
 Example to analize DST files, including a C++ source code.
+
+### grid
+
+How to get grid account and ILCDirac examples.
+
+### docs
+
+Help information to setup cvmfs and git.
+
+### geant4
+
+Introduction of geant4 simulation 
+
+### whizard2
+
+whizard2 job example
+
+### bases
+
+Event generation by bases
+
+### isrbs
+
+Example for a generation of ISR spectrum used for DBD samples and beamstrahlung spectrum using Circe2
 
 
 ### Obsolete directory
