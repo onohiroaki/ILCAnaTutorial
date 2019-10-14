@@ -32,4 +32,34 @@ a figure as shown below.
  
 <img src="glced_mhits.png" width="100pt">
 
+## How to build a standalone CED server
+
+### Install iLCUtil
+
+```
+$ wget -O iLCUtil-01-05.zip https://github.com/iLCSoft/iLCUtil/archive/v01-05.zip
+$ unzip iLCUtil-01-05.zip 
+$ mv iLCUtil-01-05 ilcutil-01-05
+$ cd ilcutil-01-05 && mkdir build && cd build 
+$ cmake ..
+$ make && make install
+$ cd ..
+```
+ilcutil is installed in the current directory
+
+### Install CED server
+
+```
+$ wget -O CED-01-09.zip https://github.com/iLCSoft/CED/archive/master.zip
+$ unzip CED-01-09.zip
+$ cd CED-01-09
+$ export ilcutil="`pwd`/ilcutil-01-05"
+$ export LD_LIBRARY_PATH="${ilcutil}/lib:${LD_LIBRARY_PATH}"
+$ export CMAKE_PREFIX_PATH="${ilcutil}"
+$ mkdir build && cd build && cmake ..
+$ make && make install
+```
+Libraries and executables are install in `lib` and `bin` directories.
+
+
  
