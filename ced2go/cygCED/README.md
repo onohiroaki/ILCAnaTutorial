@@ -34,7 +34,7 @@ a figure as shown below.
 
 ## How to build a standalone CED server
 
-### Install iLCUtil
+### Build iLCUtil
 
 ```
 $ wget -O iLCUtil-01-05.zip https://github.com/iLCSoft/iLCUtil/archive/v01-05.zip
@@ -47,7 +47,7 @@ $ cd ..
 ```
 ilcutil is installed in the current directory
 
-### Install CED server
+### Buuild CED server
 
 ```
 $ wget -O CED-01-09.zip https://github.com/iLCSoft/CED/archive/master.zip
