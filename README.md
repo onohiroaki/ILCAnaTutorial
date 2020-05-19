@@ -19,11 +19,11 @@ Please read iLCSoft documentation in
 and links therein.  Many usefull information will be found there.
 
 The released version of iLCSoft, both source and binaries, is available under `/cvmfs/ilc.desy.de/sw`. 
-The most of the system used for studies using ilcsoft must have `cvmfs` installed. If not,
-the information at 
+The most of the system used for studies using ilcsoft must have `cvmfs` installed. Here is
+a [simple installation document](docs/setup-cvmfs.md). More detail information will be found 
+at
 [ILCSoft on CVMFS - CERN TWiki](https://twiki.cern.ch/twiki/bin/view/CLIC/CLICCvmfs) and 
-[CVMFS at DESY - Grid@DESY](http://grid.desy.de/cvmfs/)
-are usefull for the installation.
+[CVMFS at DESY - Grid@DESY](http://grid.desy.de/cvmfs/).
 
 iLCSoft environment for v02-00-01 is initialized by 
 
