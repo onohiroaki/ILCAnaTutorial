@@ -1,13 +1,27 @@
 # Setup cvmfs
 
-Do following command as a root
+CVMFS documentation is available at 
+```
+https://cernvm.cern.ch/portal/filesystem/quickstart
+```
+
+To Install, do following command as a root
 
 ## Add the cvmfs yum repository
  
 ```
 yum install https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm 
 ``` 
+If this doesn't work for you, try following link.
+Yum repositories for 64bit and 32bit Scientific Linux 5 and 6 and 64bit Scientific Linux 7 are available at
+```
+http://cvmrepo.web.cern.ch/cvmrepo/yum/cvmfs-release-latest.noarch.rpm
+```
 
+An apt repository for Ubuntu packages is available under 
+```
+http://cvmrepo.web.cern.ch/cvmrepo/apt
+```
 ## install the packages
  
 ``` 
