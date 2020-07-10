@@ -54,6 +54,6 @@ CVMFS_KEYS_DIR=/etc/cvmfs/keys
 
 ``` 
 cd /etc/cvmfs  
-wget http://grid.desy.de/etc/cvmfs/keys/desy.de.pub -O /etc/cvmfs/keys/desy.de.pub 
+wget https://confluence.desy.de/download/attachments/159747860/desy.de.pub -O desy.de.pub
 ```
-
+See https://confluence.desy.de/display/grid/CVMFS+repositories if this doesn't work
