@@ -6,9 +6,9 @@
 
 softdir=/cvmfs/ilc.desy.de/sw
 
-. ${softdir}/x86_64_gcc49_sl6/v02-00-02/init_ilcsoft.sh
+. ${softdir}/x86_64_gcc82_sl6/v02-01-02/init_ilcsoft.sh
 
-ildconfig=${softdir}/ILDConfig/v02-00-02/StandardConfig/production
+ildconfig=${softdir}/ILDConfig/v02-01-02/StandardConfig/production
 
 
 ## 2. run the lcgeo/ddsim simulation example
