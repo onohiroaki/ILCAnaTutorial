@@ -73,6 +73,7 @@ def subDDSim():
 
     # Decide parameters for a job
     outputSE = "KEK-SRM"
+    outputSE = "KEK-DISK"
 
     isLocal = _clip.isLocal    
     nbevts = 10 if _clip.numberOfEvents == 0 else _clip.numberOfEvents
