@@ -1,12 +1,8 @@
 &
-(* ********************************* *)
-(* A JDL example to run at KEKCC ARC *)
-(* This is for a commen line example *)
-(* ********************************* *)
 ( executable = "/bin/sh" )
 ( arguments = "test.sh" )
 ( inputFiles = ( "test.sh" "" ) )
-( outputFiles = ( "output.txt" "gsiftp://" ) )
+( outputFiles = ( "output.txt" "" ) )
 ( stdout = "std.out" )
 ( stderr = "std.err" )
 ( queue = "gridilc_middle" ) 

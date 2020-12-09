@@ -6,8 +6,13 @@
 ```
 source setup-ui-umd4.sh
 
+arcproxy -S ilc
 
-voms-proxy-init --vomses ilc
+arcproxy -S ilc:/ilc/Role=production 
+
+arcproxy -I  # arcproxy status
+
+# voms-proxy-init --vomses ilc
 ```
 
 Reference: [https://kekcc.kek.jp/service/kekcc/support/ja/08/](https://kekcc.kek.jp/service/kekcc/support/ja/08/)
@@ -32,12 +37,16 @@ gfal-ls  srm://kek2-se01.cc.kek.jp:8444/srm/managerv2?SFN=/disk/ilc
 
 ### Submit job to arc
 ```
-arcsub -j jobs.xml -o jobid.txt -c https://kek2-ce01.cc.kek.jp/arex test.xrsl
+arcsub -j jobs.xml -o jobid.txt -c https://kek2-ce02.cc.kek.jp/arex test.xrsl 2>&1 | tee arcsub.log
+```
 
 または
 
-arcsub --debug=DEBUG  -j jobs.xml -o jobid.txt -c https://kek2-ce01.cc.kek.jp/arex test.xrsl
 ```
+arcsub --debug=DEBUG  -j jobs.xml -o jobid.txt -c https://kek2-ce02.cc.kek.jp/arex test.xrsl
+```
+
+long や heady queueを使うにはproduction role が必要
 
 ### Job status
 ```
@@ -52,6 +61,8 @@ arcstat -a -j jobs.xml
 ```
 arckill -j jobs.xml <JobID>
 ```
+JobID は`https://kek2-ce02.cc.kek.jp:443/arex/mbnMDmhO76xnDb5ySmSBv0toABFKDmABFKDmraALDmlDFKDm4z3h0m`
+のようなもの
 
 ### Get job output
 ```
