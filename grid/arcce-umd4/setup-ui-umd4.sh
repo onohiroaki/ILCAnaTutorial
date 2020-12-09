@@ -76,7 +76,7 @@ if [ -n "$v" ]; then
 fi
 
 v="$PERL5LIB"
-export PERL5LIB=${base}/usr/lib64/perl5/vendor_perl:${base}/usr/lib/perl5/vendor_perl
+export PERL5LIB=${base}/usr/lib64/perl5/vendor_perl:${base}/usr/lib/perl5/vendor_perl:${base}/usr/share/perl5
 if [ -n "$v" ]; then
   export PERL5LIB="${PERL5LIB}:$v"
 fi
