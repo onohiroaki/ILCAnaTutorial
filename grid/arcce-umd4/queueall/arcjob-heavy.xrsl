@@ -1,0 +1,6 @@
+&(executable="myscript.sh")
+(inputFiles=(myscript.sh "myscript.sh"))
+(stdout="aaaa.out")
+(stderr="bbbb.err")
+(outputFiles=("aaaa.out" "") ("bbbb.err" ""))
+(queue=gridilc_heavy)
