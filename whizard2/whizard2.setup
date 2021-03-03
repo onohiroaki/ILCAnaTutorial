@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Use SL6 binary built by clicdp
+
+source /cvmfs/clicdp.cern.ch/software/WHIZARD/2.8.3/x86_64-slc6-gcc7-opt/setup.sh
+
+
