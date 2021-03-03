@@ -1,39 +1,24 @@
 # Setup cvmfs
 
-CVMFS documentation is available at 
+A document to install CVMFS is available at 
 ```
-https://cernvm.cern.ch/portal/filesystem/quickstart
+https://cvmfs.readthedocs.io/en/stable/cpt-quickstart.html
 ```
 
-To Install, do following command as a root
+Below, an example to install CVMFS for CentOS7 is described. 
+An instruction for other OS is described in the above web page.
 
-## Add the cvmfs yum repository
- 
+## Add cvmfs yum repository
+
+As root, do 
+
 ```
 yum install https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm 
-``` 
-If this doesn't work for you, try following link.
-Yum repositories for 64bit and 32bit Scientific Linux 5 and 6 and 64bit Scientific Linux 7 are available at
-```
-http://cvmrepo.web.cern.ch/cvmrepo/yum/cvmfs-release-latest.noarch.rpm
-```
+yum install -y cvmfs cvmfs-config-default
 
-An apt repository for Ubuntu packages is available under 
-```
-http://cvmrepo.web.cern.ch/cvmrepo/apt
-```
-## install the packages
- 
-``` 
-yum install cvmfs cvmfs-config-default 
+cvmfs-config setup
 ``` 
 
-## Config cmvfs
- 
-``` 
-cvmfs_config setup 
-```
- 
 ## Create `/etc/cvmfs/default.local` with following contents.
  
 ``` 
@@ -57,3 +42,10 @@ cd /etc/cvmfs
 wget https://confluence.desy.de/download/attachments/159747860/desy.de.pub -O desy.de.pub
 ```
 See https://confluence.desy.de/display/grid/CVMFS+repositories if this doesn't work
+
+## Restart autofs
+
+```
+systemctl restart autofs
+
+```
