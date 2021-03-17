@@ -15,6 +15,7 @@ rm -vf PandoraLikelihoodData9EBin.xml
 rm -vf PandoraSettingsMuon.xml
 rm -vf bbudsc_3evt.slcio
 rm -vf bbudsc_3evt_stdreco.root
+rm -vf MarlinStdRecoParsed.xml
 
 rm -vf runmarlin.log 
 rm -vf bsub.log 
