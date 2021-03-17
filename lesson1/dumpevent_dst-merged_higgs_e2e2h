@@ -1,5 +1,13 @@
-dumpevent \
-/hsm/ilc/grid/storm/prod/ilc/mc-opt-3/ild/dst-merged/500-TDR_ws/higgs_ffh/ILD_l5_o1_v02/v02-00-01/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I106519.Pe2e2h.eL.pR.n001.d_dstm_10263_0.slcio \
-1 \
-| sed -e "s|\\\\n|\n|g" \
-| more 
+#
+# Dump first event of e2e2h dst-merged file
+# "dumpevent -h" for more help.
+# 
+# /group/ilc/grid/storm is a local path to KEK-DISK SE at KEKCC.
+
+ddir=/group/ilc/grid/storm/prod/ilc/mc-2020/ild/dst-merged/250-SetA/higgs/ILD_l5_o1_v02/v02-02
+dfile=rv02-02.sv02-02.mILD_l5_o1_v02.E250-SetA.I402003.Pe2e2h.eL.pR.n000.d_dstm_15089_0.slcio
+n_th_events=1
+
+# sed is to insert carrgae return properly.
+
+dumpevent ${ddir}/${dfile} ${n_th_events} | sed -e "s|\\\\n|\n|g" 

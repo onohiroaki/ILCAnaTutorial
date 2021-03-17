@@ -1,1 +1,1 @@
-anajob /hsm/ilc/grid/storm/prod/ilc/mc-opt-3/ild/rec/500-TDR_ws/6f_ttbar/ILD_l5_o1_v02/v02-00-01/00010433/000/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I108677.Pyyuyyu.eL.pR.n001_001.d_rec_00010433_83.slcio | sed -e "s|\\\\n|\n|g" | more 
+anajob /group/ilc/grid/storm/prod/ilc/mc-opt-3/ild/rec/500-TDR_ws/6f_ttbar/ILD_l5_o1_v02/v02-00-01/00010433/000/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I108677.Pyyuyyu.eL.pR.n001_001.d_rec_00010433_83.slcio | sed -e "s|\\\\n|\n|g" 

@@ -1,4 +1,4 @@
-source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02/init_ilcsoft.sh
+source /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-01/init_ilcsoft.sh
 
 # To use an ilcsoft built at KEKCC.
 # source /sw/ilc/ilcsoft/gcc820/v02-02/init_ilcsoft.sh

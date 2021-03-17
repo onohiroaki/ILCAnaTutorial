@@ -1,5 +1,4 @@
 dumpevent \
-/hsm/ilc/grid/storm/prod/ilc/mc-opt-3/ild/rec/500-TDR_ws/2f_Z_leptonic/ILD_l5_o1_v02/v02-00-01/00010255/000/rv02-00-01.sv02-00-01.mILD_l5_o1_v02.E500-TDR_ws.I250106.P2f_z_l.eL.pR.n001_001.d_rec_00010255_884.slcio \
+/group/ilc/grid/storm/prod/ilc/mc-2020/ild/rec/250-SetA/2f_leptonic_eL_pR/ILD_l5_o1_v02/v02-02/00015167/000/rv02-02.sv02-02.mILD_l5_o1_v02.E250-SetA.I500006.P2f_z_l.eL.pR.n000_024.d_rec_00015167_331.slcio \
 5 \
-| sed -e "s|\\\\n|\n|g" \
-| more 
+| sed -e "s|\\\\n|\n|g"  
