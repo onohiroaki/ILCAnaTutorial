@@ -1,0 +1,64 @@
+--- release-base.cfg-old	2021-03-23 12:37:09.953335000 +0900
++++ release-base.cfg-new	2021-03-23 12:36:48.314358000 +0900
+@@ -111,31 +111,33 @@
+ # -- xercesc
+ ilcsoft.install( XercesC( XercesC_version ))
+ 
+-ilcsoft.install( Geant4( Geant4_version ))
+-geant4=ilcsoft.module("Geant4")
+-geant4.envcmake["GEANT4_INSTALL_DATA"]='ON'
+-geant4.envcmake["GEANT4_USE_SYSTEM_EXPAT"]='OFF' # ignored ??
+-geant4.envcmake["GEANT4_USE_SYSTEM_CLHEP"]='ON'
+-geant4.envcmake["GEANT4_USE_OPENGL_X11"]='ON'
+-geant4.envcmake["GEANT4_USE_QT"]='ON' # requires qt
+-geant4.envcmake["GEANT4_BUILD_TLS_MODEL"]= 'global-dynamic'
+-geant4.envcmake["GEANT4_BUILD_CXXSTD"]='c++' + str(cxx_standard)
+-geant4.envcmake["GEANT4_INSTALL_DATA_TIMEOUT"]='7200'
++#ilcsoft.install( Geant4( Geant4_version ))
++#geant4=ilcsoft.module("Geant4")
++#geant4.envcmake["GEANT4_INSTALL_DATA"]='ON'
++#geant4.envcmake["GEANT4_USE_SYSTEM_EXPAT"]='OFF' # ignored ??
++#geant4.envcmake["GEANT4_USE_SYSTEM_CLHEP"]='ON'
++#geant4.envcmake["GEANT4_USE_OPENGL_X11"]='ON'
++#geant4.envcmake["GEANT4_USE_QT"]='ON' # requires qt
++#geant4.envcmake["GEANT4_BUILD_TLS_MODEL"]= 'global-dynamic'
++#geant4.envcmake["GEANT4_BUILD_CXXSTD"]='c++' + str(cxx_standard)
++#geant4.envcmake["GEANT4_INSTALL_DATA_TIMEOUT"]='7200'
+ 
+ #geant4.envcmake["QT_QMAKE_EXECUTABLE"]=/path/to/qmake
+-if 'XERCESC_ROOT_DIR' in dir():
+-    geant4.envcmake["XERCESC_ROOT_DIR"]=XERCESC_ROOT_DIR
+-    geant4.envcmake["GEANT4_USE_GDML"]='ON' # requires xerces-c
++#if 'XERCESC_ROOT_DIR' in dir():
++#    geant4.envcmake["XERCESC_ROOT_DIR"]=XERCESC_ROOT_DIR
++#    geant4.envcmake["GEANT4_USE_GDML"]='ON' # requires xerces-c
+ 
+ ilcsoft.install( ROOT( ROOT_version ))
+ ilcsoft.module("ROOT").download.type="wget"
+ ilcsoft.module("ROOT").envcmake['root7']="ON"
+ ilcsoft.module("ROOT").envcmake['webgui']="ON"
++ilcsoft.module("ROOT").envcmake['builtin_davix']="OFF"
++ilcsoft.module("ROOT").envcmake['davix']="OFF"
+ 
+ ilcsoft.install( CLHEP( CLHEP_version ))
+ ilcsoft.install( GSL( GSL_version ))
+ ilcsoft.module("GSL").use_c11=True
+-ilcsoft.install( Qt5( Qt5_version ))
++#ilcsoft.install( Qt5( Qt5_version ))
+ 
+ # cmake
+ ilcsoft.install( CMake( CMake_version ))
+@@ -155,5 +157,13 @@
+ # eigen3
+ ilcsoft.install( Eigen( Eigen_version ) )
+ 
++#ilcsoft.link( LCIO( ilcPath + "lcio/" + LCIO_version ))
++ilcsoft.install( LCIO( LCIO_version ))
++
++#----- this will build the optional ROOT dictionary for LCIO -----
++#------ set to OFF  if you don't want it
++ilcsoft.module("LCIO").envcmake['BUILD_ROOTDICT']='ON'
++ilcsoft.module("LCIO").envcmake['INSTALL_DOC']='OFF'
++
+ # end of configuration file
+ 

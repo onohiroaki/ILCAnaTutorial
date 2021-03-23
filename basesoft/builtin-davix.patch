@@ -1,0 +1,25 @@
+--- CMakeLists.txt-orig	2021-03-23 15:59:17.004243000 +0900
++++ CMakeLists.txt	2021-03-23 16:03:04.082620000 +0900
+@@ -5,8 +5,10 @@
+ find_package(OpenSSL REQUIRED)
+ 
+ set(DAVIX_VERSION "0.6.7")
+-set(DAVIX_URL "http://grid-deployment.web.cern.ch/grid-deployment/dms/lcgutil/tar/davix")
+-set(DAVIX_URLHASH "SHA256=1694152a20a5c5e692c4bc545b2efbacec5274fb799e60725412ebae40cced3d")
++# set(DAVIX_URL "http://grid-deployment.web.cern.ch/grid-deployment/dms/lcgutil/tar/davix")
++# set(DAVIX_URLHASH "SHA256=1694152a20a5c5e692c4bc545b2efbacec5274fb799e60725412ebae40cced3d")
++set(DAVIX_URL "https://github.com/cern-fts/davix/releases/download/R_0_7_6")
++set(DAVIX_URLHASH "SHA256=a2e7fdff29f7ba247a3bcdb08ab1db6d6ed745de2d3971b46526986caf360673")
+ set(DAVIX_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/DAVIX-prefix)
+ set(DAVIX_LIBNAME ${CMAKE_STATIC_LIBRARY_PREFIX}davix${CMAKE_STATIC_LIBRARY_SUFFIX})
+ 
+@@ -16,7 +18,8 @@
+ endforeach()
+ 
+ ExternalProject_Add(DAVIX
+-  URL ${DAVIX_URL}/${DAVIX_VERSION}/davix-embedded-${DAVIX_VERSION}.tar.gz
++  # URL ${DAVIX_URL}/${DAVIX_VERSION}/davix-embedded-${DAVIX_VERSION}.tar.gz
++  URL ${DAVIX_URL}/davix-${DAVIX_VERSION}.tar.gz
+   URL_HASH ${DAVIX_URLHASH}
+   CMAKE_CACHE_ARGS
+     -DCMAKE_PREFIX_PATH:STRING=${OPENSSL_PREFIX}
