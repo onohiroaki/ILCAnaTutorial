@@ -24,3 +24,8 @@ higgs/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eR.pL.I106480.001.stdhep
 4f/E250-TDR_ws.P4f_zz_sl.Gwhizard-1_95.eR.pL.I106576.001.stdhep
 EOF
 
+# Get generator meta file.
+wget https://ild.ngt.ndu.ac.jp/CDS/files/genmetaByID.json
+
+cd ${curdir}
+
