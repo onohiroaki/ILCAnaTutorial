@@ -100,10 +100,8 @@ def printData(data, maxdump=1):
 
         mcps = event.getCollection("MCParticle")
         print("Number of MCParticle elements ="+str(len(mcps)))
-        print("Dump first 4 particle files.")
         for ip in range(0, mcps.getNumberOfElements()):
             mcp = mcps.at(ip)
-            print("ip="+str(ip))
             pv = mcp.getLorentzVec()
             pdgid = mcp.getPDG()
             charge = mcp.getCharge()
@@ -111,8 +109,18 @@ def printData(data, maxdump=1):
             parents = mcp.getParents()
             daughters = mcp.getDaughters()
             nb_daughters = len(daughters)
-            print(" pdgid=%d status=%d charge=%d #daughters=%d " % 
-                 ( pdgid, status, charge, nb_daughters ) )
+            print("#ip=%d: id=%d pdgid=%d status=%d charge=%d #daughters=%d " % 
+                 ( ip, mcp.id(), pdgid, status, charge, nb_daughters ), end="" )
+            if len(parents) > 0:
+               print(" parents=",end="")
+               for parent in parents:
+                  print("%d " % parent.id(), end="")
+            if nb_daughters > 0:
+               print(" daughters=",end="")
+               print(" (id,pdg)=",end="")
+               for dau in daughters:
+                   print("(%d,%d)" % (dau.id(), dau.getPDG()),end="")
+            print("")
             print(" (E,px,py,pz)=(%g,%g,%g,%g)" % 
                  ( pv.E(), pv.Px(), pv.Py(), pv.Pz() ) )
     
@@ -401,7 +409,7 @@ if __name__ == '__main__':
     datalist = getDatalist()    
 
     # Excersize 1.
-    # printData(datalist[0], maxdump=5)
+    printData(datalist[0])
 
     # Excersize 2
     #for ip  in range(0, len(datalist)):
@@ -410,6 +418,6 @@ if __name__ == '__main__':
     #json.dump(datalist, open("e2e2anal.json","w"))  # Write analysis parameter as json file.
 
     # Excersize 3
-    datalist = json.load(open("e2e2anal.json"))
-    makePlot( datalist )    
+    # datalist = json.load(open("e2e2anal.json"))
+    # makePlot( datalist )    
 

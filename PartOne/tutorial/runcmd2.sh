@@ -18,11 +18,19 @@ while read infile ; do
     ln -sfv ${datafile} .
   fi
 done <<EOF
-higgs/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I106479.001.stdhep
 higgs/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eR.pL.I106480.001.stdhep
 4f/E250-TDR_ws.P4f_zz_sl.Gwhizard-1_95.eL.pR.I106575.001.stdhep
 4f/E250-TDR_ws.P4f_zz_sl.Gwhizard-1_95.eR.pL.I106576.001.stdhep
 EOF
+# higgs/E250-TDR_ws.Pe2e2h.Gwhizard-1_95.eL.pR.I106479.001.stdhep
+
+# Convert stdhep files to LCIO format
+for f in *.stdhep; do 
+  if [ -e ${f/stdhep/slcio} ] ; then 
+     rm -fv ${f/stdhep/slcio}
+  fi
+  stdhepjob ${f} ${f/stdhep/slcio} -1 
+done
 
 # Get generator meta file.
 wget https://ild.ngt.ndu.ac.jp/CDS/files/genmetaByID.json
