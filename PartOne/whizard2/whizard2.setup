@@ -1,0 +1,41 @@
+
+if [ -z $WHIZARD_DIR ] ; then
+  if [ -d $HOME/Tutorial/sw/x86_64_gcc82_centos7/whizard2 ] ; then 
+    export WHIZARD_DIR=$HOME/Tutorial/soft/whizard2/2.8.5
+  elif [ -d /sw/ilc/gcc820/whizard2/2.8.5 ] ; then 
+    export WHIZARD_DIR=/sw/ilc/gcc820/whizard2/2.8.5
+  else
+    echo "WHIZARD_DIR environment parameter is undefined. It should point whizard2 directory"
+    return 0
+  fi
+fi
+
+
+
+source /cvmfs/sft.cern.ch/lcg/releases/gcc/8.2.0-3fa06/x86_64-centos7/setup.sh
+
+export CXX=g++
+export CC=gcc
+
+export PYTHONDIR=/cvmfs/sft.cern.ch/lcg/releases/LCG_96/Python/2.7.16/x86_64-centos7-gcc8-opt
+export PATH=${PYTHONDIR}/bin:$PATH
+export LD_LIBRARY_PATH=${PYTHONDIR}/lib:${LD_LIBRARY_PATH}
+
+soft_dir=`( cd ${WHIZARD_DIR} && cd ../.. && pwd )`
+export OCAML_DIR=${soft_dir}/ocaml/4.05.0
+export HEPMC_DIR=/cvmfs/sft.cern.ch/lcg/releases/LCG_96/HepMC/2.06.09/x86_64-centos7-gcc8-opt
+export LCIO_DIR=/cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02/lcio/v02-15-01
+
+export LD_LIBRARY_PATH=$LCIO_DIR/lib:$HEPMC_DIR/lib:${OCAML_DIR}/lib:$LD_LIBRARY_PATH
+export PATH=$LCIO_DIR/bin:${OCAML_DIR}/bin:$PATH
+
+#WHIZARD
+export LD_LIBRARY_PATH=${WHIZARD_DIR}/lib:${LD_LIBRARY_PATH}
+export PATH=${WHIZARD_DIR}/bin:$PATH
+
+#m4
+M4_DIR=/cvmfs/sft.cern.ch/lcg/releases/LCG_96/m4/1.4.18/x86_64-centos7-gcc8-opt
+export LD_LIBRARY_PATH=${M4_DIR}/lib:${LD_LIBRARY_PATH}
+export PATH=${M4_DIR}/bin:$PATH
+
+
