@@ -14,7 +14,9 @@ SET( ${PROJECT_NAME}_VERSION_MAJOR 0 )
 SET( ${PROJECT_NAME}_VERSION_MINOR 1 )
 SET( ${PROJECT_NAME}_VERSION_PATCH 0 )
 
-
+# C17 as the standard
+SET( CMAKE_CXX_STANDARD 17 )
+SET( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 ### DEPENDENCIES ############################################################
 
@@ -63,6 +65,7 @@ ENDIF()
 # definitions to pass to the compiler
 # ADD_DEFINITIONS( "-g -Wall -ansi -pedantic" )
 # ADD_DEFINITIONS( "-Wno-long-long" )
+ADD_DEFINITIONS( "-Weffc++" )
 
 # include directories
 INCLUDE_DIRECTORIES( ./include )

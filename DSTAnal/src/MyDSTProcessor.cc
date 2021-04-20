@@ -98,29 +98,28 @@ void MyDSTProcessor::processRunHeader( LCRunHeader* run) {
     
     _nRun++ ;
     
-    if ( _nRun == 1 ) {
-        streamlog_out(MESSAGE) << "### Run Header ### " << std::endl;
-        streamlog_out(MESSAGE) << "  Run Number: " << run->getRunNumber() << std::endl;
-        streamlog_out(MESSAGE) << "  Detector name: " << run->getDetectorName() << std::endl;
-        streamlog_out(MESSAGE) << "  Description: " << run->getDescription() << std::endl;
+    streamlog_out(MESSAGE) << std::endl;
+    streamlog_out(MESSAGE) << "### Got " << _nRun << "-th Run Header ### " << std::endl;
+    streamlog_out(MESSAGE) << "  Run Number: " << run->getRunNumber() << std::endl;
+    streamlog_out(MESSAGE) << "  Detector name: " << run->getDetectorName() << std::endl;
+    streamlog_out(MESSAGE) << "  Description: " << run->getDescription() << std::endl;
+
+    const LCParameters& params = run->getParameters();
+    StringVec intKeys, floatKeys, stringKeys ;
+    int nIntKeys = params.getIntKeys(intKeys).size();
+    int nFloatKeys = params.getFloatKeys(floatKeys).size();
+    int nStringKeys = params.getStringKeys(stringKeys).size();
     
-        const LCParameters& params = run->getParameters();
-        StringVec intKeys, floatKeys, stringKeys ;
-        int nIntKeys = params.getIntKeys(intKeys).size();
-        int nFloatKeys = params.getFloatKeys(floatKeys).size();
-        int nStringKeys = params.getStringKeys(stringKeys).size();
-        
-        for ( int i=0; i < nIntKeys ; i++ ) {
-            streamlog_out(MESSAGE) << " IntKey: " << intKeys[i] << std::endl;
-        }
-        for ( int i=0; i < nFloatKeys ; i++ ) {
-            streamlog_out(MESSAGE) << " FloatKey: " << floatKeys[i] << std::endl;
-        }
-        for ( int i=0; i < nStringKeys ; i++ ) {
-            streamlog_out(MESSAGE) << " StringKey: " << stringKeys[i] << std::endl;
-        }
-    
+    for ( int i=0; i < nIntKeys ; i++ ) {
+        streamlog_out(MESSAGE) << " IntKey: " << intKeys[i] << std::endl;
     }
+    for ( int i=0; i < nFloatKeys ; i++ ) {
+        streamlog_out(MESSAGE) << " FloatKey: " << floatKeys[i] << std::endl;
+    }
+    for ( int i=0; i < nStringKeys ; i++ ) {
+        streamlog_out(MESSAGE) << " StringKey: " << stringKeys[i] << std::endl;
+    }
+
 } 
 
 /**
@@ -160,6 +159,7 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
       
     }
 
+//  # if defined(MYDEBUG)
     // MCParticleCollections
     LCCollection* colMP = NULL;
     try { 
@@ -167,7 +167,7 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
     }   
     catch ( lcio::DataNotAvailableException e )
     {
-        streamlog_out(WARNING) << _colNameMCParticle << "collection not available" << std::endl;
+        streamlog_out(WARNING) << _colNameMCParticle << " collection not available" << std::endl;
         colMP = NULL;
     }
     if( colMP != NULL ) {
@@ -184,7 +184,7 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
     }
     catch ( lcio::DataNotAvailableException e )
     {
-        streamlog_out(WARNING) << _colNamePFOs << "collection not available" << std::endl;
+        streamlog_out(WARNING) << _colNamePFOs << " collection not available" << std::endl;
         colRP = NULL;
     }
     float visible_energy=0;
@@ -244,6 +244,7 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
     _nt->Fill(visible_energy, float(npart), visible_mass, float(njet), jetmas, csjet, csj1, csj2);  
 
     //-- note: this will not be printed if compiled w/o MARLINDEBUG=1 !
+//   #endif
 
     streamlog_out(DEBUG) << "   processing event: " << evt->getEventNumber() 
         << "   in run:  " << evt->getRunNumber() << std::endl ;
@@ -268,4 +269,5 @@ void MyDSTProcessor::end(){
     _rootf->Write();
 
 }
+
 

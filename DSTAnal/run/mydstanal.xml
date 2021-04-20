@@ -21,7 +21,7 @@
 
   <Xprocessor name="MyTestProcessor"/>  
 
-  <processor name="MyLCIOOutputProcessor"/>  
+  <Xprocessor name="MyLCIOOutputProcessor"/>  
  </execute>
 
  <global>
@@ -91,7 +91,7 @@
  <processor name="MyMyDSTProcessor" type="MyDSTProcessor">
  <!-- description not set by author -->
   <!--Name of the MCParticle collection-->
-  <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticle</parameter>
+  <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticlesSkimmed</parameter>
   <!--Name of the ReconsructedParticle collection-->
   <parameter name="ReconstructedParticleCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
   <!--Root file name to output Ntuples, etc-->

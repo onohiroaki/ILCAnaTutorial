@@ -90,7 +90,7 @@
  <processor name="MyMyDSTProcessor" type="MyDSTProcessor">
  <!-- description not set by author -->
   <!--Name of the MCParticle collection-->
-  <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticle">MCParticlesSkimmed </parameter>
+  <parameter name="MCParticleCollectionName" type="string" lcioInType="MCParticlesSkimmed">MCParticlesSkimmed </parameter>
   <!--Name of the ReconsructedParticle collection-->
   <parameter name="ReconstructedParticleCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
   <!--Root file name to output Ntuples, etc-->
