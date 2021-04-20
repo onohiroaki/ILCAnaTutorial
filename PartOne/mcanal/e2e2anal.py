@@ -401,21 +401,23 @@ def getDatalist(tutorial=True):
 
 #======================================================#
 if __name__ == '__main__':
+ 
 
-
-    # Get list of files to analize.
+    ##### Get list of files to analize.
     datalist = getDatalist()    
 
-    # Excersize 1.
+    # Remove "#" to run Excersize 1, 2, 3 independantly.
+
+    ##### Excersize 1.
     printData(datalist[0])
 
-    # Excersize 2
-    #for ip  in range(0, len(datalist)):
-    #   ret = makeNtuple( datalist[ip], maxread=0)    # maxread = 0 to read all events in file.
-    #   datalist[ip].update(ret)     
-    #json.dump(datalist, open("e2e2anal.json","w"))  # Write analysis parameter as json file.
+    ##### Excersize 2
+    for ip  in range(0, len(datalist)):
+       ret = makeNtuple( datalist[ip], maxread=1000)    # maxread = 0 to read all events in file.
+       datalist[ip].update(ret)     
+    json.dump(datalist, open("e2e2anal.json","w"))  # Write analysis parameter as json file.
 
-    # Excersize 3
-    # datalist = json.load(open("e2e2anal.json"))
-    # makePlot( datalist )    
+    #####Excersize 3
+    datalist = json.load(open("e2e2anal.json"))
+    makePlot( datalist )    
 
