@@ -12,22 +12,17 @@ To run interactively, do
     >> help(printData)    # Print help
 
     >> reader = getReader()
-    >> examplePrintEvent(reader)  # Execute examplePrintEvent
+    >> printData(data)  # Print lcio data 
 
 '''
 
 from __future__ import print_function
-import os
-import pprint
-import glob
+
+import os, pprint, glob, json
 
 from pyLCIO.io import LcioReader, StdHepReader
-
 import ROOT
 ROOT.gROOT.SetBatch()
-
-import json
-
 
 # ====================================================== 
 def decodeFileName(filename):
@@ -100,6 +95,8 @@ def printData(data, maxdump=1):
 
         mcps = event.getCollection("MCParticle")
         print("Number of MCParticle elements ="+str(len(mcps)))
+     
+        # Loop over all elements of MCParticle collection
         for ip in range(0, mcps.getNumberOfElements()):
             mcp = mcps.at(ip)
             pv = mcp.getLorentzVec()
@@ -109,6 +106,8 @@ def printData(data, maxdump=1):
             parents = mcp.getParents()
             daughters = mcp.getDaughters()
             nb_daughters = len(daughters)
+
+            # print data
             print("#ip=%d: id=%d pdgid=%d status=%d charge=%d #daughters=%d " % 
                  ( ip, mcp.id(), pdgid, status, charge, nb_daughters ), end="" )
             if len(parents) > 0:
@@ -116,8 +115,7 @@ def printData(data, maxdump=1):
                for parent in parents:
                   print("%d " % parent.id(), end="")
             if nb_daughters > 0:
-               print(" daughters=",end="")
-               print(" (id,pdg)=",end="")
+               print(" daughters:(id,pdg)=",end="")
                for dau in daughters:
                    print("(%d,%d)" % (dau.id(), dau.getPDG()),end="")
             print("")
