@@ -4,8 +4,13 @@ echo "Build for gcc-8.2.5 ############################### "
 echo "######## Whizard2 build: `date` ################### "
 echo "######## setting env parameters ##############"
 
+. /cvmfs/sft.cern.ch/lcg/releases/gcc/8.2.0-3fa06/x86_64-centos7/setup.sh
+export PATH=/cvmfs/sft.cern.ch/lcg/releases/LCG_96/Python/2.7.16/x86_64-centos7-gcc8-opt/bin:${PATH}
+export LD_LIBRARY_PATH=/cvmfs/sft.cern.ch/lcg/releases/LCG_96/Python/2.7.16/x86_64-centos7-gcc8-opt/lib:${LD_LIBRARY_PATH}
+
 version=2.8.5
 install_dir=${HOME}/Tutorial/sw/x86_64_gcc82_centos7
+mkdir -p ${install_dir}/whizard2/${version}
 setup_file=${install_dir}/whizard2/${version}/init_whizard2.sh
 ncores=8      # Number of cores for compiling
 #

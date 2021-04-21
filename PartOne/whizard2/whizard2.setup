@@ -2,6 +2,8 @@
 if [ -z $WHIZARD_DIR ] ; then
   if [ -d $HOME/Tutorial/sw/x86_64_gcc82_centos7/whizard2/2.8.5 ] ; then 
     export WHIZARD_DIR=$HOME/Tutorial/sw/x86_64_gcc82_centos7/whizard2/2.8.5
+  elif [ -d /home/miyamotoi/Tutorial/sw/x86_64_gcc82_centos7/whizard2/2.8.5 ] ; then
+    export WHIZARD_DIR=/home/miyamotoi/Tutorial/sw/x86_64_gcc82_centos7/whizard2/2.8.5
   elif [ -d /sw/ilc/gcc820/whizard2/2.8.5 ] ; then 
     export WHIZARD_DIR=/sw/ilc/gcc820/whizard2/2.8.5
   else

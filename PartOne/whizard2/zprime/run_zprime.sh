@@ -36,7 +36,7 @@ mkdir -p run
 #
   logical ?do_hist = true # true to create histogram
 # 
-  logical ?is_test = false # true for test mode with low precission
+  logical ?is_test = true # true for test mode with low precission
   if ?is_test then
     n_events = 1000
   endif
