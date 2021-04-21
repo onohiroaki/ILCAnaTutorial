@@ -4,7 +4,7 @@ echo "Build for gcc-8.2.5 ############################### "
 echo "######## Whizard2 build: `date` ################### "
 echo "######## setting env parameters ##############"
 
-install_dir=${HOME}/Tutorial/sw/x86_64_gcc82_centos7
+install_dir=${HOME}/Tutorial/sw/x86_64_gcc82_centos7/whizard2
 setup_file=${install_dir}/init_whizard2.sh
 version=2.8.5
 ncores=8      # Number of cores for compiling
