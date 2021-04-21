@@ -2,72 +2,97 @@
 # example to run e+e- --> mu+mu- @ ILC 250 GeV with ZPrime model
 # ##################################################################################
 
-model = Zprime
+  model = Zprime
 
 ###################################################################################
 # alias of particle name, to be used to define kinematic cuts.
 ###################################################################################
-alias quark = u:d:s:c:b:U:D:S:C:B
-alias lepton = e1:e2:e3:E1:E2:E3
+  alias quark  = u:d:s:c:b:U:D:S:C:B
+  alias lepton = e1:e2:e3:E1:E2:E3
 
 # ##################################################################################
 # Define process
 # ##################################################################################
 
-process zprime_e2e2     =   e1,E1 => e2, E2     { $omega_flags =  "-model:constant_width" }
+  process zprime_mupair  = e1, E1 => e2, E2     { $omega_flags =  "-model:constant_width" }
+  # process zprime_qpair = e1, E1 => (u,U) + (d,D) + (s,S) + (c,C) + (b,B) { $omega_flags =  "-model:constant_width" }
+  process zprime_qpair = e1, E1 => quark, quark { $omega_flags =  "-model:constant_width" }
+
+  # Quark mass to 0 to use alias, quark
+  ms = 0
+  mc = 0
+  mb = 0
+
+  # Particle is polarized
+  polarized e1,E1,e2,E2,e3,E3,n1,N1,n2,N2,n3,N3,u,U,d,D,s,S,c,C,b,B,t,T, "W+", "W-", Z, A
+#
+# ##################################################################################
+# TO overwrite parameters defined in Zprime model file,
+#   $WHIZARD_DIR/share/whizard/models/Zprime.mdl
+  mZH = my_mZH   # Zprime  mass
+  wZH = 0.5      # Zprime width
+  a_lep = my_lepton_coupling  # Multiply the Z lepton A coupling
+  v_lep = my_lepton_coupling   # Multiply the Z lepton V coupling
 
 # ##################################################################################
-# Particle should be polarized
+# Compile process
 # ##################################################################################
-
-polarized e1,E1,e2,E2,e3,E3,n1,N1,n2,N2,n3,N3,u,U,d,D,s,S,c,C,b,B,t,T, "W+", "W-", Z, A
+  compile
 
 # ##################################################################################
 # Parameters for integration
 # ##################################################################################
 
-sqrts = 250 GeV
-
-#  
-beams = e1, E1 => circe2 => isr,isr
-$circe2_design="ILC"
-$circe2_file = "/sw/ilc/gcc820/whizard2/2.8.5/share/circe2/data/250_SetA_ee024.circe"
-?circe2_polarized = false
-?isr_recoil = false
-?isr_handler = true
-$isr_handler_mode = "recoil"
-isr_alpha = 0.0072993
-isr_mass = 0.000511 GeV
+  sqrts = 250 GeV
+  beams = e1, E1 => circe2 => isr,isr
+  $circe2_design="ILC"
+# On the fly parameter 
+# $circe2_file = "/sw/ilc/gcc820/whizard2/2.8.5/share/circe2/data/250_SetA_ee024.circe"
+  ?circe2_polarized = false
+  ?isr_recoil = false
+  ?isr_handler = true
+  $isr_handler_mode = "recoil"
+  isr_alpha = 0.0072993
+  isr_mass = 0.000511 GeV
 
 ################################################################
 # Beam polarization
 ################################################################
-beams_pol_density = @(-1), @(+1) # eL.pR
-beams_pol_fraction = 1.0,1.0 
-
-# for eR.pL, 
-# beams_pol_density = @(+1), @(-1) # eR.pL
-# beams_pol_fraction = 1.0,1.0 
-
+# On the fly parameter
 # for eL80.pR30, elecron, -80%, positron +30% 
 # beams_pol_density = @(-1), @(+1) # eR.pL
 # beams_pol_fraction = 0.8,0.3 
 
 # Kinematic cut for generated event, using the same condition as DBD samples.
-real default_Mqq_cut = 10 GeV
-real default_Mll_cut = 10 GeV
-real default_Mla_cut = 4 GeV
-cuts =  all M > default_Mqq_cut [ quark,  quark ] and all M > default_Mll_cut [ lepton, lepton ]
+  real default_Mqq_cut = 10 GeV
+  real default_Mll_cut = 10 GeV
+  real default_Mla_cut = 4 GeV
+  cuts =  all M > default_Mqq_cut [ quark, quark ] and all M > default_Mll_cut [ lepton, lepton ]
 
 ###########################################################################
 # Parameters for integration iteration, larger values for precise results 
-iterations = 1:100000, 10:100000, 1:500000
-relative_error_goal = 0.01
+###########################################################################
+# Parameters for integration iteration, larger values for precise results
+  if not ?is_test then
+    iterations = 5:100000, 10:100000
+    relative_error_goal = 0.01
+  else
+    iterations = 5:10000, 10:10000
+    relative_error_goal = 0.02
+  endif
 
-$integration_method= "vamp2" 
-$rng_method= "rng_stream"
+  $integration_method= "vamp2" 
+  $rng_method= "rng_stream"
 
 #  seed = 814995
+
+# ##################################################################################
+# Do integration
+# ##################################################################################
+  integrate( zprime_mupair, zprime_qpair ) {
+    ?polarized_events = true
+  }
+  show( results )
 
 # ##################################################################################
 # Parameters for Pythia hadronization for simulation
@@ -75,9 +100,6 @@ $rng_method= "rng_stream"
 
   ?ps_fsr_active = true 
   ?ps_taudec_active = true
-####  0=all, 1=e, 2=mu, 3=pi, 4=rho, 5=a_1, ....
-  ps_tauola_dec_mode1 = 0
-  ps_tauola_dec_mode2 = 0
 # ?ps_PYTHIA_verbose = true
 
 # LEP tuned hadronization parameters for pythia
@@ -92,21 +114,32 @@ $rng_method= "rng_stream"
   ?hadronization_active = true
   $shower_method = "PYTHIA6"
 
+# Histogram definition
+  if ?do_hist then
+    $title = "Invaiant mass of mu+mu-"
+    histogram mumu_mass (0 GeV, 260 GeV, 2 GeV)
+    analysis = record mumu_mass ( eval M[e2,E2] )
+  endif
+
 # ##################################################################################
 # Parameters for event simulation
 # ##################################################################################
-
-  # sample_split_n_kbytes = 500  # File size for spliting, if output is too large.
 
   sample_format = lcio
   ?write_raw = false
 
 # could be set on the fly
-  $sample = "example"
-  #luminosity = 10              # to specify nb of events by integrated luminotiy
-  n_events = 10000
+  # On the fly parameter
+  # $sample = "example"
+  # n_events = 10000  
 
 # ##################################################################################
-# compile, integrate, simulate, compile_analysis should follow.
+# simulate, compile_analysis should follow.
 # ##################################################################################
+
+  simulate( zprime_mupair )
+
+  if ?do_hist then
+    compile_analysis { $out_file = "zprime_mupair_analysis.dat" }
+  endif
 

@@ -1,0 +1,17 @@
+#
+# Minimum example of whizard2
+#
+model = SM_CKM                 # Model
+process pair = e1, E1 => e2, E2  # Define process
+
+sqrts = 5000 GeV
+beams = e1, E1
+
+integrate( pair )       # Integrate 
+show( sqrts, results )  # Print results
+
+?write_raw = false      # suppress default output
+$sample = "basic_pair"  # Output file name prefix
+sample_format = lcio    # Output file format
+n_events = 100          # Nb. of events to generate
+simulate( pair )              

@@ -1,87 +1,52 @@
 #!/bin/bash 
-#
-# A sample script to create Zprime events.
-#
-# To run as a KEKCC batch job, ?vis_diags should be false and compile_analysis 
-# should be commented out because latex command is not available  
-# 
-circe_dir=$WHIZARD_DIR/share/circe2/data
+
+source ${HOME}/Tutorial/PartOne/whizard2/whizard2.setup
+
+
 
 rm -rf run
 mkdir -p run
-cd run
+(
+  cd run
 
-cat > run.sin <<EOF
-!
-! Sindarin script for e+ e- --> mu+ mu- with Zprime model 
-!
-  ?vis_diags = true  # Create diagrams of this process
-!
-  \$circe2_file="${circe_dir}/250_SetA_ee024.circe"  
-  beams_pol_density = @(-1),@(1)  
-  ?isr_handler = true 
-!
-  sample_format = lcio
-  \$sample = "E250-SetA.P2f_zp180_mumu.Gwhizard-2_8_5.eL.pR"   
-! 
-  include("../zprime.sin")  # Include the default zprime setting
-!
-! --------------------------------------------------------
-! TO overwrite parameters defined in zprime.sin
-!
-  mZH = 180.0   # Zprime  mass
-  wZH = 0.5     # Zprime width
-  a_lep = 0.25   # Multiply the Z lepton A coupling
-  v_lep  = 0.25  # Multiply the Z lepton V coupling
-!
-! Integration accuracy 
-  iterations = 1:100000, 10:100000, 1:500000
-  relative_error_goal = 0.01
-
-  n_events = 10000
-!
-! --------------------------------------------------------
-! Create libraries and do integration
-compile
-integrate ( zprime_e2e2 ){ ?polarized_events = true } 
-show(results)
-!
-! --------------------------------------------------------
-! Analysis description
-!
-! Allocate plots
-  \$title = "Invaiant mass of \${\mu^+\mu^-}$"
-  \$x_label = "\$M_{\mu^+\mu^-}\$/GeV"
-  histogram mumu_mass (0 GeV, 260 GeV, 2 GeV)
-
-  \$title = "Number of photons per event"
-  \$x_label = "Number of photons"
-  histogram nb_photons ( 0, 10, 1 )
-
-  \$title = "Photon energy "
-  \$x_label = "\$E_{\gamma}\$/GeV"
-  ?y_log = true
-  y_min = 1
-  histogram e_photon (0 GeV, 150 GeV, 2 GeV)
-
-  analysis = record mumu_mass ( eval M[e2,E2] ); 
-             record nb_photons ( count [photon] );
-             record e_photon ( eval E[photon] )
-!
-! ------------------------------------------------------
-! Simulate event
-!
-  simulate ( zprime_e2e2 ){ ?polarized_events = true } 
-!
-! Output analysis results
-  compile_analysis
-
-! End of run.sin
-EOF
-
-# time is optional to record cpu run required for this calculation
+  # Prepare sindarin for this run.  First fill on-the-fly parameters
+ 
+  cat >whizard.sin <<EOF
 #
-time whizard run.sin 2>&1 | tee run.log
+  \$circe2_file = "${WHIZARD_DIR}/share/circe2/data/250_SetA_ee024.circe"
+# Beam poralization
+# beams_pol_density = @(+1), @(-1) # eR.pL
+  beams_pol_density = @(-1), @(+1) # eL.pR
+  beams_pol_fraction = 1.0,1.0
+# 
+  n_events = 10000  # Number of events to generate
+  \$sample = "E250-SetA.P2f_zp180_mumu.Gwhizard-2_8_5.eL.pR"
+#
+# Zprime mass and couplings, to define after reading model file.
+  real my_mZH = 180.0  # Zprime mass
+  real my_lepton_coupling = 0.25  # Multiply the Z lepton A & V coupling
+# 
+#
+# At KEK batch, diagrams and histograms can not be printed-out because latex 
+# command is not installed in batch system. To print, do 
+#    make -f zprime_mass_ana.makefile
+# after batch job ended sucessfully/
+#
+  ?vis_diags = false # true to create diagrams. should be false to run in batch
+#
+  logical ?do_hist = true # true to create histogram
+# 
+  logical ?is_test = false # true for test mode with low precission
+  if ?is_test then
+    n_events = 1000
+  endif
+#
+EOF
+cat ../zprime.sin >> whizard.sin
+
+whizard whizard.sin 2>&1 | tee run.log
+
+)
 
 
 
