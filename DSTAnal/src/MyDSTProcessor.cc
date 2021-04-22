@@ -39,6 +39,9 @@ using namespace marlin ;
 
 MyDSTProcessor aMyDSTProcessor ;
 
+TFile *MyDSTProcessor::_rootf = NULL ;
+TNtuple *MyDSTProcessor::_nt = NULL ;
+
 /**
  * @fn
  * Constructor of MyDSTProcessor.
@@ -67,6 +70,7 @@ MyDSTProcessor::MyDSTProcessor() : Processor("MyDSTProcessor") {
         _rootFileName,
         std::string("myanal.root"));
 
+    
 }
 
 /**
@@ -110,16 +114,17 @@ void MyDSTProcessor::processRunHeader( LCRunHeader* run) {
     int nFloatKeys = params.getFloatKeys(floatKeys).size();
     int nStringKeys = params.getStringKeys(stringKeys).size();
     
-    for ( int i=0; i < nIntKeys ; i++ ) {
+    if ( _nRun < 2 ) { 
+      for ( int i=0; i < nIntKeys ; i++ ) {
         streamlog_out(MESSAGE) << " IntKey: " << intKeys[i] << std::endl;
-    }
-    for ( int i=0; i < nFloatKeys ; i++ ) {
+      }
+      for ( int i=0; i < nFloatKeys ; i++ ) {
         streamlog_out(MESSAGE) << " FloatKey: " << floatKeys[i] << std::endl;
-    }
-    for ( int i=0; i < nStringKeys ; i++ ) {
+      }
+      for ( int i=0; i < nStringKeys ; i++ ) {
         streamlog_out(MESSAGE) << " StringKey: " << stringKeys[i] << std::endl;
-    }
-
+      }
+    } 
 } 
 
 /**
@@ -130,9 +135,8 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
     // this gets called for every event 
     // usually the working horse ...
 
-    // Dump events in first 5 events
     static bool mydebug=true;
-    if( _nEvt > 5 ) { mydebug=false; }
+    if( _nEvt == 1 ) { mydebug=false; }
     if ( mydebug ) {
         streamlog_out(DEBUG) << "   processing event: " << evt->getEventNumber()
                              << "   in run:  " << evt->getRunNumber()
@@ -159,7 +163,6 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
       
     }
 
-//  # if defined(MYDEBUG)
     // MCParticleCollections
     LCCollection* colMP = NULL;
     try { 
@@ -244,7 +247,6 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
     _nt->Fill(visible_energy, float(npart), visible_mass, float(njet), jetmas, csjet, csj1, csj2);  
 
     //-- note: this will not be printed if compiled w/o MARLINDEBUG=1 !
-//   #endif
 
     streamlog_out(DEBUG) << "   processing event: " << evt->getEventNumber() 
         << "   in run:  " << evt->getRunNumber() << std::endl ;

@@ -12,7 +12,9 @@ maxrecords=0   # Analize all events
 
 dstdir=/group/ilc/grid/storm/prod/ilc/mc-2020/ild/dst-merged/250-SetA/higgs/ILD_l5_o1_v02/v02-02
 # dstfile=rv02-02.sv02-02.mILD_l5_o1_v02.E250-SetA.I402009.Pn23n23h.eL.pR.n000.d_dstm_15095_0.slcio
-infile=`find ${dstdir} -name "*.I402009.*.slcio" -print | xargs -I{} echo -n "{} "` 
+
+# Number of input files is limitted to 20, to avoid memory liit over.
+infile=`find ${dstdir} -name "*.I402009.*.slcio" -print | head -20 | xargs -I{} echo -n "{} "` 
 
 echo "Following files will be analized."
 echo ${infile}

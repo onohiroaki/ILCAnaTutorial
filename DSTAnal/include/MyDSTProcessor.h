@@ -71,8 +71,8 @@ class MyDSTProcessor : public Processor {
         
         /** Ntuple to output analysis result
          */
-        TNtuple *_nt {};
-        TFile   *_rootf {} ;  /**< root file object */
+        static TNtuple *_nt;
+        static TFile   *_rootf;  /**< root file object */
 };
 
 #endif

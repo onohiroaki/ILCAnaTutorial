@@ -55,11 +55,12 @@
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <parameter name="Verbosity" type="string">DEBUG </parameter>
   <!--Selects the algorithm and its parameters. E.g. 'kt_algorithm 0.7' or 'ee_kt_algorithm'. For a full list of supported algorithms, see the logfi le after execution.-->
-  <parameter name="algorithm" type="StringVec">kt_algorithm 0.7  </parameter>
+  <!-- parameter name="algorithm" type="StringVec">kt_algorithm 0.7  </parameter -->
+  <parameter name="algorithm" type="StringVec">cambridge_algorithm</parameter>
   <!--One of 'Inclusive <minPt>', 'InclusiveIterativeNJets <nrJets> <minE>', 'ExclusiveNJets <nrJets>', 'ExclusiveYCut <yCut>'. Note: not all modes are available for all algorithms.-->
   <!-- parameter name="clusteringMode" type="StringVec">Inclusive  </parameter --> 
-  <!-- parameter name="clusteringMode" type="StringVec">InclusiveIterativeNJets 2 40.0 </parameter -->
-  <parameter name="clusteringMode" type="StringVec">ExclusiveNJets 2 </parameter>
+  <parameter name="clusteringMode" type="StringVec">InclusiveIterativeNJets 2 40.0 </parameter>
+  <!-- parameter name="clusteringMode" type="StringVec">ExclusiveNJets 2 </parameter -->
   <!--The identified jets-->
   <parameter name="jetOut" type="string" lcioOutType="ReconstructedParticle">JetOut</parameter>
   <!--a list of all reconstructed particles we are searching for jets in.-->
