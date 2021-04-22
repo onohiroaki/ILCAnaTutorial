@@ -40,4 +40,13 @@ M4_DIR=/cvmfs/sft.cern.ch/lcg/releases/LCG_96/m4/1.4.18/x86_64-centos7-gcc8-opt
 export LD_LIBRARY_PATH=${M4_DIR}/lib:${LD_LIBRARY_PATH}
 export PATH=${M4_DIR}/bin:$PATH
 
+# latex
+texok=`latex --version | head -1 | grep -e "TeX Live 2021" -e "Tex Live 2020"`
+if [ "x${texok}" == "x" ] ; then 
+   echo "WARNING: you tex version is old to generate figures by whizard2."
+else
+   if [ -d /usr/local/texlive/2021/bin/x86_64-linux ] ; then 
+      export PATH=/usr/local/texlive/2021/bin/x86_64-linux:${PATH}
+   fi
+fi
 
