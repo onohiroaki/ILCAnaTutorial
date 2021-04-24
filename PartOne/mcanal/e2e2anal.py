@@ -76,15 +76,15 @@ def printData(data, maxdump=1):
         params = event.getParameters()
     #### List Float parameter values
         for key in params.getFloatKeys(strvec):
-           print("    Float parameters "+str(key)+" = " + str(params.getFloatVal(key)) )
+            print("    Float parameters "+str(key)+" = " + str(params.getFloatVal(key)) )
     #### List Int parameter values
         strvec.clear()
         for key in params.getIntKeys(strvec):
-           print("    Int parameters "+str(key)+" = " + str(params.getIntVal(key)) )
+            print("    Int parameters "+str(key)+" = " + str(params.getIntVal(key)) )
     #### List String parameter values
         strvec.clear()
         for key in params.getStringKeys(strvec):
-           print("    String parameters "+str(key)+" = " + str(params.getStringVal(key)) )
+            print("    String parameters "+str(key)+" = " + str(params.getStringVal(key)) )
 
 
     #  print collections in the event 
@@ -97,8 +97,9 @@ def printData(data, maxdump=1):
         print("Number of MCParticle elements ="+str(len(mcps)))
      
         # Loop over all elements of MCParticle collection
-        for ip in range(0, mcps.getNumberOfElements()):
-            mcp = mcps.at(ip)
+        # for ip in range(0, mcps.getNumberOfElements()):
+        #    mcp = mcps.at(ip)  
+        for ip, mcp in enumerate(mcps):
             pv = mcp.getLorentzVec()
             pdgid = mcp.getPDG()
             charge = mcp.getCharge()
@@ -111,13 +112,13 @@ def printData(data, maxdump=1):
             print("#ip=%d: id=%d pdgid=%d status=%d charge=%d #daughters=%d " % 
                  ( ip, mcp.id(), pdgid, status, charge, nb_daughters ), end="" )
             if len(parents) > 0:
-               print(" parents=",end="")
-               for parent in parents:
-                  print("%d " % parent.id(), end="")
+                print(" parents=",end="")
+                for parent in parents:
+                    print("%d " % parent.id(), end="")
             if nb_daughters > 0:
-               print(" daughters:(id,pdg)=",end="")
-               for dau in daughters:
-                   print("(%d,%d)" % (dau.id(), dau.getPDG()),end="")
+                print(" daughters:(id,pdg)=",end="")
+                for dau in daughters:
+                    print("(%d,%d)" % (dau.id(), dau.getPDG()),end="")
             print("")
             print(" (E,px,py,pz)=(%g,%g,%g,%g)" % 
                  ( pv.E(), pv.Px(), pv.Py(), pv.Pz() ) )
@@ -151,18 +152,6 @@ def makeNtuple( data , maxread=1000, genmeta_json=""):
     # =======================================================================
     # Preparing to read and analize files
     # =======================================================================
-    ##  Get enrgy and process id from filename
-    filemeta = decodeFileName(os.path.basename(data["files"][0]))
-    ecm = float(filemeta["E"].split("-")[0])   # Get Energy from file name
-    procid = filemeta["I"]
-
-    ##  Getcross section from a genmeta json file.
-    if genmeta_json == "":
-       genmeta_json = os.environ["HOME"]+"/Tutorial/data/genmetaByID.json"
-    genmeta = json.load(open(genmeta_json))
-    cross_section = float(genmeta[str(procid)]["cross_section_in_fb"])
-    print("  Cross section of procid %s is %s " % ( procid, cross_section ) )
-
     ##  Create a root file.
     dataname = data["alias"]
     rootfile = dataname + ".root"
@@ -170,6 +159,28 @@ def makeNtuple( data , maxread=1000, genmeta_json=""):
     ntev = ROOT.TNtuple("nt",dataname + " analysis", "emum:emup:mmumu:mmiss:mrest")
     print("==== Creating root file " + str(rootfile) )
 
+    ##  Get enrgy and process id from filename
+    filemeta = decodeFileName(os.path.basename(data["files"][0]))
+    ecm = float(filemeta["E"].split("-")[0])   # Get Energy from file name
+
+    ## Get cross_section from input data or genmeta file.
+    if "cross_section" in data:
+        cross_section = float(data["cross_section"])
+        print("Cross section of input file is %f " % ( cross_section ) )
+    else:
+    ##  Getcross section from a genmeta json file.
+        procid = filemeta["I"] 
+        genmeta_json = os.environ["HOME"]+"/Tutorial/data/genmetaByID.json"
+        if not os.path.exists(genmeta_json):
+           print("ERROR : " + genmeta_json + " does not exist.")
+           exit(0)
+        genmeta = json.load(open(genmeta_json))
+        cross_section = float(genmeta[str(procid)]["cross_section_in_fb"]) 
+        print("Cross section of procid %s is %f " % ( procid, cross_section ) )
+
+    # ========================================================================
+    # Create reader
+    # ========================================================================
     reader = LcioReader.LcioReader()
     #######  reader = StdHepReader.StdHepReader()  # Memory leak ?  Not work to read too many files.
     for infile in data["files"]:
@@ -183,16 +194,13 @@ def makeNtuple( data , maxread=1000, genmeta_json=""):
     # Read events in the file, and fill Ntuple
     # =======================================================================
     nread = 0
-    for event in reader:
-        if not event:
-           print("Read EOF at nread ="+str(nread))
-           break
+    for idx, event in enumerate(reader):
         if maxread > 0 and nread >= maxread:
-           print("Reached maxread(%d) at nread=%d" % (maxread, nread))
-           break
+            print("Reached maxread(%d) at nread=%d" % (maxread, nread))
+            break
         nread = nread + 1
         if nread%1000 == 0:
-           print(" reading "+str(nread)+"-th event")
+            print(" reading "+str(nread)+"-th event")
 
         psum = ROOT.TLorentzVector(0.0, 0.0, 0.0, 0.0)
         pmum = ROOT.TLorentzVector(0.0, 0.0, 0.0, 0.0)
@@ -205,26 +213,30 @@ def makeNtuple( data , maxread=1000, genmeta_json=""):
         # and find mu+ and mu- of the highest energy
         for mcp in event.getCollection("MCParticle"):
             if mcp.getGeneratorStatus() == 1 :  # select final state particles
-               p = mcp.getLorentzVec()
-               psum += p
-               pdg = mcp.getPDG()
-               if pdg == 13 and p.E() > pmum.E():
-                  pmum = p
-               if pdg == -13 and p.E() > pmup.E():
-                  pmup = p
+                p = mcp.getLorentzVec()
+                psum += p
+                pdg = mcp.getPDG()
+                if pdg == 13 and p.E() > pmum.E():
+                    pmum = p
+                if pdg == -13 and p.E() > pmup.E():
+                    pmup = p
             
         pmumu = pmum + pmup   
         mumumas = pmumu.M()
-        missmas = (pini - pmumu).M()
-        restmas = ( psum - pmum - pmup ).M()
+        missmas = (pini - pmumu).M()          # Mass recoil to mu+, mu- 
+        restmas = ( psum - pmum - pmup ).M()  # Mass other than mu+, mu-
 
         # Fiil variables in Ntuple
         ntev.Fill(float(pmum.E()), float(pmup.E()), float(mumumas), float(missmas), float(restmas))
+ 
+        if nread >= nbevents :
+            print("### COmpleted last event. Nread is "+str(nread))
+            break 
     
     print("### Read "+str(nread)+" events")
-    intlumi = float(nread)/cross_section
+    intlumi = float(nread)/cross_section if float(cross_section) > 0.0 else 0.0
     rfile.Write()
-    rfile.Close()
+    rfile.Close()    # Close root file
 
     ret = {"cm_energy":ecm, "cross_section":cross_section, "nread":nread, "intlumi":intlumi, 
            "rootfile":rootfile}
@@ -249,7 +261,7 @@ def makePlot(indata, lumi=2000.0, plotpref="plot"):
     
     # Get information from input data
     pldata = []
-    # Polarization factor for (e-,e+)=(-80%,+30%)
+    # Weight factor for polarization (e-,e+)=(-80%,+30%)
     pol_factor = {"eLpR":0.585, "eRpL":0.035}
 
     # Get Ntuple from root files
@@ -273,12 +285,12 @@ def makePlot(indata, lumi=2000.0, plotpref="plot"):
     # ===============================================================================
     # Plots of all histogram
     # ===============================================================================
-    # Draw uppper figure
+    ## Draw uppper figure
     c1.cd(1)
     selection = "mmumu >81.0 && mmumu < 101.0"  # Event selection condition
     nsel = pldata[0]["nt"].Draw("mmiss",selection)
     pldata[0]["hist"] = pldata[0]["nt"].GetHistogram()
-    pldata[0]["hist"].Scale(pldata[0]["scale"])
+    pldata[0]["hist"].Scale(pldata[0]["scale"])  # Scale histogram by polarization and integrated luminosity
     ROOT.gPad.SetGridx(1)
     ROOT.gPad.SetGridy(1)
     pldata[0]["hist"].SetTitle("Number of events for %d fb^{-1}" % int(lumi))
@@ -290,23 +302,24 @@ def makePlot(indata, lumi=2000.0, plotpref="plot"):
             nsel = pldata[ip]["nt"].Draw("mmiss",selection,"same")
             pldata[ip]["hist"] = pldata[ip]["nt"].GetHistogram()
             pldata[ip]["hist"].Scale(pldata[ip]["scale"])
-
+    
+    ## write labels
     xpos = 0.7
     ypos = 0.7
     dy = 0.07
     for ip in range(0, len(pldata)):
-       pldata[ip]["label"] = ROOT.TLatex(xpos, ypos, pldata[ip]["alias"])
-       pldata[ip]["label"].SetNDC(1)
-       pldata[ip]["label"].SetTextColor(pldata[ip]["color"])
-       pldata[ip]["label"].Draw("same")
-       ypos = ypos - dy
+        pldata[ip]["label"] = ROOT.TLatex(xpos, ypos, pldata[ip]["alias"])
+        pldata[ip]["label"].SetNDC(1)
+        pldata[ip]["label"].SetTextColor(pldata[ip]["color"])
+        pldata[ip]["label"].Draw("same")
+        ypos = ypos - dy
    
     # ===============================================================================
     # Sum eLpR and eRpL hists and create sum hist of higgs and 2f_Z_l
     # ===============================================================================
     plindex = {}
     for ip in range(0, len(pldata)):
-      plindex[pldata[ip]["alias"]] = ip 
+        plindex[pldata[ip]["alias"]] = ip 
 
     # Draw summed scaled histogram in 2nd canvas
     c1.cd(2)
@@ -330,12 +343,12 @@ def makePlot(indata, lumi=2000.0, plotpref="plot"):
     dy = 0.07
     lbsum = {}
     for k in ["higgs + zz_sl", "zz_sl"]:
-       color = 21 if k == "zz_sl" else 48
-       lbsum[k] = ROOT.TLatex(xpos, ypos, k)
-       lbsum[k].SetNDC(1)
-       lbsum[k].SetTextColor(color)
-       lbsum[k].Draw("same")
-       ypos = ypos - dy
+        color = 21 if k == "zz_sl" else 48
+        lbsum[k] = ROOT.TLatex(xpos, ypos, k)
+        lbsum[k].SetNDC(1)
+        lbsum[k].SetTextColor(color)
+        lbsum[k].Draw("same")
+        ypos = ypos - dy
 
     # Count number of events in 123 to 130 GeV
     hmin = 123.0
@@ -387,14 +400,14 @@ def getDatalist(tutorial=True):
         {"alias":"zz_sl-eLpR", "search":basepath + "/4f/E250-TDR_ws.P4f_zz_sl.*.eL.pR.I106575.*.stdhep"},
         {"alias":"zz_sl-eRpL", "search":basepath + "/4f/E250-TDR_ws.P4f_zz_sl.*.eR.pL.I106576.*.stdhep"} ]
         for ip in range(0, len(datalist)):
-           datalist[ip]["files"] = sorted(glob.glob(datalist[ip]["search"]))
-           print("Found " + str(len(datalist[ip]["files"])) + " files for "+datalist[ip]["alias"])
-           if len(datalist[ip]["files"]) == 0:
-              print("No files found for " + datalist[ip]["alias"])
-              exit(0)
-           if "stdhep" in ",".join(datalist[ip]["files"]):
-              print("Reading stdhep is disabled because of a memory leak.")
-              exit(0)
+            datalist[ip]["files"] = sorted(glob.glob(datalist[ip]["search"]))
+            print("Found " + str(len(datalist[ip]["files"])) + " files for "+datalist[ip]["alias"])
+            if len(datalist[ip]["files"]) == 0:
+                print("No files found for " + datalist[ip]["alias"])
+                exit(0)
+            if "stdhep" in ",".join(datalist[ip]["files"]):
+                print("Reading stdhep is disabled because of a memory leak.")
+                exit(0)
            
 
     return datalist 
@@ -410,11 +423,13 @@ if __name__ == '__main__':
 
     ##### Excersize 1.
     printData(datalist[0])
+    print("")     # Just a blank line at the end
 
     ##### Excersize 2
     for ip  in range(0, len(datalist)):
-       ret = makeNtuple( datalist[ip], maxread=1000)    # maxread = 0 to read all events in file.
-       datalist[ip].update(ret)     
+        ret = makeNtuple( datalist[ip], maxread=1000)    # maxread = 0 to read all events in file.
+        datalist[ip].update(ret)     
+        print("")     # Just a blank line at the end
     json.dump(datalist, open("e2e2anal.json","w"))  # Write analysis parameter as json file.
 
     #####Excersize 3
