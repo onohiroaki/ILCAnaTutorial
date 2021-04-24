@@ -74,10 +74,10 @@
 ###########################################################################
 # Parameters for integration iteration, larger values for precise results
   if not ?is_test then
-    iterations = 5:100000, 10:100000
+    iterations = 5:100000:"gw", 10:100000
     relative_error_goal = 0.01
   else
-    iterations = 5:10000, 10:10000
+    iterations = 5:10000:"gw", 10:10000
     relative_error_goal = 0.02
   endif
 

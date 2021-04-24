@@ -2,8 +2,6 @@
 
 source ${HOME}/Tutorial/PartOne/whizard2/whizard2.setup
 
-
-
 rm -rf run
 mkdir -p run
 (
@@ -32,7 +30,9 @@ mkdir -p run
 #    make -f zprime_mass_ana.makefile
 # after batch job ended sucessfully/
 #
-  ?vis_diags = false # true to create diagrams. should be false to run in batch
+  ?vis_diags = true # true to create diagrams. should be false to run in batch
+#
+  ?vis_history = true # display integration history
 #
   logical ?do_hist = true # true to create histogram
 # 

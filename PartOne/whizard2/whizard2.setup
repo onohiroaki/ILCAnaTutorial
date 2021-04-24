@@ -41,7 +41,7 @@ export LD_LIBRARY_PATH=${M4_DIR}/lib:${LD_LIBRARY_PATH}
 export PATH=${M4_DIR}/bin:$PATH
 
 # latex
-texok=`latex --version | head -1 | grep -e "TeX Live 2021" -e "Tex Live 2020"`
+texok=`latex --version | head -1 | grep -e "TeX Live 2021" -e "TeX Live 2020"`
 if [ "x${texok}" == "x" ] ; then
    if [ -d /usr/local/texlive/2021/bin/x86_64-linux ] ; then
       export PATH=/usr/local/texlive/2021/bin/x86_64-linux:${PATH}
