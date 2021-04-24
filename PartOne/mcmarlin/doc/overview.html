@@ -1,0 +1,59 @@
+/**
+
+\mainpage MCMarlin : ilcsoft sample program 
+
+<h2>Overview</h2>
+
+This directory contains an example to run a program 
+to analize MCParticle collection of LCIO file. 
+For study of mu+ mu- h events, recoil mass respect to mu+ mu- system,
+etc are calcualated and saved in a root file.
+
+The source code is src/MCMarlin.cc
+An example to access LCIO object and create a root Ntuple 
+will be found there.
+
+To build the program,  
+
+<pre>
+$ . /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-01/init_ilcsoft.sh
+$ mkdir build
+$ cd build
+$ cmake -C ${ILCSOFT}/ILCSoft.cmake ..
+$ make 
+$ make install
+</pre>
+
+To run interactively, 
+<pre>
+$ cd run 
+$ ./run.sh 
+</pre>
+
+This will analize mu+ mu- h sample in ~/Tutorial/data.
+A file, mcmarlin.root, is created.
+
+To run in batch at KEKCC, do 
+<pre>
+$ . bsub.sh 
+</pre>
+
+
+This will submit a batch job and creates a file.
+
+The root file contains a ntuple named "nt", which has following leaves.
+<pre>
+1. Variables calculated from MCParticle objects
+  emum  : selected mu- energy
+  emup  : selected mu+ energy
+  mmumu : mu+mu- mass
+  mrecoil : mass recoil to the mu+ mu- system
+  mrest  : observed mass excluding mu+ mu- 
+
+</pre>
+
+-------------------------------------------------
+Akiya Miyamoto
+23 April, 2021
+
+*/
