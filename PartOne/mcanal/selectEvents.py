@@ -50,8 +50,8 @@ def selectEvents( inputFileName, outputFileName , maxread=1000):
 
     # create a reader
     if not os.path.exists(inputFileName): 
-       print(inputFileName + " does not exist.")
-       exit(0)
+        print(inputFileName + " does not exist.")
+        exit(0)
 
     reader = LcioReader.LcioReader( str(inputFileName) )
     print("Input file is " + inputFileName)
@@ -59,8 +59,8 @@ def selectEvents( inputFileName, outputFileName , maxread=1000):
     # create a writer
     print("Selected events are written in " + outputFileName)
     if os.path.exists(outputFileName):
-       print("Output file, " + outputFileName + ", exists. Remove it first.")
-       exit(0) 
+        print("Output file, " + outputFileName + ", exists. Remove it first.")
+        exit(0) 
 
     writer = IOIMPL.LCFactory.getInstance().createLCWriter()
     writer.open( str(outputFileName), EVENT.LCIO.WRITE_NEW ) 
@@ -85,20 +85,23 @@ def selectEvents( inputFileName, outputFileName , maxread=1000):
     ntev = ROOT.TNtuple("nt","event selection", "emum:emup:mmumu:mmiss:mrest")
     print("==== Creating root file " + str(rootfile) )
 
+    nbevents = reader.getNumberOfEvents() 
+    print("There are " + str(nbevents) + " events in this file.")
+
     # =======================================================================
     # Read events in the file, and fill Ntuple
     # =======================================================================
     nread = 0
     for event in reader:
-        if not event:
-           print("Read EOF at nread ="+str(nread))
-           break
+        if nread >= nbevents:
+            print("### Completed selection of input file(s) at nread=%d, nwrite=%d" % (nread, nwrite))
+            break
         if maxread > 0 and nread >= maxread:
-           print("Reached maxread(%d) at nread=%d" % (maxread, nread))
-           break
+            print("Reached maxread(%d) at nread=%d" % (maxread, nread))
+            break
         nread = nread + 1
         if nread%1000 == 0:
-           print(" reading "+str(nread)+"-th event")
+            print(" reading "+str(nread)+"-th event")
 
         psum = ROOT.TLorentzVector(0.0, 0.0, 0.0, 0.0)
         pmum = ROOT.TLorentzVector(0.0, 0.0, 0.0, 0.0)
@@ -115,13 +118,13 @@ def selectEvents( inputFileName, outputFileName , maxread=1000):
         # and find mu+ and mu- of the highest energy
         for mcp in mcps:
             if mcp.getGeneratorStatus() == 1 :  # select final state particles
-               p = mcp.getLorentzVec()
-               psum += p
-               pdg = mcp.getPDG()
-               if pdg == 13 and p.E() > pmum.E():
-                  pmum = p
-               if pdg == -13 and p.E() > pmup.E():
-                  pmup = p
+                p = mcp.getLorentzVec()
+                psum += p
+                pdg = mcp.getPDG()
+                if pdg == 13 and p.E() > pmum.E():
+                    pmum = p
+                if pdg == -13 and p.E() > pmup.E():
+                    pmup = p
             
         pmumu = pmum + pmup   
         mumumas = pmumu.M()
@@ -135,34 +138,34 @@ def selectEvents( inputFileName, outputFileName , maxread=1000):
         # Select events
         # #################################################
         
-        if float(mumumas) < MASS_MIN or float(mumumas) > MASS_MAX:
-           continue
+        if float(mumumas) >= MASS_MIN and float(mumumas) <= MASS_MAX:
 
-        # Passed event selection.  Create output collection
-        nwrite = nwrite + 1
-        print("Passed selection: M(mumu)=%f, nwrite/nread=%d/%d" % ( float(mumumas), nwrite, nread))
-        writeEvent = IMPL.LCEventImpl()
-        # Event header
-        writeEvent.setEventNumber( event.getEventNumber() )
-        writeEvent.setRunNumber( aRunNumber )
-        writeEvent.setDetectorName( event.getDetectorName() )
-        writeEvent.setTimeStamp( event.getTimeStamp() )
-        copyObjectParameters( event, writeEvent )
-        # Event parameters
-        writeParams = writeEvent.getParameters()
-        # keyVec = ROOT.vector("string")()
-        writeParams.setValue("nwrite", nwrite)  # integer
-        writeParams.setValue("mumu_mass", float(mumumas))  # float
-
-        # Collections
-        for colname in ["MCParticle"]:
-          col = event.getCollection( colname )
-          colwrite = copy.deepcopy(col)
-          writeEvent.addCollection( colwrite, colwrite.getTypeName()) # Add input correction to output
-
-        # Write event
-        writer.writeEvent( writeEvent )
+            # Passed event selection.  Create output collection
+            nwrite = nwrite + 1
+            if nwrite < 10 or nwrite%1000 == 1:
+                print("Passed selection: M(mumu)=%f, nwrite/nread=%d/%d" % ( float(mumumas), nwrite, nread))
+            writeEvent = IMPL.LCEventImpl()
+            # Event header
+            writeEvent.setEventNumber( event.getEventNumber() )
+            writeEvent.setRunNumber( aRunNumber )
+            writeEvent.setDetectorName( event.getDetectorName() )
+            writeEvent.setTimeStamp( event.getTimeStamp() )
+            copyObjectParameters( event, writeEvent )
+            # Event parameters
+            writeParams = writeEvent.getParameters()
+            # keyVec = ROOT.vector("string")()
+            writeParams.setValue("nwrite", nwrite)  # integer
+            writeParams.setValue("mumu_mass", float(mumumas))  # float
     
+            # Collections
+            for colname in ["MCParticle"]:
+                col = event.getCollection( colname )
+                colwrite = copy.deepcopy(col)
+                writeEvent.addCollection( colwrite, colwrite.getTypeName()) # Add input correction to output
+    
+            # Write event
+            writer.writeEvent( writeEvent )
+
     # close file at the end.
     writer.flush()
     writer.close
