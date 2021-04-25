@@ -4,17 +4,6 @@
 #
 # install ilcsoft-base and ilcsoft itself.
 # 
-# Required packages ( in the case of Ubuntu 20.04. Need corresponding packages for CentOS7
-#
-# apt install -y net-tools gcc g++ gfortran openssh-server vim git
-# apt install -y ocaml python2 mysql-client libmysqlclient-dev make curl 
-# apt install -y libclang-dev libopengl-dev llvm-10 llvm
-# apt install -y doxygen cmake libxml2-dev uuid-dev 
-# apt install -y libxpm-dev xpmutils libxft-dev libxext-dev
-# apt install -y libpython2.7-dev libpython2-stdlib
-# apt install -y dpkg-dev gsl-bin libgsl-dev python-numpy libjpeg-dev libgif-dev libtiff-dev cmake-curses-gui
-# apt install -y imagemagick mesa-common-dev libglu1-mesa-dev
-#
 install_dir=${HOME}/Tutorial/sw/x86_64_gcc82_centos7
 ncores=8    # Number of cores to use for build
 
