@@ -21,9 +21,9 @@ n_events = 1000  # Number of events to generate
 #    make -f mumu_mass_ana.makefile
 # after batch job ended sucessfully/
 #
-?vis_diags = false # true to create diagrams
+?vis_diags = true # true to create diagrams
 #
-logical ?do_hist = hist # true to create histogram
+logical ?do_hist = true # true to create histogram
 # 
 logical ?is_test = false # true for test mode with low precission
 #
