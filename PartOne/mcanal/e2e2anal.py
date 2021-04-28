@@ -230,7 +230,7 @@ def makeNtuple( data , maxread=1000, genmeta_json=""):
         ntev.Fill(float(pmum.E()), float(pmup.E()), float(mumumas), float(missmas), float(restmas))
  
         if nread >= nbevents :
-            print("### COmpleted last event. Nread is "+str(nread))
+            print("### Completed last event. Nread is "+str(nread))
             break 
     
     print("### Read "+str(nread)+" events")
