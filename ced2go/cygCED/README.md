@@ -3,25 +3,20 @@
 CED server, `glced.exe`, was built with cygwin Windows and prepared as 
 an standalone application. 
 
-## How to download and unpack
- 
-### Donwload [cygced-v01-09-02.tar.xz](cygCED-v01-09-02.tar.xz) 
-sha256sum and md5sum of the file is as follows.
-```
-$ sha256sum cygCED-v01-09-02.tar.xz
-15de73b469e4ccf63eb6ee8334be54298e9b23cf793fb472c09ab6be081eecd8  cygCED-v01-09-02.tar.xz
+## Use pre-build library
 
-$ md5sum cygCED-v01-09-02.tar.xz
-2c4dc6aaa15f3e4bc031da981765e98e  cygCED-v01-09-02.tar.xz
-```
-### Unpack it and add the directory to your command path.
-```
-$ tar Jxf cygCED-v01-09-02.tar.xz
-```
+Binaries for cygwin is prepared on github. 
+To use them, download it and put files in your command path. 
 
+```
+$ wget https://github.com/akiyamiyamoto/CED/releases/download/v01-09-03-cyg/cygCED-bin.tar.gz
+# Make sure sha256sum is same shown at https://github.com/akiyamiyamoto/CED/releases/tag/v01-09-03-cyg
+$ mkdir CEDbin
+$ tar zxf cygCED-bin.tar.gz -C CEDbin
+$ export PATH=CEDbin:${PATH}  
+```
 ### Test run 
 ```
-$ export PATH=${PWD}/cygced-v01-09-02:${PATH}
 $ glced.exe & 
 $ glced_hits.exe
 ```
@@ -37,29 +32,41 @@ a figure as shown below.
 ### Build iLCUtil
 
 ```
-$ wget -O iLCUtil-01-05.zip https://github.com/iLCSoft/iLCUtil/archive/v01-05.zip
-$ unzip iLCUtil-01-05.zip 
-$ mv iLCUtil-01-05 ilcutil-01-05
-$ cd ilcutil-01-05 && mkdir build && cd build 
-$ cmake ..
-$ make && make install
-$ cd ..
+# Build ilcutil
+wget -O iLCUtil-01-05.zip https://github.com/iLCSoft/iLCUtil/archive/v01-06-01.tar.gz
+tar zxf v01-06-01.tar.gz
+mv iLCUtil-01-06-01 v01-06-01
+cd v01-06-01
+
+mkdir build
+pushd 
+  cd build
+  cmake ..
+  make -j 4
+  make install
 ```
 ilcutil is installed in the current directory
 
 ### Buuild CED server
 
 ```
-$ wget -O CED-01-09.zip https://github.com/iLCSoft/CED/archive/master.zip
-$ unzip CED-01-09.zip
-$ cd CED-01-09
-$ export ilcutil="`pwd`/ilcutil-01-05"
-$ export LD_LIBRARY_PATH="${ilcutil}/lib:${LD_LIBRARY_PATH}"
-$ export CMAKE_PREFIX_PATH="${ilcutil}"
-$ mkdir build && cd build && cmake ..
-$ make && make install
+export ILCUTIL_DIR=<ilcutil_dir>
+
+git clone https://github.com/akiyamiyamoto/CED.git
+pushd CED
+  tar zxf cygCED-v01-09-03.tar.gz
+  mv v01-09-03-cygwin v01-09-03
+  pushd v01-09-03
+    mkdir build
+    pushd build
+      cmake -DCMAKE_INSTALL_PREFIX=<install_dir> .. 2>&1 | tee mycmake.log
+      make -j 4 2>&1 | tee mymake.log
+      make -j 4 install 2>&1 | tee myinstall.log
+    popd
+  popd
+
 ```
 Libraries and executables are install in `lib` and `bin` directories.
-
+`dll` in lib should be copied to `bin` directory of `glced`
 
  
