@@ -6,4 +6,4 @@ if [ ! -e lcgeo ] ; then
   ln -s ${lcgeo_DIR} lcgeo
 fi
 
-geoDisplay -compact simple01.xml
+geoDisplay -compact exam01.xml
