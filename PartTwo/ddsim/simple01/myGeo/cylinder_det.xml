@@ -1,0 +1,45 @@
+<lccdd>
+  <detectors>
+  <detector id="2" name="ContainmentShell" type="DD4hep_CylinderShell" vis="TPCVis" readout="ContainmentHits" >
+      <comment>Containment shell to measure calorimeter escapes</comment>
+      <material name="Air"/>
+      <module name="Barrel1" id="0" vis="RedVis">
+        <zplane rmin="20*cm" rmax="22*cm" z="-200*cm"/>
+        <zplane rmin="20*cm" rmax="22*cm" z="200*cm"/>
+      </module>  
+      <module name="Barrel2" id="1" vis="RedVis">
+        <zplane rmin="70*cm" rmax="72*cm" z="-200*cm"/>
+        <zplane rmin="70*cm" rmax="72*cm" z="200*cm"/>
+      </module>  
+      <module name="Barrel3" id="2" vis="RedVis">
+        <zplane rmin="120*cm" rmax="122*cm" z="-200*cm"/>
+        <zplane rmin="120*cm" rmax="122*cm" z="200*cm"/>
+      </module>  
+
+<!--
+        <zplane rmin="HcalBarrel_rmax+20*cm" rmax="HcalBarrel_rmax+22*cm" z="-2*HcalBarrel_zmax"/>
+        <zplane rmin="HcalBarrel_rmax+20*cm" rmax="HcalBarrel_rmax+22*cm" z="2*HcalBarrel_zmax"/>
+      </module>
+
+      <module name="SideA" id="1" vis="VisibleRed">
+        <zplane rmin="0" rmax="HcalBarrel_rmax+22*cm" z="2*HcalBarrel_zmax+10*cm"/>
+        <zplane rmin="0" rmax="HcalBarrel_rmax+22*cm" z="2*HcalBarrel_zmax+20*cm"/>
+      </module>
+      <module name="SideB" id="2" vis="VisibleRed">
+        <zplane rmin="0" rmax="HcalBarrel_rmax+22*cm" z="-(2*HcalBarrel_zmax+10*cm)"/>
+        <zplane rmin="0" rmax="HcalBarrel_rmax+22*cm" z="-(2*HcalBarrel_zmax+20*cm)"/>
+      </module>
+-->
+    </detector>
+
+  </detectors>
+<!--
+  to be joined by a sensitive detector:
+-->
+  <readouts>
+    <readout name="ContainmentHits">
+      <id>system:8,barrel:3</id>
+    </readout>
+  </readouts>
+
+</lccdd>
