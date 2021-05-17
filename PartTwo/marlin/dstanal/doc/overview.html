@@ -1,0 +1,59 @@
+/**
+
+\mainpage DSTAnalysis : ilcsoft sample program 
+
+<h2>Overview</h2>
+
+This directory contains an example to run MarlinFastJet on 
+ILD DBD DST file and create a root file of visible mass, 
+jet mass etc by a user program.
+
+The source code is src/MyDSTProcessor.cc
+An example to access LCIO object and create a root Ntuple 
+will be found there.
+
+To build the program,  
+
+<pre>
+$ . /cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-01/init_ilcsoft.sh
+$ mkdir build
+$ cd build
+$ cmake -C ${ILCSOFT}/ILCSoft.cmake ..
+$ make 
+$ make install
+</pre>
+
+To run interactively, 
+<pre>
+$ cd run 
+$ ./rundst.sh 
+</pre>
+
+This will analize sample created by runmarlin example of Tutorial.
+A file, myanal.root, is created in the current directory.
+
+To analize the ILD optimization sample at KEKCC, do 
+<pre>
+$ . bsub.sh 
+</pre>
+
+This will submit a batch job and creates a file, anal_many.root
+
+The root file contains a ntuple named "nt", which has following leaves.
+<pre>
+1. Variables calculated by all PandoraPFOs objects
+  ev   : visible energy
+  np   : number of particles
+  mass : visible mass
+
+</pre>
+
+Note that input file include aa_lowpt background tracks and 
+options and parameters are not optimized for the best result.
+It is prepared as an example.
+
+-------------------------------------------------
+Akiya Miyamoto
+24-May, 2021
+
+**/

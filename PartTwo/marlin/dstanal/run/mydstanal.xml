@@ -1,0 +1,78 @@
+<!--
+  Steering file for dstanal.
+
+-->
+
+<marlin>
+  <!-- ### Constants section #################################################### -->
+  <constants>
+    <!-- Global constant for dstanal --> 
+    <constant name="DoOutput" value="false" />
+  </constants>
+
+  <!-- ### Execute section: defines module to execute ########################### -->
+  <execute>
+
+    <processor name="myDSTProcessor"/>
+
+    <!-- Do output or -->
+    <if condition="${DoOutput}">
+       <processor name="MyLCIOOutputProcessor"/>  
+    </if>
+
+  </execute>
+
+  <!-- ### Global parameters ################################################### -->
+  <global>
+    <parameter name="LCIOInputFiles"> 
+       input_dstfile.slcio
+    </parameter>
+    <!-- limit the number of processed records (run+evt): -->  
+    <parameter name="MaxRecordNumber" value="0" />  
+    <parameter name="SkipNEvents" value="0" />  
+    <parameter name="SupressCheck" value="false" />  
+    <parameter name="GearXMLFile"> GearOutput.xml  </parameter>  
+    <!--  <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG  </parameter> -->
+    <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter> 
+    <parameter name="RandomSeed" value="1234567890" />
+    <parameter name="OutputSteeringFile" value="output_mydstanal.xml"/>
+   </global>
+
+  <!-- ### Parameters of mydstanal ################################################### -->
+    <processor name="myDSTProcessor" type="MyDSTProcessor">
+    <!-- description not set by author -->
+    <!--Name of the ReconsructedParticle collection-->
+    <parameter name="ReconstructedParticleCollectionName" type="string" lcioInType="ReconstructedParticle">PandoraPFOs </parameter>
+    <!--Root file name to output Ntuples, etc-->
+    <parameter name="RootFileName" type="string">myanal.root </parameter>
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <parameter name="Verbosity" type="string">DEBUG </parameter>
+    <!--Select events if true-->
+    <parameter name="DoSelection" type="bool">"false"</parameter>
+    <!--Max number of events to output. -1 for no limit-->
+    <parameter name="MaxEventsToWrite" type="int">-1</parameter>
+
+  </processor>
+   
+  <!-- ### Parameters of output processor ################################################### -->
+  <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
+    <!--Writes the current event to the specified LCIO outputfile. Needs to be the last ActiveProcessor.-->
+    <!--drops the named collections from the event-->
+    <!--parameter name="DropCollectionNames" type="StringVec">TPCHits HCalHits  </parameter-->
+    <!--drops all collections of the given type from the event-->
+    <!--parameter name="DropCollectionTypes" type="StringVec">SimTrackerHit SimCalorimeterHit  </parameter-->
+    <!-- write complete objects in subset collections to the file (i.e. ignore subset flag)-->
+    <!--parameter name="FullSubsetCollections" type="StringVec">MCParticlesSkimmed  </parameter-->
+    <!--force keep of the named collections - overrules DropCollectionTypes (and DropCollectionNames)-->
+    <!--parameter name="KeepCollectionNames" type="StringVec">MyPreciousSimTrackerHits  </parameter-->
+    <!-- name of output file -->
+    <parameter name="LCIOOutputFile" type="string">outputfile.slcio </parameter>
+    <!--write mode for output file:  WRITE_APPEND or WRITE_NEW-->
+    <parameter name="LCIOWriteMode" type="string">WRITE_NEW</parameter>
+    <!--will split output file if size in kB exceeds given value - doesn't work with APPEND and NEW-->
+    <!--parameter name="SplitFileSizekB" type="int">1992294 </parameter-->
+    <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+    <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
+  </processor>
+  
+</marlin>
