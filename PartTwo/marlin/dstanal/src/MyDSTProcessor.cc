@@ -59,13 +59,20 @@ MyDSTProcessor::MyDSTProcessor() : Processor("MyDSTProcessor") {
 
     _description = "A sample DST analysis processor " ;
 
-    // register steering parameters: name, description, class-variable, default value
+    // register input collection: type, name, description, variable, default
+    //
+    // "type" is a collection type defined in ${LCIO}/src/cpp/src/IMPL/LCIO.cc
+    //
+    // marlin fills value in variable, which is defined as a class variable 
+    // for use in other member functions. Class variable begins with "_" 
+    // according to the ILCSoft nameing convention.
     registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
         "ReconstructedParticleCollectionName",
         "Name of the ReconsructedParticle collection"  ,
         _colNamePFOs,  std::string("PandoraPFOs")
     );
 
+    // register steering parameters: name, description, class-variable, default
     registerProcessorParameter("RootFileName",
         "Root file name to output Ntuples, etc",
         _rootFileName, std::string("myanal.root"));
@@ -77,6 +84,13 @@ MyDSTProcessor::MyDSTProcessor() : Processor("MyDSTProcessor") {
     registerProcessorParameter("MaxEventsToWrite", 
         "Max number of events to output.", 
         _noutMax, int(-1));
+
+    // In case of multiple values, use Vecs as follows
+    //   FloatVec _vec_variables; 
+    //   FloatVec vec_defaults;
+    //   registerProcessParameter("multi_variables", "example of vec.",
+    //           _vec_variables, vec_defaults, vec_defaults.size();
+    //
     
 }
 
@@ -145,6 +159,7 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
 
     const LCParameters& params = evt->getParameters();
     const double cmenergy = params.getFloatVal( "Energy" );
+    _nEvt ++ ;
 
     static int noutEvents = 0;
     bool good_event = false;  // Output event if true.
@@ -152,7 +167,7 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
     static bool mydebug=true;
     if ( mydebug ) {
         mydebug = false;
-        streamlog_out(DEBUG) << "   processing event: " << evt->getEventNumber()
+        streamlog_out(DEBUG) << "   begin processing event: " << evt->getEventNumber()
                              << "   in run:  " << evt->getRunNumber()
                              << std::endl ;
 //        LCTOOLS::dumpEvent(evt);
@@ -223,9 +238,9 @@ void MyDSTProcessor::processEvent( LCEvent * evt ) {
 
     // Fill data into Ntuple 
 
-    streamlog_out(DEBUG) << "   processing event: " << evt->getEventNumber() 
+    streamlog_out(DEBUG) << "   nEvt (nRecord) =" << _nEvt 
+                         << "   processed event: " << evt->getEventNumber() 
                          << "   in run:  " << evt->getRunNumber() << std::endl ;
-    _nEvt ++ ;
 
     // Set return value always true.
     // setReturnValue( true );
