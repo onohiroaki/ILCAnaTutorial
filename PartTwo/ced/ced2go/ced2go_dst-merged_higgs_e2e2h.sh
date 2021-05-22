@@ -1,9 +1,5 @@
 #
-#  Before source this file, do 
-#  $ export CED_PORT=<port_number>
-#
 #  ced2to will starts glced, then cedviewer.
-#
 #
 
 # If ced2go not in PATH, source init_ilcsoft

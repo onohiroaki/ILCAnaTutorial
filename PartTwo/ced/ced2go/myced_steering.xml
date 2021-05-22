@@ -11,20 +11,25 @@
 
 
 <marlin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ilcsoft.desy.de/marlin/marlin.xsd">
+ <constants>
+  <!--- viewer name -->
+  <constant name="viewer" value="MyDSTViewer"/>
+ </constants>
+
+
+
  <execute>
-  $Viewer$
+   <processor name="${viewer}"/>
  </execute>
 
  <global>
-<parameter name="LCIOInputFiles"> 
-$LCIOInputFiles$
-  </parameter>
+  <parameter name="LCIOInputFiles"> lciofile </parameter>
 
   <!-- limit the number of processed records (run+evt): -->  
   <parameter name="MaxRecordNumber" value="5001" />  
   <parameter name="SkipNEvents" value="0" />  
   <parameter name="SupressCheck" value="false" />  
-  <parameter name="GearXMLFile"> $GearXMLFile$ </parameter>  
+  <parameter name="GearXMLFile"> GearFile </parameter>  
 <parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter>
   <!-- parameter name="Verbosity" options="DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> MESSAGE  </parameter --> 
 
