@@ -26,6 +26,22 @@ viewer="MyCEDViewer"
 # datafile=rv02-02.sv02-02.mILD_l5_o1_v02.E250-SetA.I402003.Pe2e2h.eL.pR.n000.d_dstm_15089_0.slcio
 # viewer="MyDSTViewer"
 
+# Example to view Delphes file. Add following two options
+#       --MyDSTViewer.ParticleCollection="PFOs" \
+#       --MyDSTViewer.JetCollections="Jets Durham_2Jets Durham_3Jets Durham_4Jets Durham_5Jets Durham_6Jets" \
+datadir=~/Tutorial/data
+datafile=delphes_E250.Pe2e2h.eL.pR.slcio
+viewer="MyDSTViewer"
+
+# Geometry file of ILD_L5_v02
+gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/StandardConfig/production/Gear/gear_ILD_l5_o1_v02.xml
+
+Marlin --global.LCIOInputFiles=${datadir}/${datafile} \
+       --global.GearXMLFile=${gearfile} \
+       --constant.viewer=${viewer} \
+       myced_steering.xml
+
+
 gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/StandardConfig/production/Gear/gear_ILD_l5_o1_v02.xml
 
 Marlin --global.LCIOInputFiles=${datadir}/${datafile} \
@@ -33,4 +49,18 @@ Marlin --global.LCIOInputFiles=${datadir}/${datafile} \
        --constant.viewer=${viewer} \
        myced_steering.xml 
 
+# ###############################################################
+#
+# Data layer in the case of DSTViewer
+#   Data layer  1 : photon and others (muon?)
+#               6 : TPC track
+#               9 : Cluster ( by cylinder )
+#              11 : Jets
+#              18 : Cluster ( by ellipse )
+#              19 : Cluster ( by ellipse )
+#
+#   data are obtained from "PandoraPFOs" except 11.
+#           11 (Jets) are obtained from "JetOut Durham_2Jets Durham_3Jets Durham_4Jets Durham_5Jets Durham_6Jets"
+# ###############################################################
+~
 

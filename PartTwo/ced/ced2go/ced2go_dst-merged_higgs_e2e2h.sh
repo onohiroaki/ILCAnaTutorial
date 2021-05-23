@@ -15,3 +15,16 @@ gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/StandardConfig/production/Gea
 
 ced2go -v DSTViewer -d ${gearfile} ${datadir}/${datafile}
 
+# ###############################################################
+# 
+# Data layer in the case of DSTViewer
+#   Data layer  1 : photon and others (muon?)
+#               6 : TPC track
+#               9 : Cluster ( by cylinder )
+#              11 : Jets
+#              18 : Cluster ( by ellipse )
+#              19 : Cluster ( by ellipse )
+#
+#   data are obtained from "PandoraPFOs" except 11.
+#           11 (Jets) are obtained from "JetOut Durham_2Jets Durham_3Jets Durham_4Jets Durham_5Jets Durham_6Jets"
+# ###############################################################
