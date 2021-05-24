@@ -14,13 +14,15 @@ datafile=rv02-02.sv02-02.mILD_l5_o1_v02.E250-SetA.I402003.Pe2e2h.eL.pR.n000.d_ds
 gearfile=/cvmfs/ilc.desy.de/sw/ILDConfig/v02-02-01/StandardConfig/production/Gear/gear_ILD_l5_o1_v02.xml
 
 ced2go -v DSTViewer -d ${gearfile} ${datadir}/${datafile}
+# ced2go -v GenericViewer -d ${gearfile} ${datadir}/${datafile}
 
 # ###############################################################
 # 
 # Data layer in the case of DSTViewer
-#   Data layer  1 : photon and others (muon?)
-#               6 : TPC track
-#               9 : Cluster ( by cylinder )
+#   Data layer  1 : Momentum at IP,   color by log(Energy)
+#               6 : Charged track
+#                   Color: pi+(red), pi-(orange), e-(blue), e+(violet), other(black)
+#               9 : Cluster ( by cylinder ), color by log(Energy)
 #              11 : Jets
 #              18 : Cluster ( by ellipse )
 #              19 : Cluster ( by ellipse )
